@@ -5,7 +5,7 @@
         <view class="hero-copy">
           <text class="title">Snowy Enligsh</text>
           <text class="sub">25 篇教材文章词汇题，支持按文章练习和混合刷题。</text>
-          <text class="hero-desc">题目来自教材 PDF 中的文章内容，优先选取高考常考词汇和短语，并在每次进入时自动打乱顺序。</text>
+          <text class="hero-desc">题目优先选取高考常考词汇和短语，并在每次进入时自动打乱顺序。</text>
         </view>
       </view>
     </view>
