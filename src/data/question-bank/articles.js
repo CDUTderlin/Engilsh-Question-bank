@@ -1,0 +1,202 @@
+export default [
+  {
+    "articleId": "article-01",
+    "articleIndex": 1,
+    "unitTitle": "Friendship",
+    "articleTitle": "Fall in Love with English",
+    "sourcePdfPage": 3,
+    "count": 43
+  },
+  {
+    "articleId": "article-02",
+    "articleIndex": 2,
+    "unitTitle": "English around the world",
+    "articleTitle": "Different Kinds of English",
+    "sourcePdfPage": 7,
+    "count": 41
+  },
+  {
+    "articleId": "article-03",
+    "articleIndex": 3,
+    "unitTitle": "Travel journal",
+    "articleTitle": "A Hard Trip",
+    "sourcePdfPage": 11,
+    "count": 42
+  },
+  {
+    "articleId": "article-04",
+    "articleIndex": 4,
+    "unitTitle": "Earthquakes",
+    "articleTitle": "A Terrible Earthquake",
+    "sourcePdfPage": 15,
+    "count": 45
+  },
+  {
+    "articleId": "article-05",
+    "articleIndex": 5,
+    "unitTitle": "Nelson Mandela - a modern hero",
+    "articleTitle": "A Great President",
+    "sourcePdfPage": 19,
+    "count": 43
+  },
+  {
+    "articleId": "article-06",
+    "articleIndex": 6,
+    "unitTitle": "Cultural relics",
+    "articleTitle": "A Brave Maid",
+    "sourcePdfPage": 23,
+    "count": 41
+  },
+  {
+    "articleId": "article-07",
+    "articleIndex": 7,
+    "unitTitle": "The Olympic Games",
+    "articleTitle": "Competitions Must Be Fair",
+    "sourcePdfPage": 27,
+    "count": 41
+  },
+  {
+    "articleId": "article-08",
+    "articleIndex": 8,
+    "unitTitle": "Computers",
+    "articleTitle": "The Computer",
+    "sourcePdfPage": 31,
+    "count": 42
+  },
+  {
+    "articleId": "article-09",
+    "articleIndex": 9,
+    "unitTitle": "Wildlife protection",
+    "articleTitle": "Protect Wildlife",
+    "sourcePdfPage": 35,
+    "count": 42
+  },
+  {
+    "articleId": "article-10",
+    "articleIndex": 10,
+    "unitTitle": "Music",
+    "articleTitle": "My First Band",
+    "sourcePdfPage": 39,
+    "count": 40
+  },
+  {
+    "articleId": "article-11",
+    "articleIndex": 11,
+    "unitTitle": "Festivals around the world",
+    "articleTitle": "An Interesting Festival",
+    "sourcePdfPage": 43,
+    "count": 42
+  },
+  {
+    "articleId": "article-12",
+    "articleIndex": 12,
+    "unitTitle": "Healthy eating",
+    "articleTitle": "Balanced Diet",
+    "sourcePdfPage": 47,
+    "count": 40
+  },
+  {
+    "articleId": "article-13",
+    "articleIndex": 13,
+    "unitTitle": "The Million Pound Bank Note",
+    "articleTitle": "Go Ahead",
+    "sourcePdfPage": 51,
+    "count": 40
+  },
+  {
+    "articleId": "article-14",
+    "articleIndex": 14,
+    "unitTitle": "Astronomy: the science of the stars",
+    "articleTitle": "Explore UKII",
+    "sourcePdfPage": 55,
+    "count": 43
+  },
+  {
+    "articleId": "article-15",
+    "articleIndex": 15,
+    "unitTitle": "Canada \"The True North\"",
+    "articleTitle": "A Journey across Canada",
+    "sourcePdfPage": 59,
+    "count": 42
+  },
+  {
+    "articleId": "article-16",
+    "articleIndex": 16,
+    "unitTitle": "Women of achievement",
+    "articleTitle": "A Woman Doctor Li Na",
+    "sourcePdfPage": 63,
+    "count": 25
+  },
+  {
+    "articleId": "article-17",
+    "articleIndex": 17,
+    "unitTitle": "Working the land",
+    "articleTitle": "Tuan's New Farming Way",
+    "sourcePdfPage": 67,
+    "count": 25
+  },
+  {
+    "articleId": "article-18",
+    "articleIndex": 18,
+    "unitTitle": "A taste of English humour",
+    "articleTitle": "A Great Master of Humour",
+    "sourcePdfPage": 71,
+    "count": 25
+  },
+  {
+    "articleId": "article-19",
+    "articleIndex": 19,
+    "unitTitle": "Body language",
+    "articleTitle": "A Misunderstanding",
+    "sourcePdfPage": 75,
+    "count": 25
+  },
+  {
+    "articleId": "article-20",
+    "articleIndex": 20,
+    "unitTitle": "Theme parks",
+    "articleTitle": "A Unique Theme Park",
+    "sourcePdfPage": 79,
+    "count": 25
+  },
+  {
+    "articleId": "article-21",
+    "articleIndex": 21,
+    "unitTitle": "Great scientists",
+    "articleTitle": "A Strange Severe Disease",
+    "sourcePdfPage": 83,
+    "count": 25
+  },
+  {
+    "articleId": "article-22",
+    "articleIndex": 22,
+    "unitTitle": "The United Kingdom",
+    "articleTitle": "Sightseeing in the United Kingdom",
+    "sourcePdfPage": 87,
+    "count": 25
+  },
+  {
+    "articleId": "article-23",
+    "articleIndex": 23,
+    "unitTitle": "Life in the future",
+    "articleTitle": "An Air Crash",
+    "sourcePdfPage": 91,
+    "count": 25
+  },
+  {
+    "articleId": "article-24",
+    "articleIndex": 24,
+    "unitTitle": "Making the news",
+    "articleTitle": "An Amateur Journalist",
+    "sourcePdfPage": 95,
+    "count": 25
+  },
+  {
+    "articleId": "article-25",
+    "articleIndex": 25,
+    "unitTitle": "First aid",
+    "articleTitle": "First Aid",
+    "sourcePdfPage": 98,
+    "count": 25
+  }
+]
