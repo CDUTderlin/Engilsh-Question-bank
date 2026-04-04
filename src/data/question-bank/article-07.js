@@ -1,0 +1,1314 @@
+export default [
+  {
+    "id": "article-07-q1",
+    "type": "single",
+    "category": "The Olympic Games",
+    "articleId": "article-07",
+    "articleIndex": 7,
+    "articleTitle": "Competitions Must Be Fair",
+    "articleLabel": "?7? ? Competitions Must Be Fair",
+    "sourcePdfPage": 27,
+    "stem": "fairness",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "参加；参与"
+      },
+      {
+        "key": "B",
+        "text": "为...做广告"
+      },
+      {
+        "key": "C",
+        "text": "公平；公正"
+      },
+      {
+        "key": "D",
+        "text": "光荣；荣誉"
+      }
+    ],
+    "answer": "C",
+    "explanation": "fairness 的中文含义是: 公平；公正??"
+  },
+  {
+    "id": "article-07-q2",
+    "type": "single",
+    "category": "The Olympic Games",
+    "articleId": "article-07",
+    "articleIndex": 7,
+    "articleTitle": "Competitions Must Be Fair",
+    "articleLabel": "?7? ? Competitions Must Be Fair",
+    "sourcePdfPage": 27,
+    "stem": "deserve",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "露天）体育场（stadiums/stadia）"
+      },
+      {
+        "key": "B",
+        "text": "应受；值得"
+      },
+      {
+        "key": "C",
+        "text": "古代的，古老的"
+      },
+      {
+        "key": "D",
+        "text": "有魔力的"
+      }
+    ],
+    "answer": "B",
+    "explanation": "deserve 的中文含义是: 应受；值得??"
+  },
+  {
+    "id": "article-07-q3",
+    "type": "single",
+    "category": "The Olympic Games",
+    "articleId": "article-07",
+    "articleIndex": 7,
+    "articleTitle": "Competitions Must Be Fair",
+    "articleLabel": "?7? ? Competitions Must Be Fair",
+    "sourcePdfPage": 27,
+    "stem": "competitor",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "竞争者；参赛者"
+      },
+      {
+        "key": "B",
+        "text": "没有希望的；绝望的"
+      },
+      {
+        "key": "C",
+        "text": "体操；体能训练"
+      },
+      {
+        "key": "D",
+        "text": "物理的；身体的；生理的"
+      }
+    ],
+    "answer": "A",
+    "explanation": "competitor 的中文含义是: 竞争者；参赛者??"
+  },
+  {
+    "id": "article-07-q4",
+    "type": "single",
+    "category": "The Olympic Games",
+    "articleId": "article-07",
+    "articleIndex": 7,
+    "articleTitle": "Competitions Must Be Fair",
+    "articleLabel": "?7? ? Competitions Must Be Fair",
+    "sourcePdfPage": 27,
+    "stem": "bargain",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "疼痛；痛苦"
+      },
+      {
+        "key": "B",
+        "text": "责任；职责"
+      },
+      {
+        "key": "C",
+        "text": "陆续地；一个接一个地"
+      },
+      {
+        "key": "D",
+        "text": "讨价还价；便宜货"
+      }
+    ],
+    "answer": "D",
+    "explanation": "bargain 的中文含义是: 讨价还价；便宜货??"
+  },
+  {
+    "id": "article-07-q5",
+    "type": "single",
+    "category": "The Olympic Games",
+    "articleId": "article-07",
+    "articleIndex": 7,
+    "articleTitle": "Competitions Must Be Fair",
+    "articleLabel": "?7? ? Competitions Must Be Fair",
+    "sourcePdfPage": 27,
+    "stem": "admit",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "允许进入；承认；接纳"
+      },
+      {
+        "key": "B",
+        "text": "海报；招贴；广告（画）"
+      },
+      {
+        "key": "C",
+        "text": "收费；控诉；费用；主管"
+      },
+      {
+        "key": "D",
+        "text": "奖章，勋章，纪念章"
+      }
+    ],
+    "answer": "A",
+    "explanation": "admit 的中文含义是: 允许进入；承认；接纳??"
+  },
+  {
+    "id": "article-07-q6",
+    "type": "single",
+    "category": "The Olympic Games",
+    "articleId": "article-07",
+    "articleIndex": 7,
+    "articleTitle": "Competitions Must Be Fair",
+    "articleLabel": "?7? ? Competitions Must Be Fair",
+    "sourcePdfPage": 27,
+    "stem": "basis",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "取代"
+      },
+      {
+        "key": "B",
+        "text": "基础；依据"
+      },
+      {
+        "key": "C",
+        "text": "愚蠢的，傻的"
+      },
+      {
+        "key": "D",
+        "text": "规则的；定期的；常规的"
+      }
+    ],
+    "answer": "B",
+    "explanation": "basis 的中文含义是: 基础；依据??"
+  },
+  {
+    "id": "article-07-q7",
+    "type": "single",
+    "category": "The Olympic Games",
+    "articleId": "article-07",
+    "articleIndex": 7,
+    "articleTitle": "Competitions Must Be Fair",
+    "articleLabel": "?7? ? Competitions Must Be Fair",
+    "sourcePdfPage": 27,
+    "stem": "motto",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "体操；体育馆；健身房"
+      },
+      {
+        "key": "B",
+        "text": "主人；节目主持人做东；主办"
+      },
+      {
+        "key": "C",
+        "text": "座右铭；格言；警句"
+      },
+      {
+        "key": "D",
+        "text": "罚款"
+      }
+    ],
+    "answer": "C",
+    "explanation": "motto 的中文含义是: 座右铭；格言；警句??"
+  },
+  {
+    "id": "article-07-q8",
+    "type": "single",
+    "category": "The Olympic Games",
+    "articleId": "article-07",
+    "articleIndex": 7,
+    "articleTitle": "Competitions Must Be Fair",
+    "articleLabel": "?7? ? Competitions Must Be Fair",
+    "sourcePdfPage": 27,
+    "stem": "homeland",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "志愿者；志愿的；自愿"
+      },
+      {
+        "key": "B",
+        "text": "希腊"
+      },
+      {
+        "key": "C",
+        "text": "为...做广告"
+      },
+      {
+        "key": "D",
+        "text": "祖国；本国"
+      }
+    ],
+    "answer": "D",
+    "explanation": "homeland 的中文含义是: 祖国；本国??"
+  },
+  {
+    "id": "article-07-q9",
+    "type": "single",
+    "category": "The Olympic Games",
+    "articleId": "article-07",
+    "articleIndex": 7,
+    "articleTitle": "Competitions Must Be Fair",
+    "articleLabel": "?7? ? Competitions Must Be Fair",
+    "sourcePdfPage": 27,
+    "stem": "glory",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "光荣；荣誉"
+      },
+      {
+        "key": "B",
+        "text": "欺骗；作弊"
+      },
+      {
+        "key": "C",
+        "text": "主管；看管"
+      },
+      {
+        "key": "D",
+        "text": "露天）体育场（stadiums/stadia）"
+      }
+    ],
+    "answer": "A",
+    "explanation": "glory 的中文含义是: 光荣；荣誉??"
+  },
+  {
+    "id": "article-07-q10",
+    "type": "single",
+    "category": "The Olympic Games",
+    "articleId": "article-07",
+    "articleIndex": 7,
+    "articleTitle": "Competitions Must Be Fair",
+    "articleLabel": "?7? ? Competitions Must Be Fair",
+    "sourcePdfPage": 27,
+    "stem": "nowadays",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "物理的；身体的；生理的"
+      },
+      {
+        "key": "B",
+        "text": "目标；目的；球门；得分"
+      },
+      {
+        "key": "C",
+        "text": "现今；现在"
+      },
+      {
+        "key": "D",
+        "text": "比赛，竞赛"
+      }
+    ],
+    "answer": "C",
+    "explanation": "nowadays 的中文含义是: 现今；现在??"
+  },
+  {
+    "id": "article-07-q11",
+    "type": "single",
+    "category": "The Olympic Games",
+    "articleId": "article-07",
+    "articleIndex": 7,
+    "articleTitle": "Competitions Must Be Fair",
+    "articleLabel": "?7? ? Competitions Must Be Fair",
+    "sourcePdfPage": 27,
+    "stem": "ancient",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "古代的，古老的"
+      },
+      {
+        "key": "B",
+        "text": "也；又"
+      },
+      {
+        "key": "C",
+        "text": "陆续地；一个接一个地"
+      },
+      {
+        "key": "D",
+        "text": "人工智能"
+      }
+    ],
+    "answer": "A",
+    "explanation": "ancient 的中文含义是: 古代的，古老的??"
+  },
+  {
+    "id": "article-07-q12",
+    "type": "single",
+    "category": "The Olympic Games",
+    "articleId": "article-07",
+    "articleIndex": 7,
+    "articleTitle": "Competitions Must Be Fair",
+    "articleLabel": "?7? ? Competitions Must Be Fair",
+    "sourcePdfPage": 27,
+    "stem": "slave",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "收费；控诉；费用；主管"
+      },
+      {
+        "key": "B",
+        "text": "合逻辑的；逻辑上的"
+      },
+      {
+        "key": "C",
+        "text": "希腊（人）的，希腊语的；希腊人，希腊语"
+      },
+      {
+        "key": "D",
+        "text": "奴隶"
+      }
+    ],
+    "answer": "D",
+    "explanation": "slave 的中文含义是: 奴隶??"
+  },
+  {
+    "id": "article-07-q13",
+    "type": "single",
+    "category": "The Olympic Games",
+    "articleId": "article-07",
+    "articleIndex": 7,
+    "articleTitle": "Competitions Must Be Fair",
+    "articleLabel": "?7? ? Competitions Must Be Fair",
+    "sourcePdfPage": 27,
+    "stem": "hopeless",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "严格的；严厉的"
+      },
+      {
+        "key": "B",
+        "text": "目标；目的；球门；得分"
+      },
+      {
+        "key": "C",
+        "text": "没有希望的；绝望的"
+      },
+      {
+        "key": "D",
+        "text": "愚蠢的，傻的"
+      }
+    ],
+    "answer": "C",
+    "explanation": "hopeless 的中文含义是: 没有希望的；绝望的??"
+  },
+  {
+    "id": "article-07-q14",
+    "type": "single",
+    "category": "The Olympic Games",
+    "articleId": "article-07",
+    "articleIndex": 7,
+    "articleTitle": "Competitions Must Be Fair",
+    "articleLabel": "?7? ? Competitions Must Be Fair",
+    "sourcePdfPage": 27,
+    "stem": "athlete",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "总数；算术题；金额"
+      },
+      {
+        "key": "B",
+        "text": "运动员"
+      },
+      {
+        "key": "C",
+        "text": "罚款"
+      },
+      {
+        "key": "D",
+        "text": "简化"
+      }
+    ],
+    "answer": "B",
+    "explanation": "athlete 的中文含义是: 运动员??"
+  },
+  {
+    "id": "article-07-q15",
+    "type": "single",
+    "category": "The Olympic Games",
+    "articleId": "article-07",
+    "articleIndex": 7,
+    "articleTitle": "Competitions Must Be Fair",
+    "articleLabel": "?7? ? Competitions Must Be Fair",
+    "sourcePdfPage": 27,
+    "stem": "pain",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "疼痛；痛苦"
+      },
+      {
+        "key": "B",
+        "text": "希腊"
+      },
+      {
+        "key": "C",
+        "text": "下载"
+      },
+      {
+        "key": "D",
+        "text": "技术"
+      }
+    ],
+    "answer": "A",
+    "explanation": "pain 的中文含义是: 疼痛；痛苦??"
+  },
+  {
+    "id": "article-07-q16",
+    "type": "single",
+    "category": "The Olympic Games",
+    "articleId": "article-07",
+    "articleIndex": 7,
+    "articleTitle": "Competitions Must Be Fair",
+    "articleLabel": "?7? ? Competitions Must Be Fair",
+    "sourcePdfPage": 27,
+    "stem": "take part in",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "欺骗；作弊"
+      },
+      {
+        "key": "B",
+        "text": "无论如何；即使如此"
+      },
+      {
+        "key": "C",
+        "text": "电子的"
+      },
+      {
+        "key": "D",
+        "text": "参加；参与"
+      }
+    ],
+    "answer": "D",
+    "explanation": "take part in 的中文含义是: 参加；参与??"
+  },
+  {
+    "id": "article-07-q17",
+    "type": "single",
+    "category": "The Olympic Games",
+    "articleId": "article-07",
+    "articleIndex": 7,
+    "articleTitle": "Competitions Must Be Fair",
+    "articleLabel": "?7? ? Competitions Must Be Fair",
+    "sourcePdfPage": 27,
+    "stem": "medal",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "奖章，勋章，纪念章"
+      },
+      {
+        "key": "B",
+        "text": "计算"
+      },
+      {
+        "key": "C",
+        "text": "管；管子；电子管"
+      },
+      {
+        "key": "D",
+        "text": "目标；目的；球门；得分"
+      }
+    ],
+    "answer": "A",
+    "explanation": "medal 的中文含义是: 奖章，勋章，纪念章??"
+  },
+  {
+    "id": "article-07-q18",
+    "type": "single",
+    "category": "The Olympic Games",
+    "articleId": "article-07",
+    "articleIndex": 7,
+    "articleTitle": "Competitions Must Be Fair",
+    "articleLabel": "?7? ? Competitions Must Be Fair",
+    "sourcePdfPage": 27,
+    "stem": "magical",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "人工智能"
+      },
+      {
+        "key": "B",
+        "text": "有魔力的"
+      },
+      {
+        "key": "C",
+        "text": "人造的"
+      },
+      {
+        "key": "D",
+        "text": "在的帮忙下"
+      }
+    ],
+    "answer": "B",
+    "explanation": "magical 的中文含义是: 有魔力的??"
+  },
+  {
+    "id": "article-07-q19",
+    "type": "single",
+    "category": "The Olympic Games",
+    "articleId": "article-07",
+    "articleIndex": 7,
+    "articleTitle": "Competitions Must Be Fair",
+    "articleLabel": "?7? ? Competitions Must Be Fair",
+    "sourcePdfPage": 27,
+    "stem": "replace",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "科技的"
+      },
+      {
+        "key": "B",
+        "text": "合逻辑的；逻辑上的"
+      },
+      {
+        "key": "C",
+        "text": "取代"
+      },
+      {
+        "key": "D",
+        "text": "智能的；聪明的"
+      }
+    ],
+    "answer": "C",
+    "explanation": "replace 的中文含义是: 取代??"
+  },
+  {
+    "id": "article-07-q20",
+    "type": "single",
+    "category": "The Olympic Games",
+    "articleId": "article-07",
+    "articleIndex": 7,
+    "articleTitle": "Competitions Must Be Fair",
+    "articleLabel": "?7? ? Competitions Must Be Fair",
+    "sourcePdfPage": 27,
+    "stem": "gymnastics",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "碎片，芯片"
+      },
+      {
+        "key": "B",
+        "text": "从时起"
+      },
+      {
+        "key": "C",
+        "text": "目标；目的；球门；得分"
+      },
+      {
+        "key": "D",
+        "text": "体操；体能训练"
+      }
+    ],
+    "answer": "D",
+    "explanation": "gymnastics 的中文含义是: 体操；体能训练??"
+  },
+  {
+    "id": "article-07-q21",
+    "type": "single",
+    "category": "The Olympic Games",
+    "articleId": "article-07",
+    "articleIndex": 7,
+    "articleTitle": "Competitions Must Be Fair",
+    "articleLabel": "?7? ? Competitions Must Be Fair",
+    "sourcePdfPage": 27,
+    "stem": "host",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "主人；节目主持人做东；主办"
+      },
+      {
+        "key": "B",
+        "text": "总的，整个的；合计，总数"
+      },
+      {
+        "key": "C",
+        "text": "革命；变革"
+      },
+      {
+        "key": "D",
+        "text": "总数；算术题；金额"
+      }
+    ],
+    "answer": "A",
+    "explanation": "host 的中文含义是: 主人；节目主持人做东；主办??"
+  },
+  {
+    "id": "article-07-q22",
+    "type": "single",
+    "category": "The Olympic Games",
+    "articleId": "article-07",
+    "articleIndex": 7,
+    "articleTitle": "Competitions Must Be Fair",
+    "articleLabel": "?7? ? Competitions Must Be Fair",
+    "sourcePdfPage": 27,
+    "stem": "responsibility",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "技术"
+      },
+      {
+        "key": "B",
+        "text": "网"
+      },
+      {
+        "key": "C",
+        "text": "责任；职责"
+      },
+      {
+        "key": "D",
+        "text": "智力；智能"
+      }
+    ],
+    "answer": "C",
+    "explanation": "responsibility 的中文含义是: 责任；职责??"
+  },
+  {
+    "id": "article-07-q23",
+    "type": "single",
+    "category": "The Olympic Games",
+    "articleId": "article-07",
+    "articleIndex": 7,
+    "articleTitle": "Competitions Must Be Fair",
+    "articleLabel": "?7? ? Competitions Must Be Fair",
+    "sourcePdfPage": 27,
+    "stem": "advertise",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "为...做广告"
+      },
+      {
+        "key": "B",
+        "text": "起来；升起；出现"
+      },
+      {
+        "key": "C",
+        "text": "电子的"
+      },
+      {
+        "key": "D",
+        "text": "可移动的；机动的"
+      }
+    ],
+    "answer": "A",
+    "explanation": "advertise 的中文含义是: 为...做广告??"
+  },
+  {
+    "id": "article-07-q24",
+    "type": "single",
+    "category": "The Olympic Games",
+    "articleId": "article-07",
+    "articleIndex": 7,
+    "articleTitle": "Competitions Must Be Fair",
+    "articleLabel": "?7? ? Competitions Must Be Fair",
+    "sourcePdfPage": 27,
+    "stem": "poster",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "管；管子；电子管"
+      },
+      {
+        "key": "B",
+        "text": "解决；解答"
+      },
+      {
+        "key": "C",
+        "text": "外观；外貌；出现"
+      },
+      {
+        "key": "D",
+        "text": "海报；招贴；广告（画）"
+      }
+    ],
+    "answer": "D",
+    "explanation": "poster 的中文含义是: 海报；招贴；广告（画）??"
+  },
+  {
+    "id": "article-07-q25",
+    "type": "single",
+    "category": "The Olympic Games",
+    "articleId": "article-07",
+    "articleIndex": 7,
+    "articleTitle": "Competitions Must Be Fair",
+    "articleLabel": "?7? ? Competitions Must Be Fair",
+    "sourcePdfPage": 27,
+    "stem": "stadium",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "总合地，完全地"
+      },
+      {
+        "key": "B",
+        "text": "逻辑上；合逻辑地；有条理地"
+      },
+      {
+        "key": "C",
+        "text": "露天）体育场（stadiums/stadia）"
+      },
+      {
+        "key": "D",
+        "text": "人造的"
+      }
+    ],
+    "answer": "C",
+    "explanation": "stadium 的中文含义是: 露天）体育场（stadiums/stadia）??"
+  },
+  {
+    "id": "article-07-q26",
+    "type": "single",
+    "category": "The Olympic Games",
+    "articleId": "article-07",
+    "articleIndex": 7,
+    "articleTitle": "Competitions Must Be Fair",
+    "articleLabel": "?7? ? Competitions Must Be Fair",
+    "sourcePdfPage": 27,
+    "stem": "regular",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "教练"
+      },
+      {
+        "key": "B",
+        "text": "规则的；定期的；常规的"
+      },
+      {
+        "key": "C",
+        "text": "智能的；聪明的"
+      },
+      {
+        "key": "D",
+        "text": "网络，网状系统"
+      }
+    ],
+    "answer": "B",
+    "explanation": "regular 的中文含义是: 规则的；定期的；常规的??"
+  },
+  {
+    "id": "article-07-q27",
+    "type": "single",
+    "category": "The Olympic Games",
+    "articleId": "article-07",
+    "articleIndex": 7,
+    "articleTitle": "Competitions Must Be Fair",
+    "articleLabel": "?7? ? Competitions Must Be Fair",
+    "sourcePdfPage": 27,
+    "stem": "physical",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "物理的；身体的；生理的"
+      },
+      {
+        "key": "B",
+        "text": "从时起"
+      },
+      {
+        "key": "C",
+        "text": "发信号；信号"
+      },
+      {
+        "key": "D",
+        "text": "探索；探测；探究"
+      }
+    ],
+    "answer": "A",
+    "explanation": "physical 的中文含义是: 物理的；身体的；生理的??"
+  },
+  {
+    "id": "article-07-q28",
+    "type": "single",
+    "category": "The Olympic Games",
+    "articleId": "article-07",
+    "articleIndex": 7,
+    "articleTitle": "Competitions Must Be Fair",
+    "articleLabel": "?7? ? Competitions Must Be Fair",
+    "sourcePdfPage": 27,
+    "stem": "gymnasium",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "总的，整个的；合计，总数"
+      },
+      {
+        "key": "B",
+        "text": "类型vt.打字"
+      },
+      {
+        "key": "C",
+        "text": "人类"
+      },
+      {
+        "key": "D",
+        "text": "体操；体育馆；健身房"
+      }
+    ],
+    "answer": "D",
+    "explanation": "gymnasium 的中文含义是: 体操；体育馆；健身房??"
+  },
+  {
+    "id": "article-07-q29",
+    "type": "single",
+    "category": "The Olympic Games",
+    "articleId": "article-07",
+    "articleIndex": 7,
+    "articleTitle": "Competitions Must Be Fair",
+    "articleLabel": "?7? ? Competitions Must Be Fair",
+    "sourcePdfPage": 27,
+    "stem": "one after another",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "陆续地；一个接一个地"
+      },
+      {
+        "key": "B",
+        "text": "操作员；接线员"
+      },
+      {
+        "key": "C",
+        "text": "拖把；用拖把拖洗"
+      },
+      {
+        "key": "D",
+        "text": "网"
+      }
+    ],
+    "answer": "A",
+    "explanation": "one after another 的中文含义是: 陆续地；一个接一个地??"
+  },
+  {
+    "id": "article-07-q30",
+    "type": "single",
+    "category": "The Olympic Games",
+    "articleId": "article-07",
+    "articleIndex": 7,
+    "articleTitle": "Competitions Must Be Fair",
+    "articleLabel": "?7? ? Competitions Must Be Fair",
+    "sourcePdfPage": 27,
+    "stem": "volunteer",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "可移动的；机动的"
+      },
+      {
+        "key": "B",
+        "text": "志愿者；志愿的；自愿"
+      },
+      {
+        "key": "C",
+        "text": "顽皮的，淘气的"
+      },
+      {
+        "key": "D",
+        "text": "火箭"
+      }
+    ],
+    "answer": "B",
+    "explanation": "volunteer 的中文含义是: 志愿者；志愿的；自愿??"
+  },
+  {
+    "id": "article-07-q31",
+    "type": "single",
+    "category": "The Olympic Games",
+    "articleId": "article-07",
+    "articleIndex": 7,
+    "articleTitle": "Competitions Must Be Fair",
+    "articleLabel": "?7? ? Competitions Must Be Fair",
+    "sourcePdfPage": 27,
+    "stem": "charge",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "机器人"
+      },
+      {
+        "key": "B",
+        "text": "解决；解答"
+      },
+      {
+        "key": "C",
+        "text": "收费；控诉；费用；主管"
+      },
+      {
+        "key": "D",
+        "text": "如此以致"
+      }
+    ],
+    "answer": "C",
+    "explanation": "charge 的中文含义是: 收费；控诉；费用；主管??"
+  },
+  {
+    "id": "article-07-q32",
+    "type": "single",
+    "category": "The Olympic Games",
+    "articleId": "article-07",
+    "articleIndex": 7,
+    "articleTitle": "Competitions Must Be Fair",
+    "articleLabel": "?7? ? Competitions Must Be Fair",
+    "sourcePdfPage": 27,
+    "stem": "in charge",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "性格；特点"
+      },
+      {
+        "key": "B",
+        "text": "检查；视察"
+      },
+      {
+        "key": "C",
+        "text": "逻辑上；合逻辑地；有条理地"
+      },
+      {
+        "key": "D",
+        "text": "主管；看管"
+      }
+    ],
+    "answer": "D",
+    "explanation": "in charge 的中文含义是: 主管；看管??"
+  },
+  {
+    "id": "article-07-q33",
+    "type": "single",
+    "category": "The Olympic Games",
+    "articleId": "article-07",
+    "articleIndex": 7,
+    "articleTitle": "Competitions Must Be Fair",
+    "articleLabel": "?7? ? Competitions Must Be Fair",
+    "sourcePdfPage": 27,
+    "stem": "foolish",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "愚蠢的，傻的"
+      },
+      {
+        "key": "B",
+        "text": "注意"
+      },
+      {
+        "key": "C",
+        "text": "看守；监视"
+      },
+      {
+        "key": "D",
+        "text": "教练"
+      }
+    ],
+    "answer": "A",
+    "explanation": "foolish 的中文含义是: 愚蠢的，傻的??"
+  },
+  {
+    "id": "article-07-q34",
+    "type": "single",
+    "category": "The Olympic Games",
+    "articleId": "article-07",
+    "articleIndex": 7,
+    "articleTitle": "Competitions Must Be Fair",
+    "articleLabel": "?7? ? Competitions Must Be Fair",
+    "sourcePdfPage": 27,
+    "stem": "compete",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "探索；探测；探究"
+      },
+      {
+        "key": "B",
+        "text": "消失；灭亡"
+      },
+      {
+        "key": "C",
+        "text": "比赛，竞赛"
+      },
+      {
+        "key": "D",
+        "text": "侄女；甥女"
+      }
+    ],
+    "answer": "C",
+    "explanation": "compete 的中文含义是: 比赛，竞赛??"
+  },
+  {
+    "id": "article-07-q35",
+    "type": "single",
+    "category": "The Olympic Games",
+    "articleId": "article-07",
+    "articleIndex": 7,
+    "articleTitle": "Competitions Must Be Fair",
+    "articleLabel": "?7? ? Competitions Must Be Fair",
+    "sourcePdfPage": 27,
+    "stem": "fine",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "罚款"
+      },
+      {
+        "key": "B",
+        "text": "在危险中；垂危"
+      },
+      {
+        "key": "C",
+        "text": "人类"
+      },
+      {
+        "key": "D",
+        "text": "事件；事变"
+      }
+    ],
+    "answer": "A",
+    "explanation": "fine 的中文含义是: 罚款??"
+  },
+  {
+    "id": "article-07-q36",
+    "type": "single",
+    "category": "The Olympic Games",
+    "articleId": "article-07",
+    "articleIndex": 7,
+    "articleTitle": "Competitions Must Be Fair",
+    "articleLabel": "?7? ? Competitions Must Be Fair",
+    "sourcePdfPage": 27,
+    "stem": "as well",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "拖把；用拖把拖洗"
+      },
+      {
+        "key": "B",
+        "text": "损害；危害"
+      },
+      {
+        "key": "C",
+        "text": "鉴赏；感激；意识到"
+      },
+      {
+        "key": "D",
+        "text": "也；又"
+      }
+    ],
+    "answer": "D",
+    "explanation": "as well 的中文含义是: 也；又??"
+  },
+  {
+    "id": "article-07-q37",
+    "type": "single",
+    "category": "The Olympic Games",
+    "articleId": "article-07",
+    "articleIndex": 7,
+    "articleTitle": "Competitions Must Be Fair",
+    "articleLabel": "?7? ? Competitions Must Be Fair",
+    "sourcePdfPage": 27,
+    "stem": "Greece",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "恐龙"
+      },
+      {
+        "key": "B",
+        "text": "毛皮；皮子"
+      },
+      {
+        "key": "C",
+        "text": "希腊"
+      },
+      {
+        "key": "D",
+        "text": "顽皮的，淘气的"
+      }
+    ],
+    "answer": "C",
+    "explanation": "Greece 的中文含义是: 希腊??"
+  },
+  {
+    "id": "article-07-q38",
+    "type": "single",
+    "category": "The Olympic Games",
+    "articleId": "article-07",
+    "articleIndex": 7,
+    "articleTitle": "Competitions Must Be Fair",
+    "articleLabel": "?7? ? Competitions Must Be Fair",
+    "sourcePdfPage": 27,
+    "stem": "Greek",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "以至于；结果"
+      },
+      {
+        "key": "B",
+        "text": "希腊（人）的，希腊语的；希腊人，希腊语"
+      },
+      {
+        "key": "C",
+        "text": "如此以致"
+      },
+      {
+        "key": "D",
+        "text": "想不到的；意外的；未预料到"
+      }
+    ],
+    "answer": "B",
+    "explanation": "Greek 的中文含义是: 希腊（人）的，希腊语的；希腊人，希腊语??"
+  },
+  {
+    "id": "article-07-q39",
+    "type": "single",
+    "category": "The Olympic Games",
+    "articleId": "article-07",
+    "articleIndex": 7,
+    "articleTitle": "Competitions Must Be Fair",
+    "articleLabel": "?7? ? Competitions Must Be Fair",
+    "sourcePdfPage": 27,
+    "stem": "cheat",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "欺骗；作弊"
+      },
+      {
+        "key": "B",
+        "text": "检查；视察"
+      },
+      {
+        "key": "C",
+        "text": "牙生动植物"
+      },
+      {
+        "key": "D",
+        "text": "储备；预定；保护区"
+      }
+    ],
+    "answer": "A",
+    "explanation": "cheat 的中文含义是: 欺骗；作弊??"
+  },
+  {
+    "id": "article-07-q40",
+    "type": "single",
+    "category": "The Olympic Games",
+    "articleId": "article-07",
+    "articleIndex": 7,
+    "articleTitle": "Competitions Must Be Fair",
+    "articleLabel": "?7? ? Competitions Must Be Fair",
+    "sourcePdfPage": 27,
+    "stem": "strict",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "注意"
+      },
+      {
+        "key": "B",
+        "text": "寻找；狩猎，猎取"
+      },
+      {
+        "key": "C",
+        "text": "灰尘"
+      },
+      {
+        "key": "D",
+        "text": "严格的；严厉的"
+      }
+    ],
+    "answer": "D",
+    "explanation": "strict 的中文含义是: 严格的；严厉的??"
+  },
+  {
+    "id": "article-07-q41",
+    "type": "single",
+    "category": "The Olympic Games",
+    "articleId": "article-07",
+    "articleIndex": 7,
+    "articleTitle": "Competitions Must Be Fair",
+    "articleLabel": "?7? ? Competitions Must Be Fair",
+    "sourcePdfPage": 27,
+    "stem": "goal",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "目标；目的；球门；得分"
+      },
+      {
+        "key": "B",
+        "text": "地毯"
+      },
+      {
+        "key": "C",
+        "text": "影响"
+      },
+      {
+        "key": "D",
+        "text": "消失；灭亡"
+      }
+    ],
+    "answer": "A",
+    "explanation": "goal 的中文含义是: 目标；目的；球门；得分??"
+  }
+]

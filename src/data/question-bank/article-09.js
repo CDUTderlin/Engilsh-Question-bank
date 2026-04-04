@@ -1,0 +1,1346 @@
+export default [
+  {
+    "id": "article-09-q1",
+    "type": "single",
+    "category": "Wildlife protection",
+    "articleId": "article-09",
+    "articleIndex": 9,
+    "articleTitle": "Protect Wildlife",
+    "articleLabel": "?9? ? Protect Wildlife",
+    "sourcePdfPage": 35,
+    "stem": "in danger",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "牙生动植物"
+      },
+      {
+        "key": "B",
+        "text": "确定的；某一；一定"
+      },
+      {
+        "key": "C",
+        "text": "储备；预定；保护区"
+      },
+      {
+        "key": "D",
+        "text": "在危险中；垂危"
+      }
+    ],
+    "answer": "D",
+    "explanation": "in danger 的中文含义是: 在危险中；垂危??"
+  },
+  {
+    "id": "article-09-q2",
+    "type": "single",
+    "category": "Wildlife protection",
+    "articleId": "article-09",
+    "articleIndex": 9,
+    "articleTitle": "Protect Wildlife",
+    "articleLabel": "?9? ? Protect Wildlife",
+    "sourcePdfPage": 35,
+    "stem": "inspection",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "灰尘"
+      },
+      {
+        "key": "B",
+        "text": "保护不受危害"
+      },
+      {
+        "key": "C",
+        "text": "检查；视察"
+      },
+      {
+        "key": "D",
+        "text": "寻找；狩猎，猎取"
+      }
+    ],
+    "answer": "C",
+    "explanation": "inspection 的中文含义是: 检查；视察??"
+  },
+  {
+    "id": "article-09-q3",
+    "type": "single",
+    "category": "Wildlife protection",
+    "articleId": "article-09",
+    "articleIndex": 9,
+    "articleTitle": "Protect Wildlife",
+    "articleLabel": "?9? ? Protect Wildlife",
+    "sourcePdfPage": 35,
+    "stem": "appreciate",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "蚊子"
+      },
+      {
+        "key": "B",
+        "text": "鉴赏；感激；意识到"
+      },
+      {
+        "key": "C",
+        "text": "地毯"
+      },
+      {
+        "key": "D",
+        "text": "影响"
+      }
+    ],
+    "answer": "B",
+    "explanation": "appreciate 的中文含义是: 鉴赏；感激；意识到??"
+  },
+  {
+    "id": "article-09-q4",
+    "type": "single",
+    "category": "Wildlife protection",
+    "articleId": "article-09",
+    "articleIndex": 9,
+    "articleTitle": "Protect Wildlife",
+    "articleLabel": "?9? ? Protect Wildlife",
+    "sourcePdfPage": 35,
+    "stem": "pay attention to",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "注意"
+      },
+      {
+        "key": "B",
+        "text": "安全的；可靠的"
+      },
+      {
+        "key": "C",
+        "text": "擦"
+      },
+      {
+        "key": "D",
+        "text": "按照；根据所说"
+      }
+    ],
+    "answer": "A",
+    "explanation": "pay attention to 的中文含义是: 注意??"
+  },
+  {
+    "id": "article-09-q5",
+    "type": "single",
+    "category": "Wildlife protection",
+    "articleId": "article-09",
+    "articleIndex": 9,
+    "articleTitle": "Protect Wildlife",
+    "articleLabel": "?9? ? Protect Wildlife",
+    "sourcePdfPage": 35,
+    "stem": "dinosaur",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "仁慈；宽恕；怜阀"
+      },
+      {
+        "key": "B",
+        "text": "昆虫"
+      },
+      {
+        "key": "C",
+        "text": "包含；包括；能容纳"
+      },
+      {
+        "key": "D",
+        "text": "恐龙"
+      }
+    ],
+    "answer": "D",
+    "explanation": "dinosaur 的中文含义是: 恐龙??"
+  },
+  {
+    "id": "article-09-q6",
+    "type": "single",
+    "category": "Wildlife protection",
+    "articleId": "article-09",
+    "articleIndex": 9,
+    "articleTitle": "Protect Wildlife",
+    "articleLabel": "?9? ? Protect Wildlife",
+    "sourcePdfPage": 35,
+    "stem": "die out",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "消失；灭亡"
+      },
+      {
+        "key": "B",
+        "text": "凶猛的；猛烈的"
+      },
+      {
+        "key": "C",
+        "text": "雇用；利用"
+      },
+      {
+        "key": "D",
+        "text": "形成；产生"
+      }
+    ],
+    "answer": "A",
+    "explanation": "die out 的中文含义是: 消失；灭亡??"
+  },
+  {
+    "id": "article-09-q7",
+    "type": "single",
+    "category": "Wildlife protection",
+    "articleId": "article-09",
+    "articleIndex": 9,
+    "articleTitle": "Protect Wildlife",
+    "articleLabel": "?9? ? Protect Wildlife",
+    "sourcePdfPage": 35,
+    "stem": "unexpected",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "远的；远处的"
+      },
+      {
+        "key": "B",
+        "text": "想不到的；意外的；未预料到"
+      },
+      {
+        "key": "C",
+        "text": "区域；范围"
+      },
+      {
+        "key": "D",
+        "text": "咬；叮"
+      }
+    ],
+    "answer": "B",
+    "explanation": "unexpected 的中文含义是: 想不到的；意外的；未预料到??"
+  },
+  {
+    "id": "article-09-q8",
+    "type": "single",
+    "category": "Wildlife protection",
+    "articleId": "article-09",
+    "articleIndex": 9,
+    "articleTitle": "Protect Wildlife",
+    "articleLabel": "?9? ? Protect Wildlife",
+    "sourcePdfPage": 35,
+    "stem": "incident",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "检查；视察"
+      },
+      {
+        "key": "B",
+        "text": "确定的；某一；一定"
+      },
+      {
+        "key": "C",
+        "text": "事件；事变"
+      },
+      {
+        "key": "D",
+        "text": "笑；笑声"
+      }
+    ],
+    "answer": "C",
+    "explanation": "incident 的中文含义是: 事件；事变??"
+  },
+  {
+    "id": "article-09-q9",
+    "type": "single",
+    "category": "Wildlife protection",
+    "articleId": "article-09",
+    "articleIndex": 9,
+    "articleTitle": "Protect Wildlife",
+    "articleLabel": "?9? ? Protect Wildlife",
+    "sourcePdfPage": 35,
+    "stem": "wildlife",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "效力大的，强有力的，强大的"
+      },
+      {
+        "key": "B",
+        "text": "回答；响应；作出反应"
+      },
+      {
+        "key": "C",
+        "text": "保护不受危害"
+      },
+      {
+        "key": "D",
+        "text": "牙生动植物"
+      }
+    ],
+    "answer": "D",
+    "explanation": "wildlife 的中文含义是: 牙生动植物??"
+  },
+  {
+    "id": "article-09-q10",
+    "type": "single",
+    "category": "Wildlife protection",
+    "articleId": "article-09",
+    "articleIndex": 9,
+    "articleTitle": "Protect Wildlife",
+    "articleLabel": "?9? ? Protect Wildlife",
+    "sourcePdfPage": 35,
+    "stem": "harm",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "损害；危害"
+      },
+      {
+        "key": "B",
+        "text": "收入"
+      },
+      {
+        "key": "C",
+        "text": "结局；结尾"
+      },
+      {
+        "key": "D",
+        "text": "蚊子"
+      }
+    ],
+    "answer": "A",
+    "explanation": "harm 的中文含义是: 损害；危害??"
+  },
+  {
+    "id": "article-09-q11",
+    "type": "single",
+    "category": "Wildlife protection",
+    "articleId": "article-09",
+    "articleIndex": 9,
+    "articleTitle": "Protect Wildlife",
+    "articleLabel": "?9? ? Protect Wildlife",
+    "sourcePdfPage": 35,
+    "stem": "hunt",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "按照；根据所说"
+      },
+      {
+        "key": "B",
+        "text": "依赖；依靠"
+      },
+      {
+        "key": "C",
+        "text": "寻找；狩猎，猎取"
+      },
+      {
+        "key": "D",
+        "text": "损失；丧失；损耗"
+      }
+    ],
+    "answer": "C",
+    "explanation": "hunt 的中文含义是: 寻找；狩猎，猎取??"
+  },
+  {
+    "id": "article-09-q12",
+    "type": "single",
+    "category": "Wildlife protection",
+    "articleId": "article-09",
+    "articleIndex": 9,
+    "articleTitle": "Protect Wildlife",
+    "articleLabel": "?9? ? Protect Wildlife",
+    "sourcePdfPage": 35,
+    "stem": "fur",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "毛皮；皮子"
+      },
+      {
+        "key": "B",
+        "text": "突然笑起来；大声笑了出来"
+      },
+      {
+        "key": "C",
+        "text": "包含；包括；能容纳"
+      },
+      {
+        "key": "D",
+        "text": "广播；播放"
+      }
+    ],
+    "answer": "A",
+    "explanation": "fur 的中文含义是: 毛皮；皮子??"
+  },
+  {
+    "id": "article-09-q13",
+    "type": "single",
+    "category": "Wildlife protection",
+    "articleId": "article-09",
+    "articleIndex": 9,
+    "articleTitle": "Protect Wildlife",
+    "articleLabel": "?9? ? Protect Wildlife",
+    "sourcePdfPage": 35,
+    "stem": "carpet",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "雇用；利用"
+      },
+      {
+        "key": "B",
+        "text": "浏览；稍加研究"
+      },
+      {
+        "key": "C",
+        "text": "减少；支小或支少"
+      },
+      {
+        "key": "D",
+        "text": "地毯"
+      }
+    ],
+    "answer": "D",
+    "explanation": "carpet 的中文含义是: 地毯??"
+  },
+  {
+    "id": "article-09-q14",
+    "type": "single",
+    "category": "Wildlife protection",
+    "articleId": "article-09",
+    "articleIndex": 9,
+    "articleTitle": "Protect Wildlife",
+    "articleLabel": "?9? ? Protect Wildlife",
+    "sourcePdfPage": 35,
+    "stem": "so that",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "注意，关心"
+      },
+      {
+        "key": "B",
+        "text": "简短地；短暂地"
+      },
+      {
+        "key": "C",
+        "text": "以至于；结果"
+      },
+      {
+        "key": "D",
+        "text": "区域；范围"
+      }
+    ],
+    "answer": "C",
+    "explanation": "so that 的中文含义是: 以至于；结果??"
+  },
+  {
+    "id": "article-09-q15",
+    "type": "single",
+    "category": "Wildlife protection",
+    "articleId": "article-09",
+    "articleIndex": 9,
+    "articleTitle": "Protect Wildlife",
+    "articleLabel": "?9? ? Protect Wildlife",
+    "sourcePdfPage": 35,
+    "stem": "secure",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "梦见；梦想；设想"
+      },
+      {
+        "key": "B",
+        "text": "安全的；可靠的"
+      },
+      {
+        "key": "C",
+        "text": "笑；笑声"
+      },
+      {
+        "key": "D",
+        "text": "熟悉；与……熟悉起来"
+      }
+    ],
+    "answer": "B",
+    "explanation": "secure 的中文含义是: 安全的；可靠的??"
+  },
+  {
+    "id": "article-09-q16",
+    "type": "single",
+    "category": "Wildlife protection",
+    "articleId": "article-09",
+    "articleIndex": 9,
+    "articleTitle": "Protect Wildlife",
+    "articleLabel": "?9? ? Protect Wildlife",
+    "sourcePdfPage": 35,
+    "stem": "reserve",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "储备；预定；保护区"
+      },
+      {
+        "key": "B",
+        "text": "回答；响应；作出反应"
+      },
+      {
+        "key": "C",
+        "text": "敏感的；易受伤害的；灵敏的"
+      },
+      {
+        "key": "D",
+        "text": "男演员；行动者"
+      }
+    ],
+    "answer": "A",
+    "explanation": "reserve 的中文含义是: 储备；预定；保护区??"
+  },
+  {
+    "id": "article-09-q17",
+    "type": "single",
+    "category": "Wildlife protection",
+    "articleId": "article-09",
+    "articleIndex": 9,
+    "articleTitle": "Protect Wildlife",
+    "articleLabel": "?9? ? Protect Wildlife",
+    "sourcePdfPage": 35,
+    "stem": "mercy",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "收入"
+      },
+      {
+        "key": "B",
+        "text": "简短的；简要的；摘要；大纲"
+      },
+      {
+        "key": "C",
+        "text": "投入"
+      },
+      {
+        "key": "D",
+        "text": "仁慈；宽恕；怜阀"
+      }
+    ],
+    "answer": "D",
+    "explanation": "mercy 的中文含义是: 仁慈；宽恕；怜阀??"
+  },
+  {
+    "id": "article-09-q18",
+    "type": "single",
+    "category": "Wildlife protection",
+    "articleId": "article-09",
+    "articleIndex": 9,
+    "articleTitle": "Protect Wildlife",
+    "articleLabel": "?9? ? Protect Wildlife",
+    "sourcePdfPage": 35,
+    "stem": "dust",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "灰尘"
+      },
+      {
+        "key": "B",
+        "text": "说实在地；实话说"
+      },
+      {
+        "key": "C",
+        "text": "滚动，打滚n.面包圈，小圆面包；卷状物"
+      },
+      {
+        "key": "D",
+        "text": "依赖；依靠"
+      }
+    ],
+    "answer": "A",
+    "explanation": "dust 的中文含义是: 灰尘??"
+  },
+  {
+    "id": "article-09-q19",
+    "type": "single",
+    "category": "Wildlife protection",
+    "articleId": "article-09",
+    "articleIndex": 9,
+    "articleTitle": "Protect Wildlife",
+    "articleLabel": "?9? ? Protect Wildlife",
+    "sourcePdfPage": 35,
+    "stem": "come into being",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "广播；播放"
+      },
+      {
+        "key": "B",
+        "text": "形成；产生"
+      },
+      {
+        "key": "C",
+        "text": "表演；履行；行动"
+      },
+      {
+        "key": "D",
+        "text": "民间的"
+      }
+    ],
+    "answer": "B",
+    "explanation": "come into being 的中文含义是: 形成；产生??"
+  },
+  {
+    "id": "article-09-q20",
+    "type": "single",
+    "category": "Wildlife protection",
+    "articleId": "article-09",
+    "articleIndex": 9,
+    "articleTitle": "Protect Wildlife",
+    "articleLabel": "?9? ? Protect Wildlife",
+    "sourcePdfPage": 35,
+    "stem": "affect",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "自信的；确信的"
+      },
+      {
+        "key": "B",
+        "text": "浏览；稍加研究"
+      },
+      {
+        "key": "C",
+        "text": "影响"
+      },
+      {
+        "key": "D",
+        "text": "酒馆；酒吧"
+      }
+    ],
+    "answer": "C",
+    "explanation": "affect 的中文含义是: 影响??"
+  },
+  {
+    "id": "article-09-q21",
+    "type": "single",
+    "category": "Wildlife protection",
+    "articleId": "article-09",
+    "articleIndex": 9,
+    "articleTitle": "Protect Wildlife",
+    "articleLabel": "?9? ? Protect Wildlife",
+    "sourcePdfPage": 35,
+    "stem": "distant",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "组成；形成；构成n.表格；形式；结构"
+      },
+      {
+        "key": "B",
+        "text": "得，赚得"
+      },
+      {
+        "key": "C",
+        "text": "简短地；短暂地"
+      },
+      {
+        "key": "D",
+        "text": "远的；远处的"
+      }
+    ],
+    "answer": "D",
+    "explanation": "distant 的中文含义是: 远的；远处的??"
+  },
+  {
+    "id": "article-09-q22",
+    "type": "single",
+    "category": "Wildlife protection",
+    "articleId": "article-09",
+    "articleIndex": 9,
+    "articleTitle": "Protect Wildlife",
+    "articleLabel": "?9? ? Protect Wildlife",
+    "sourcePdfPage": 35,
+    "stem": "rub",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "擦"
+      },
+      {
+        "key": "B",
+        "text": "现金"
+      },
+      {
+        "key": "C",
+        "text": "依赖；依靠"
+      },
+      {
+        "key": "D",
+        "text": "梦见；梦想；设想"
+      }
+    ],
+    "answer": "A",
+    "explanation": "rub 的中文含义是: 擦??"
+  },
+  {
+    "id": "article-09-q23",
+    "type": "single",
+    "category": "Wildlife protection",
+    "articleId": "article-09",
+    "articleIndex": 9,
+    "articleTitle": "Protect Wildlife",
+    "articleLabel": "?9? ? Protect Wildlife",
+    "sourcePdfPage": 35,
+    "stem": "certain",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "男演员；行动者"
+      },
+      {
+        "key": "B",
+        "text": "胡须"
+      },
+      {
+        "key": "C",
+        "text": "确定的；某一；一定"
+      },
+      {
+        "key": "D",
+        "text": "乐器；工具，器械"
+      }
+    ],
+    "answer": "C",
+    "explanation": "certain 的中文含义是: 确定的；某一；一定??"
+  },
+  {
+    "id": "article-09-q24",
+    "type": "single",
+    "category": "Wildlife protection",
+    "articleId": "article-09",
+    "articleIndex": 9,
+    "articleTitle": "Protect Wildlife",
+    "articleLabel": "?9? ? Protect Wildlife",
+    "sourcePdfPage": 35,
+    "stem": "insect",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "昆虫"
+      },
+      {
+        "key": "B",
+        "text": "过客，过路人"
+      },
+      {
+        "key": "C",
+        "text": "投入"
+      },
+      {
+        "key": "D",
+        "text": "音乐家，乐师"
+      }
+    ],
+    "answer": "A",
+    "explanation": "insect 的中文含义是: 昆虫??"
+  },
+  {
+    "id": "article-09-q25",
+    "type": "single",
+    "category": "Wildlife protection",
+    "articleId": "article-09",
+    "articleIndex": 9,
+    "articleTitle": "Protect Wildlife",
+    "articleLabel": "?9? ? Protect Wildlife",
+    "sourcePdfPage": 35,
+    "stem": "protect ... from",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "滚动，打滚n.面包圈，小圆面包；卷状物"
+      },
+      {
+        "key": "B",
+        "text": "熟悉；与熟悉起来"
+      },
+      {
+        "key": "C",
+        "text": "额外的，外加的"
+      },
+      {
+        "key": "D",
+        "text": "保护不受危害"
+      }
+    ],
+    "answer": "D",
+    "explanation": "protect ... from 的中文含义是: 保护不受危害??"
+  },
+  {
+    "id": "article-09-q26",
+    "type": "single",
+    "category": "Wildlife protection",
+    "articleId": "article-09",
+    "articleIndex": 9,
+    "articleTitle": "Protect Wildlife",
+    "articleLabel": "?9? ? Protect Wildlife",
+    "sourcePdfPage": 35,
+    "stem": "fierce",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "用现金；有现钱"
+      },
+      {
+        "key": "B",
+        "text": "另外；也；此外，还有"
+      },
+      {
+        "key": "C",
+        "text": "凶猛的；猛烈的"
+      },
+      {
+        "key": "D",
+        "text": "表演；履行；行动"
+      }
+    ],
+    "answer": "C",
+    "explanation": "fierce 的中文含义是: 凶猛的；猛烈的??"
+  },
+  {
+    "id": "article-09-q27",
+    "type": "single",
+    "category": "Wildlife protection",
+    "articleId": "article-09",
+    "articleIndex": 9,
+    "articleTitle": "Protect Wildlife",
+    "articleLabel": "?9? ? Protect Wildlife",
+    "sourcePdfPage": 35,
+    "stem": "mosquito",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "认为有（重要性、意义)；附上；连接"
+      },
+      {
+        "key": "B",
+        "text": "蚊子"
+      },
+      {
+        "key": "C",
+        "text": "酒馆；酒吧"
+      },
+      {
+        "key": "D",
+        "text": "假装；假扮"
+      }
+    ],
+    "answer": "B",
+    "explanation": "mosquito 的中文含义是: 蚊子??"
+  },
+  {
+    "id": "article-09-q28",
+    "type": "single",
+    "category": "Wildlife protection",
+    "articleId": "article-09",
+    "articleIndex": 9,
+    "articleTitle": "Protect Wildlife",
+    "articleLabel": "?9? ? Protect Wildlife",
+    "sourcePdfPage": 35,
+    "stem": "bite",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "咬；叮"
+      },
+      {
+        "key": "B",
+        "text": "得，赚得"
+      },
+      {
+        "key": "C",
+        "text": "熟悉的；常见的；亲近的"
+      },
+      {
+        "key": "D",
+        "text": "演出，表演"
+      }
+    ],
+    "answer": "A",
+    "explanation": "bite 的中文含义是: 咬；叮??"
+  },
+  {
+    "id": "article-09-q29",
+    "type": "single",
+    "category": "Wildlife protection",
+    "articleId": "article-09",
+    "articleIndex": 9,
+    "articleTitle": "Protect Wildlife",
+    "articleLabel": "?9? ? Protect Wildlife",
+    "sourcePdfPage": 35,
+    "stem": "according to",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "现金"
+      },
+      {
+        "key": "B",
+        "text": "加；增加；加法"
+      },
+      {
+        "key": "C",
+        "text": "爵士音乐，爵士舞曲"
+      },
+      {
+        "key": "D",
+        "text": "按照；根据所说"
+      }
+    ],
+    "answer": "D",
+    "explanation": "according to 的中文含义是: 按照；根据所说??"
+  },
+  {
+    "id": "article-09-q30",
+    "type": "single",
+    "category": "Wildlife protection",
+    "articleId": "article-09",
+    "articleIndex": 9,
+    "articleTitle": "Protect Wildlife",
+    "articleLabel": "?9? ? Protect Wildlife",
+    "sourcePdfPage": 35,
+    "stem": "inspect",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "检查；视察"
+      },
+      {
+        "key": "B",
+        "text": "系上；附加；连接"
+      },
+      {
+        "key": "C",
+        "text": "后来"
+      },
+      {
+        "key": "D",
+        "text": "胡须"
+      }
+    ],
+    "answer": "A",
+    "explanation": "inspect 的中文含义是: 检查；视察??"
+  },
+  {
+    "id": "article-09-q31",
+    "type": "single",
+    "category": "Wildlife protection",
+    "articleId": "article-09",
+    "articleIndex": 9,
+    "articleTitle": "Protect Wildlife",
+    "articleLabel": "?9? ? Protect Wildlife",
+    "sourcePdfPage": 35,
+    "stem": "contain",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "音乐家，乐师"
+      },
+      {
+        "key": "B",
+        "text": "包含；包括；能容纳"
+      },
+      {
+        "key": "C",
+        "text": "盼望；期待"
+      },
+      {
+        "key": "D",
+        "text": "曲默的；谈谐的"
+      }
+    ],
+    "answer": "B",
+    "explanation": "contain 的中文含义是: 包含；包括；能容纳??"
+  },
+  {
+    "id": "article-09-q32",
+    "type": "single",
+    "category": "Wildlife protection",
+    "articleId": "article-09",
+    "articleIndex": 9,
+    "articleTitle": "Protect Wildlife",
+    "articleLabel": "?9? ? Protect Wildlife",
+    "sourcePdfPage": 35,
+    "stem": "powerful",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "戏弄"
+      },
+      {
+        "key": "B",
+        "text": "熟悉；与熟悉起来"
+      },
+      {
+        "key": "C",
+        "text": "效力大的，强有力的，强大的"
+      },
+      {
+        "key": "D",
+        "text": "赞美；钦佩；羡慕"
+      }
+    ],
+    "answer": "C",
+    "explanation": "powerful 的中文含义是: 效力大的，强有力的，强大的??"
+  },
+  {
+    "id": "article-09-q33",
+    "type": "single",
+    "category": "Wildlife protection",
+    "articleId": "article-09",
+    "articleIndex": 9,
+    "articleTitle": "Protect Wildlife",
+    "articleLabel": "?9? ? Protect Wildlife",
+    "sourcePdfPage": 35,
+    "stem": "employ",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "邀请"
+      },
+      {
+        "key": "B",
+        "text": "收获；收割"
+      },
+      {
+        "key": "C",
+        "text": "另外；也；此外，还有"
+      },
+      {
+        "key": "D",
+        "text": "雇用；利用"
+      }
+    ],
+    "answer": "D",
+    "explanation": "employ 的中文含义是: 雇用；利用??"
+  },
+  {
+    "id": "article-09-q34",
+    "type": "single",
+    "category": "Wildlife protection",
+    "articleId": "article-09",
+    "articleIndex": 9,
+    "articleTitle": "Protect Wildlife",
+    "articleLabel": "?9? ? Protect Wildlife",
+    "sourcePdfPage": 35,
+    "stem": "ending",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "结局；结尾"
+      },
+      {
+        "key": "B",
+        "text": "农业的"
+      },
+      {
+        "key": "C",
+        "text": "分类"
+      },
+      {
+        "key": "D",
+        "text": "认为有（重要性、意义)；附上；连接"
+      }
+    ],
+    "answer": "A",
+    "explanation": "ending 的中文含义是: 结局；结尾??"
+  },
+  {
+    "id": "article-09-q35",
+    "type": "single",
+    "category": "Wildlife protection",
+    "articleId": "article-09",
+    "articleIndex": 9,
+    "articleTitle": "Protect Wildlife",
+    "articleLabel": "?9? ? Protect Wildlife",
+    "sourcePdfPage": 35,
+    "stem": "zone",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "演出，表演"
+      },
+      {
+        "key": "B",
+        "text": "发生"
+      },
+      {
+        "key": "C",
+        "text": "区域；范围"
+      },
+      {
+        "key": "D",
+        "text": "起源；由来"
+      }
+    ],
+    "answer": "C",
+    "explanation": "zone 的中文含义是: 区域；范围??"
+  },
+  {
+    "id": "article-09-q36",
+    "type": "single",
+    "category": "Wildlife protection",
+    "articleId": "article-09",
+    "articleIndex": 9,
+    "articleTitle": "Protect Wildlife",
+    "articleLabel": "?9? ? Protect Wildlife",
+    "sourcePdfPage": 35,
+    "stem": "loss",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "损失；丧失；损耗"
+      },
+      {
+        "key": "B",
+        "text": "道歉；谢罪"
+      },
+      {
+        "key": "C",
+        "text": "爵士音乐，爵士舞曲"
+      },
+      {
+        "key": "D",
+        "text": "独立的；自主的"
+      }
+    ],
+    "answer": "A",
+    "explanation": "loss 的中文含义是: 损失；丧失；损耗??"
+  },
+  {
+    "id": "article-09-q37",
+    "type": "single",
+    "category": "Wildlife protection",
+    "articleId": "article-09",
+    "articleIndex": 9,
+    "articleTitle": "Protect Wildlife",
+    "articleLabel": "?9? ? Protect Wildlife",
+    "sourcePdfPage": 35,
+    "stem": "laughter",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "后来"
+      },
+      {
+        "key": "B",
+        "text": "庆祝；祝贺"
+      },
+      {
+        "key": "C",
+        "text": "农业"
+      },
+      {
+        "key": "D",
+        "text": "笑；笑声"
+      }
+    ],
+    "answer": "D",
+    "explanation": "laughter 的中文含义是: 笑；笑声??"
+  },
+  {
+    "id": "article-09-q38",
+    "type": "single",
+    "category": "Wildlife protection",
+    "articleId": "article-09",
+    "articleIndex": 9,
+    "articleTitle": "Protect Wildlife",
+    "articleLabel": "?9? ? Protect Wildlife",
+    "sourcePdfPage": 35,
+    "stem": "burst into laughter",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "节日；盛宴"
+      },
+      {
+        "key": "B",
+        "text": "墨西哥"
+      },
+      {
+        "key": "C",
+        "text": "突然笑起来；大声笑了出来"
+      },
+      {
+        "key": "D",
+        "text": "盼望；期待"
+      }
+    ],
+    "answer": "C",
+    "explanation": "burst into laughter 的中文含义是: 突然笑起来；大声笑了出来??"
+  },
+  {
+    "id": "article-09-q39",
+    "type": "single",
+    "category": "Wildlife protection",
+    "articleId": "article-09",
+    "articleIndex": 9,
+    "articleTitle": "Protect Wildlife",
+    "articleLabel": "?9? ? Protect Wildlife",
+    "sourcePdfPage": 35,
+    "stem": "respond",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "宗教的"
+      },
+      {
+        "key": "B",
+        "text": "回答；响应；作出反应"
+      },
+      {
+        "key": "C",
+        "text": "赞美；钦佩；羡慕"
+      },
+      {
+        "key": "D",
+        "text": "独立"
+      }
+    ],
+    "answer": "B",
+    "explanation": "respond 的中文含义是: 回答；响应；作出反应??"
+  },
+  {
+    "id": "article-09-q40",
+    "type": "single",
+    "category": "Wildlife protection",
+    "articleId": "article-09",
+    "articleIndex": 9,
+    "articleTitle": "Protect Wildlife",
+    "articleLabel": "?9? ? Protect Wildlife",
+    "sourcePdfPage": 35,
+    "stem": "decrease",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "减少；支小或支少"
+      },
+      {
+        "key": "B",
+        "text": "收获；收割"
+      },
+      {
+        "key": "C",
+        "text": "遍及全世界的；世界性的"
+      },
+      {
+        "key": "D",
+        "text": "诡计，把戏；欺骗，诈骗"
+      }
+    ],
+    "answer": "A",
+    "explanation": "decrease 的中文含义是: 减少；支小或支少??"
+  },
+  {
+    "id": "article-09-q41",
+    "type": "single",
+    "category": "Wildlife protection",
+    "articleId": "article-09",
+    "articleIndex": 9,
+    "articleTitle": "Protect Wildlife",
+    "articleLabel": "?9? ? Protect Wildlife",
+    "sourcePdfPage": 35,
+    "stem": "income",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "农业的"
+      },
+      {
+        "key": "B",
+        "text": "基督徒；基督教的"
+      },
+      {
+        "key": "C",
+        "text": "守信"
+      },
+      {
+        "key": "D",
+        "text": "收入"
+      }
+    ],
+    "answer": "D",
+    "explanation": "income 的中文含义是: 收入??"
+  },
+  {
+    "id": "article-09-q42",
+    "type": "single",
+    "category": "Wildlife protection",
+    "articleId": "article-09",
+    "articleIndex": 9,
+    "articleTitle": "Protect Wildlife",
+    "articleLabel": "?9? ? Protect Wildlife",
+    "sourcePdfPage": 35,
+    "stem": "attention",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "注意，关心"
+      },
+      {
+        "key": "B",
+        "text": "到来，到达"
+      },
+      {
+        "key": "C",
+        "text": "溺死；淹没"
+      },
+      {
+        "key": "D",
+        "text": "发生"
+      }
+    ],
+    "answer": "A",
+    "explanation": "attention 的中文含义是: 注意，关心??"
+  }
+]

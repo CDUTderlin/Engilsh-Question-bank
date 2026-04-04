@@ -1,0 +1,1378 @@
+export default [
+  {
+    "id": "article-05-q1",
+    "type": "single",
+    "category": "Nelson Mandela - a modern hero",
+    "articleId": "article-05",
+    "articleIndex": 5,
+    "articleTitle": "A Great President",
+    "articleLabel": "?5? ? A Great President",
+    "sourcePdfPage": 19,
+    "stem": "devote oneself to",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "无私地；忘我地"
+      },
+      {
+        "key": "B",
+        "text": "教育；训练"
+      },
+      {
+        "key": "C",
+        "text": "致力于；献身于"
+      },
+      {
+        "key": "D",
+        "text": "当权；上台"
+      }
+    ],
+    "answer": "C",
+    "explanation": "devote oneself to 的中文含义是: 致力于；献身于??"
+  },
+  {
+    "id": "article-05-q2",
+    "type": "single",
+    "category": "Nelson Mandela - a modern hero",
+    "articleId": "article-05",
+    "articleIndex": 5,
+    "articleTitle": "A Great President",
+    "articleLabel": "?5? ? A Great President",
+    "sourcePdfPage": 19,
+    "stem": "principle",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "人类"
+      },
+      {
+        "key": "B",
+        "text": "原则；原理"
+      },
+      {
+        "key": "C",
+        "text": "律师"
+      },
+      {
+        "key": "D",
+        "text": "费，酬金"
+      }
+    ],
+    "answer": "B",
+    "explanation": "principle 的中文含义是: 原则；原理??"
+  },
+  {
+    "id": "article-05-q3",
+    "type": "single",
+    "category": "Nelson Mandela - a modern hero",
+    "articleId": "article-05",
+    "articleIndex": 5,
+    "articleTitle": "A Great President",
+    "articleLabel": "?5? ? A Great President",
+    "sourcePdfPage": 19,
+    "stem": "violence",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "暴力；暴行"
+      },
+      {
+        "key": "B",
+        "text": "自我；自身"
+      },
+      {
+        "key": "C",
+        "text": "指导；领导"
+      },
+      {
+        "key": "D",
+        "text": "献身；专心于"
+      }
+    ],
+    "answer": "A",
+    "explanation": "violence 的中文含义是: 暴力；暴行??"
+  },
+  {
+    "id": "article-05-q4",
+    "type": "single",
+    "category": "Nelson Mandela - a modern hero",
+    "articleId": "article-05",
+    "articleIndex": 5,
+    "articleTitle": "A Great President",
+    "articleLabel": "?5? ? A Great President",
+    "sourcePdfPage": 19,
+    "stem": "lose heart",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "无私的；忘我的"
+      },
+      {
+        "key": "B",
+        "text": "失业"
+      },
+      {
+        "key": "C",
+        "text": "不公正的；不公平的"
+      },
+      {
+        "key": "D",
+        "text": "失去勇气或信心"
+      }
+    ],
+    "answer": "D",
+    "explanation": "lose heart 的中文含义是: 失去勇气或信心??"
+  },
+  {
+    "id": "article-05-q5",
+    "type": "single",
+    "category": "Nelson Mandela - a modern hero",
+    "articleId": "article-05",
+    "articleIndex": 5,
+    "articleTitle": "A Great President",
+    "articleLabel": "?5? ? A Great President",
+    "sourcePdfPage": 19,
+    "stem": "found",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "建立；建设"
+      },
+      {
+        "key": "B",
+        "text": "受过教育的；有教养的"
+      },
+      {
+        "key": "C",
+        "text": "反黑人的"
+      },
+      {
+        "key": "D",
+        "text": "求助于；致力于"
+      }
+    ],
+    "answer": "A",
+    "explanation": "found 的中文含义是: 建立；建设??"
+  },
+  {
+    "id": "article-05-q6",
+    "type": "single",
+    "category": "Nelson Mandela - a modern hero",
+    "articleId": "article-05",
+    "articleIndex": 5,
+    "articleTitle": "A Great President",
+    "articleLabel": "?5? ? A Great President",
+    "sourcePdfPage": 19,
+    "stem": "republic",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "法律的；合法的"
+      },
+      {
+        "key": "B",
+        "text": "共和国"
+      },
+      {
+        "key": "C",
+        "text": "青春；青年"
+      },
+      {
+        "key": "D",
+        "text": "平等的vt.等于；使等于"
+      }
+    ],
+    "answer": "B",
+    "explanation": "republic 的中文含义是: 共和国??"
+  },
+  {
+    "id": "article-05-q7",
+    "type": "single",
+    "category": "Nelson Mandela - a modern hero",
+    "articleId": "article-05",
+    "articleIndex": 5,
+    "articleTitle": "A Great President",
+    "articleLabel": "?5? ? A Great President",
+    "sourcePdfPage": 19,
+    "stem": "president",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "忠实的；深爱的"
+      },
+      {
+        "key": "B",
+        "text": "意见；看法；主张"
+      },
+      {
+        "key": "C",
+        "text": "总统；主席"
+      },
+      {
+        "key": "D",
+        "text": "青年团"
+      }
+    ],
+    "answer": "C",
+    "explanation": "president 的中文含义是: 总统；主席??"
+  },
+  {
+    "id": "article-05-q8",
+    "type": "single",
+    "category": "Nelson Mandela - a modern hero",
+    "articleId": "article-05",
+    "articleIndex": 5,
+    "articleTitle": "A Great President",
+    "articleLabel": "?5? ? A Great President",
+    "sourcePdfPage": 19,
+    "stem": "quality",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "前缀)反；抗"
+      },
+      {
+        "key": "B",
+        "text": "和平的；安宁的"
+      },
+      {
+        "key": "C",
+        "text": "教育；训练"
+      },
+      {
+        "key": "D",
+        "text": "质量；性质；品质"
+      }
+    ],
+    "answer": "D",
+    "explanation": "quality 的中文含义是: 质量；性质；品质??"
+  },
+  {
+    "id": "article-05-q9",
+    "type": "single",
+    "category": "Nelson Mandela - a modern hero",
+    "articleId": "article-05",
+    "articleIndex": 5,
+    "articleTitle": "A Great President",
+    "articleLabel": "?5? ? A Great President",
+    "sourcePdfPage": 19,
+    "stem": "come to power",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "当权；上台"
+      },
+      {
+        "key": "B",
+        "text": "各蔷的；低劣的；卑邮的"
+      },
+      {
+        "key": "C",
+        "text": "设立；建立"
+      },
+      {
+        "key": "D",
+        "text": "人类"
+      }
+    ],
+    "answer": "A",
+    "explanation": "come to power 的中文含义是: 当权；上台??"
+  },
+  {
+    "id": "article-05-q10",
+    "type": "single",
+    "category": "Nelson Mandela - a modern hero",
+    "articleId": "article-05",
+    "articleIndex": 5,
+    "articleTitle": "A Great President",
+    "articleLabel": "?5? ? A Great President",
+    "sourcePdfPage": 19,
+    "stem": "generous",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "献身；专心于"
+      },
+      {
+        "key": "B",
+        "text": "进攻"
+      },
+      {
+        "key": "C",
+        "text": "恢慨的；大方的"
+      },
+      {
+        "key": "D",
+        "text": "联盟；社团"
+      }
+    ],
+    "answer": "C",
+    "explanation": "generous 的中文含义是: 恢慨的；大方的??"
+  },
+  {
+    "id": "article-05-q11",
+    "type": "single",
+    "category": "Nelson Mandela - a modern hero",
+    "articleId": "article-05",
+    "articleIndex": 5,
+    "articleTitle": "A Great President",
+    "articleLabel": "?5? ? A Great President",
+    "sourcePdfPage": 19,
+    "stem": "lawyer",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "律师"
+      },
+      {
+        "key": "B",
+        "text": "选举；投票"
+      },
+      {
+        "key": "C",
+        "text": "不公正的；不公平的"
+      },
+      {
+        "key": "D",
+        "text": "逃脱；逃走；泄露"
+      }
+    ],
+    "answer": "A",
+    "explanation": "lawyer 的中文含义是: 律师??"
+  },
+  {
+    "id": "article-05-q12",
+    "type": "single",
+    "category": "Nelson Mandela - a modern hero",
+    "articleId": "article-05",
+    "articleIndex": 5,
+    "articleTitle": "A Great President",
+    "articleLabel": "?5? ? A Great President",
+    "sourcePdfPage": 19,
+    "stem": "willing",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "反黑人的"
+      },
+      {
+        "key": "B",
+        "text": "幸免；幸存；生还"
+      },
+      {
+        "key": "C",
+        "text": "恐怖"
+      },
+      {
+        "key": "D",
+        "text": "乐意的；自愿的"
+      }
+    ],
+    "answer": "D",
+    "explanation": "willing 的中文含义是: 乐意的；自愿的??"
+  },
+  {
+    "id": "article-05-q13",
+    "type": "single",
+    "category": "Nelson Mandela - a modern hero",
+    "articleId": "article-05",
+    "articleIndex": 5,
+    "articleTitle": "A Great President",
+    "articleLabel": "?5? ? A Great President",
+    "sourcePdfPage": 19,
+    "stem": "self",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "使充气；爆炸"
+      },
+      {
+        "key": "B",
+        "text": "根据；证据"
+      },
+      {
+        "key": "C",
+        "text": "自我；自身"
+      },
+      {
+        "key": "D",
+        "text": "青春；青年"
+      }
+    ],
+    "answer": "C",
+    "explanation": "self 的中文含义是: 自我；自身??"
+  },
+  {
+    "id": "article-05-q14",
+    "type": "single",
+    "category": "Nelson Mandela - a modern hero",
+    "articleId": "article-05",
+    "articleIndex": 5,
+    "articleTitle": "A Great President",
+    "articleLabel": "?5? ? A Great President",
+    "sourcePdfPage": 19,
+    "stem": "selfish",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "木制的"
+      },
+      {
+        "key": "B",
+        "text": "自私的"
+      },
+      {
+        "key": "C",
+        "text": "青年团"
+      },
+      {
+        "key": "D",
+        "text": "亲威；亲属"
+      }
+    ],
+    "answer": "B",
+    "explanation": "selfish 的中文含义是: 自私的??"
+  },
+  {
+    "id": "article-05-q15",
+    "type": "single",
+    "category": "Nelson Mandela - a modern hero",
+    "articleId": "article-05",
+    "articleIndex": 5,
+    "articleTitle": "A Great President",
+    "articleLabel": "?5? ? A Great President",
+    "sourcePdfPage": 19,
+    "stem": "selfless",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "无私的；忘我的"
+      },
+      {
+        "key": "B",
+        "text": "和平的；安宁的"
+      },
+      {
+        "key": "C",
+        "text": "贵重的；有价值的"
+      },
+      {
+        "key": "D",
+        "text": "朝代"
+      }
+    ],
+    "answer": "A",
+    "explanation": "selfless 的中文含义是: 无私的；忘我的??"
+  },
+  {
+    "id": "article-05-q16",
+    "type": "single",
+    "category": "Nelson Mandela - a modern hero",
+    "articleId": "article-05",
+    "articleIndex": 5,
+    "articleTitle": "A Great President",
+    "articleLabel": "?5? ? A Great President",
+    "sourcePdfPage": 19,
+    "stem": "selflessly",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "各蔷的；低劣的；卑邮的"
+      },
+      {
+        "key": "B",
+        "text": "移开；搬开；脱掉"
+      },
+      {
+        "key": "C",
+        "text": "使吃惊；惊"
+      },
+      {
+        "key": "D",
+        "text": "无私地；忘我地"
+      }
+    ],
+    "answer": "D",
+    "explanation": "selflessly 的中文含义是: 无私地；忘我地??"
+  },
+  {
+    "id": "article-05-q17",
+    "type": "single",
+    "category": "Nelson Mandela - a modern hero",
+    "articleId": "article-05",
+    "articleIndex": 5,
+    "articleTitle": "A Great President",
+    "articleLabel": "?5? ? A Great President",
+    "sourcePdfPage": 19,
+    "stem": "turn to",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "求助于；致力于"
+      },
+      {
+        "key": "B",
+        "text": "入口"
+      },
+      {
+        "key": "C",
+        "text": "艺术家"
+      },
+      {
+        "key": "D",
+        "text": "进攻"
+      }
+    ],
+    "answer": "A",
+    "explanation": "turn to 的中文含义是: 求助于；致力于??"
+  },
+  {
+    "id": "article-05-q18",
+    "type": "single",
+    "category": "Nelson Mandela - a modern hero",
+    "articleId": "article-05",
+    "articleIndex": 5,
+    "articleTitle": "A Great President",
+    "articleLabel": "?5? ? A Great President",
+    "sourcePdfPage": 19,
+    "stem": "fee",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "逃脱；逃走；泄露"
+      },
+      {
+        "key": "B",
+        "text": "费，酬金"
+      },
+      {
+        "key": "C",
+        "text": "罕见的，稀有的"
+      },
+      {
+        "key": "D",
+        "text": "花）瓶；瓶饰"
+      }
+    ],
+    "answer": "B",
+    "explanation": "fee 的中文含义是: 费，酬金??"
+  },
+  {
+    "id": "article-05-q19",
+    "type": "single",
+    "category": "Nelson Mandela - a modern hero",
+    "articleId": "article-05",
+    "articleIndex": 5,
+    "articleTitle": "A Great President",
+    "articleLabel": "?5? ? A Great President",
+    "sourcePdfPage": 19,
+    "stem": "legal",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "接待"
+      },
+      {
+        "key": "B",
+        "text": "幸免；幸存；生还"
+      },
+      {
+        "key": "C",
+        "text": "法律的；合法的"
+      },
+      {
+        "key": "D",
+        "text": "挑选；选择"
+      }
+    ],
+    "answer": "C",
+    "explanation": "legal 的中文含义是: 法律的；合法的??"
+  },
+  {
+    "id": "article-05-q20",
+    "type": "single",
+    "category": "Nelson Mandela - a modern hero",
+    "articleId": "article-05",
+    "articleIndex": 5,
+    "articleTitle": "A Great President",
+    "articleLabel": "?5? ? A Great President",
+    "sourcePdfPage": 19,
+    "stem": "guidance",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "令人吃惊的"
+      },
+      {
+        "key": "B",
+        "text": "装饰；装修"
+      },
+      {
+        "key": "C",
+        "text": "根据；证据"
+      },
+      {
+        "key": "D",
+        "text": "指导；领导"
+      }
+    ],
+    "answer": "D",
+    "explanation": "guidance 的中文含义是: 指导；领导??"
+  },
+  {
+    "id": "article-05-q21",
+    "type": "single",
+    "category": "Nelson Mandela - a modern hero",
+    "articleId": "article-05",
+    "articleIndex": 5,
+    "articleTitle": "A Great President",
+    "articleLabel": "?5? ? A Great President",
+    "sourcePdfPage": 19,
+    "stem": "opinion",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "意见；看法；主张"
+      },
+      {
+        "key": "B",
+        "text": "想象，喜爱adj.奇特的，异样的"
+      },
+      {
+        "key": "C",
+        "text": "图案，图样；样式vt.设计；策划"
+      },
+      {
+        "key": "D",
+        "text": "木制的"
+      }
+    ],
+    "answer": "A",
+    "explanation": "opinion 的中文含义是: 意见；看法；主张??"
+  },
+  {
+    "id": "article-05-q22",
+    "type": "single",
+    "category": "Nelson Mandela - a modern hero",
+    "articleId": "article-05",
+    "articleIndex": 5,
+    "articleTitle": "A Great President",
+    "articleLabel": "?5? ? A Great President",
+    "sourcePdfPage": 19,
+    "stem": "out of work",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "朝代"
+      },
+      {
+        "key": "B",
+        "text": "绘画，油画"
+      },
+      {
+        "key": "C",
+        "text": "失业"
+      },
+      {
+        "key": "D",
+        "text": "风格，格调"
+      }
+    ],
+    "answer": "C",
+    "explanation": "out of work 的中文含义是: 失业??"
+  },
+  {
+    "id": "article-05-q23",
+    "type": "single",
+    "category": "Nelson Mandela - a modern hero",
+    "articleId": "article-05",
+    "articleIndex": 5,
+    "articleTitle": "A Great President",
+    "articleLabel": "?5? ? A Great President",
+    "sourcePdfPage": 19,
+    "stem": "educate",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "教育；训练"
+      },
+      {
+        "key": "B",
+        "text": "珠宝；宝石"
+      },
+      {
+        "key": "C",
+        "text": "使吃惊；惊"
+      },
+      {
+        "key": "D",
+        "text": "属于"
+      }
+    ],
+    "answer": "A",
+    "explanation": "educate 的中文含义是: 教育；训练??"
+  },
+  {
+    "id": "article-05-q24",
+    "type": "single",
+    "category": "Nelson Mandela - a modern hero",
+    "articleId": "article-05",
+    "articleIndex": 5,
+    "articleTitle": "A Great President",
+    "articleLabel": "?5? ? A Great President",
+    "sourcePdfPage": 19,
+    "stem": "educated",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "艺术家"
+      },
+      {
+        "key": "B",
+        "text": "城堡"
+      },
+      {
+        "key": "C",
+        "text": "看重；器重"
+      },
+      {
+        "key": "D",
+        "text": "受过教育的；有教养的"
+      }
+    ],
+    "answer": "D",
+    "explanation": "educated 的中文含义是: 受过教育的；有教养的??"
+  },
+  {
+    "id": "article-05-q25",
+    "type": "single",
+    "category": "Nelson Mandela - a modern hero",
+    "articleId": "article-05",
+    "articleIndex": 5,
+    "articleTitle": "A Great President",
+    "articleLabel": "?5? ? A Great President",
+    "sourcePdfPage": 19,
+    "stem": "mankind",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "蜜；蜂蜜"
+      },
+      {
+        "key": "B",
+        "text": "群；组；军队"
+      },
+      {
+        "key": "C",
+        "text": "人类"
+      },
+      {
+        "key": "D",
+        "text": "罕见的，稀有的"
+      }
+    ],
+    "answer": "C",
+    "explanation": "mankind 的中文含义是: 人类??"
+  },
+  {
+    "id": "article-05-q26",
+    "type": "single",
+    "category": "Nelson Mandela - a modern hero",
+    "articleId": "article-05",
+    "articleIndex": 5,
+    "articleTitle": "A Great President",
+    "articleLabel": "?5? ? A Great President",
+    "sourcePdfPage": 19,
+    "stem": "equal",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "争论；辩论"
+      },
+      {
+        "key": "B",
+        "text": "平等的vt.等于；使等于"
+      },
+      {
+        "key": "C",
+        "text": "挑选；选择"
+      },
+      {
+        "key": "D",
+        "text": "属，附属"
+      }
+    ],
+    "answer": "B",
+    "explanation": "equal 的中文含义是: 平等的vt.等于；使等于??"
+  },
+  {
+    "id": "article-05-q27",
+    "type": "single",
+    "category": "Nelson Mandela - a modern hero",
+    "articleId": "article-05",
+    "articleIndex": 5,
+    "articleTitle": "A Great President",
+    "articleLabel": "?5? ? A Great President",
+    "sourcePdfPage": 19,
+    "stem": "devote",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "献身；专心于"
+      },
+      {
+        "key": "B",
+        "text": "装饰；装修"
+      },
+      {
+        "key": "C",
+        "text": "从前的"
+      },
+      {
+        "key": "D",
+        "text": "少于"
+      }
+    ],
+    "answer": "A",
+    "explanation": "devote 的中文含义是: 献身；专心于??"
+  },
+  {
+    "id": "article-05-q28",
+    "type": "single",
+    "category": "Nelson Mandela - a modern hero",
+    "articleId": "article-05",
+    "articleIndex": 5,
+    "articleTitle": "A Great President",
+    "articleLabel": "?5? ? A Great President",
+    "sourcePdfPage": 19,
+    "stem": "devoted",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "想象，喜爱adj.奇特的，异样的"
+      },
+      {
+        "key": "B",
+        "text": "处于交战状态"
+      },
+      {
+        "key": "C",
+        "text": "女仆；侍女"
+      },
+      {
+        "key": "D",
+        "text": "忠实的；深爱的"
+      }
+    ],
+    "answer": "D",
+    "explanation": "devoted 的中文含义是: 忠实的；深爱的??"
+  },
+  {
+    "id": "article-05-q29",
+    "type": "single",
+    "category": "Nelson Mandela - a modern hero",
+    "articleId": "article-05",
+    "articleIndex": 5,
+    "articleTitle": "A Great President",
+    "articleLabel": "?5? ? A Great President",
+    "sourcePdfPage": 19,
+    "stem": "unfair",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "不公正的；不公平的"
+      },
+      {
+        "key": "B",
+        "text": "爆炸"
+      },
+      {
+        "key": "C",
+        "text": "拆开"
+      },
+      {
+        "key": "D",
+        "text": "绘画，油画"
+      }
+    ],
+    "answer": "A",
+    "explanation": "unfair 的中文含义是: 不公正的；不公平的??"
+  },
+  {
+    "id": "article-05-q30",
+    "type": "single",
+    "category": "Nelson Mandela - a modern hero",
+    "articleId": "article-05",
+    "articleIndex": 5,
+    "articleTitle": "A Great President",
+    "articleLabel": "?5? ? A Great President",
+    "sourcePdfPage": 19,
+    "stem": "anti-",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "属于"
+      },
+      {
+        "key": "B",
+        "text": "前缀)反；抗"
+      },
+      {
+        "key": "C",
+        "text": "下沉；沉下"
+      },
+      {
+        "key": "D",
+        "text": "怀疑，疑惑"
+      }
+    ],
+    "answer": "B",
+    "explanation": "anti- 的中文含义是: 前缀)反；抗??"
+  },
+  {
+    "id": "article-05-q31",
+    "type": "single",
+    "category": "Nelson Mandela - a modern hero",
+    "articleId": "article-05",
+    "articleIndex": 5,
+    "articleTitle": "A Great President",
+    "articleLabel": "?5? ? A Great President",
+    "sourcePdfPage": 19,
+    "stem": "anti-black",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "非正式"
+      },
+      {
+        "key": "B",
+        "text": "城堡"
+      },
+      {
+        "key": "C",
+        "text": "反黑人的"
+      },
+      {
+        "key": "D",
+        "text": "试验；审讯；审判"
+      }
+    ],
+    "answer": "C",
+    "explanation": "anti-black 的中文含义是: 反黑人的??"
+  },
+  {
+    "id": "article-05-q32",
+    "type": "single",
+    "category": "Nelson Mandela - a modern hero",
+    "articleId": "article-05",
+    "articleIndex": 5,
+    "articleTitle": "A Great President",
+    "articleLabel": "?5? ? A Great President",
+    "sourcePdfPage": 19,
+    "stem": "set up",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "分离；分别地"
+      },
+      {
+        "key": "B",
+        "text": "公平；公正"
+      },
+      {
+        "key": "C",
+        "text": "群；组；军队"
+      },
+      {
+        "key": "D",
+        "text": "设立；建立"
+      }
+    ],
+    "answer": "D",
+    "explanation": "set up 的中文含义是: 设立；建立??"
+  },
+  {
+    "id": "article-05-q33",
+    "type": "single",
+    "category": "Nelson Mandela - a modern hero",
+    "articleId": "article-05",
+    "articleIndex": 5,
+    "articleTitle": "A Great President",
+    "articleLabel": "?5? ? A Great President",
+    "sourcePdfPage": 19,
+    "stem": "youth",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "青春；青年"
+      },
+      {
+        "key": "B",
+        "text": "竞争者；参赛者"
+      },
+      {
+        "key": "C",
+        "text": "水手，海员"
+      },
+      {
+        "key": "D",
+        "text": "争论；辩论"
+      }
+    ],
+    "answer": "A",
+    "explanation": "youth 的中文含义是: 青春；青年??"
+  },
+  {
+    "id": "article-05-q34",
+    "type": "single",
+    "category": "Nelson Mandela - a modern hero",
+    "articleId": "article-05",
+    "articleIndex": 5,
+    "articleTitle": "A Great President",
+    "articleLabel": "?5? ? A Great President",
+    "sourcePdfPage": 19,
+    "stem": "league",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "少于"
+      },
+      {
+        "key": "B",
+        "text": "允许进入；承认；接纳"
+      },
+      {
+        "key": "C",
+        "text": "联盟；社团"
+      },
+      {
+        "key": "D",
+        "text": "本地的；当地的"
+      }
+    ],
+    "answer": "C",
+    "explanation": "league 的中文含义是: 联盟；社团??"
+  },
+  {
+    "id": "article-05-q35",
+    "type": "single",
+    "category": "Nelson Mandela - a modern hero",
+    "articleId": "article-05",
+    "articleIndex": 5,
+    "articleTitle": "A Great President",
+    "articleLabel": "?5? ? A Great President",
+    "sourcePdfPage": 19,
+    "stem": "Youth League",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "青年团"
+      },
+      {
+        "key": "B",
+        "text": "寻找"
+      },
+      {
+        "key": "C",
+        "text": "女仆；侍女"
+      },
+      {
+        "key": "D",
+        "text": "座右铭；格言；警句"
+      }
+    ],
+    "answer": "A",
+    "explanation": "Youth League 的中文含义是: 青年团??"
+  },
+  {
+    "id": "article-05-q36",
+    "type": "single",
+    "category": "Nelson Mandela - a modern hero",
+    "articleId": "article-05",
+    "articleIndex": 5,
+    "articleTitle": "A Great President",
+    "articleLabel": "?5? ? A Great President",
+    "sourcePdfPage": 19,
+    "stem": "vote",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "拆开"
+      },
+      {
+        "key": "B",
+        "text": "光荣；荣誉"
+      },
+      {
+        "key": "C",
+        "text": "应受；值得"
+      },
+      {
+        "key": "D",
+        "text": "选举；投票"
+      }
+    ],
+    "answer": "D",
+    "explanation": "vote 的中文含义是: 选举；投票??"
+  },
+  {
+    "id": "article-05-q37",
+    "type": "single",
+    "category": "Nelson Mandela - a modern hero",
+    "articleId": "article-05",
+    "articleIndex": 5,
+    "articleTitle": "A Great President",
+    "articleLabel": "?5? ? A Great President",
+    "sourcePdfPage": 19,
+    "stem": "peaceful",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "讨价还价；便宜货"
+      },
+      {
+        "key": "B",
+        "text": "古代的，古老的"
+      },
+      {
+        "key": "C",
+        "text": "和平的；安宁的"
+      },
+      {
+        "key": "D",
+        "text": "下沉；沉下"
+      }
+    ],
+    "answer": "C",
+    "explanation": "peaceful 的中文含义是: 和平的；安宁的??"
+  },
+  {
+    "id": "article-05-q38",
+    "type": "single",
+    "category": "Nelson Mandela - a modern hero",
+    "articleId": "article-05",
+    "articleIndex": 5,
+    "articleTitle": "A Great President",
+    "articleLabel": "?5? ? A Great President",
+    "sourcePdfPage": 19,
+    "stem": "terror",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "没有希望的；绝望的"
+      },
+      {
+        "key": "B",
+        "text": "恐怖"
+      },
+      {
+        "key": "C",
+        "text": "试验；审讯；审判"
+      },
+      {
+        "key": "D",
+        "text": "基础；依据"
+      }
+    ],
+    "answer": "B",
+    "explanation": "terror 的中文含义是: 恐怖??"
+  },
+  {
+    "id": "article-05-q39",
+    "type": "single",
+    "category": "Nelson Mandela - a modern hero",
+    "articleId": "article-05",
+    "articleIndex": 5,
+    "articleTitle": "A Great President",
+    "articleLabel": "?5? ? A Great President",
+    "sourcePdfPage": 19,
+    "stem": "mean",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "各蔷的；低劣的；卑邮的"
+      },
+      {
+        "key": "B",
+        "text": "公平；公正"
+      },
+      {
+        "key": "C",
+        "text": "祖国；本国"
+      },
+      {
+        "key": "D",
+        "text": "疼痛；痛苦"
+      }
+    ],
+    "answer": "A",
+    "explanation": "mean 的中文含义是: 各蔷的；低劣的；卑邮的??"
+  },
+  {
+    "id": "article-05-q40",
+    "type": "single",
+    "category": "Nelson Mandela - a modern hero",
+    "articleId": "article-05",
+    "articleIndex": 5,
+    "articleTitle": "A Great President",
+    "articleLabel": "?5? ? A Great President",
+    "sourcePdfPage": 19,
+    "stem": "blow up",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "竞争者；参赛者"
+      },
+      {
+        "key": "B",
+        "text": "现今；现在"
+      },
+      {
+        "key": "C",
+        "text": "奖章，勋章，纪念章"
+      },
+      {
+        "key": "D",
+        "text": "使充气；爆炸"
+      }
+    ],
+    "answer": "D",
+    "explanation": "blow up 的中文含义是: 使充气；爆炸??"
+  },
+  {
+    "id": "article-05-q41",
+    "type": "single",
+    "category": "Nelson Mandela - a modern hero",
+    "articleId": "article-05",
+    "articleIndex": 5,
+    "articleTitle": "A Great President",
+    "articleLabel": "?5? ? A Great President",
+    "sourcePdfPage": 19,
+    "stem": "attack",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "进攻"
+      },
+      {
+        "key": "B",
+        "text": "奴隶"
+      },
+      {
+        "key": "C",
+        "text": "取代"
+      },
+      {
+        "key": "D",
+        "text": "允许进入；承认；接纳"
+      }
+    ],
+    "answer": "A",
+    "explanation": "attack 的中文含义是: 进攻??"
+  },
+  {
+    "id": "article-05-q42",
+    "type": "single",
+    "category": "Nelson Mandela - a modern hero",
+    "articleId": "article-05",
+    "articleIndex": 5,
+    "articleTitle": "A Great President",
+    "articleLabel": "?5? ? A Great President",
+    "sourcePdfPage": 19,
+    "stem": "relative",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "座右铭；格言；警句"
+      },
+      {
+        "key": "B",
+        "text": "亲威；亲属"
+      },
+      {
+        "key": "C",
+        "text": "主人；节目主持人做东；主办"
+      },
+      {
+        "key": "D",
+        "text": "运动员"
+      }
+    ],
+    "answer": "B",
+    "explanation": "relative 的中文含义是: 亲威；亲属??"
+  },
+  {
+    "id": "article-05-q43",
+    "type": "single",
+    "category": "Nelson Mandela - a modern hero",
+    "articleId": "article-05",
+    "articleIndex": 5,
+    "articleTitle": "A Great President",
+    "articleLabel": "?5? ? A Great President",
+    "sourcePdfPage": 19,
+    "stem": "escape",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "参加；参与"
+      },
+      {
+        "key": "B",
+        "text": "光荣；荣誉"
+      },
+      {
+        "key": "C",
+        "text": "逃脱；逃走；泄露"
+      },
+      {
+        "key": "D",
+        "text": "为...做广告"
+      }
+    ],
+    "answer": "C",
+    "explanation": "escape 的中文含义是: 逃脱；逃走；泄露??"
+  }
+]

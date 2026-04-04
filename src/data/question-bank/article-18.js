@@ -1,0 +1,802 @@
+export default [
+  {
+    "id": "article-18-q1",
+    "type": "single",
+    "category": "A taste of English humour",
+    "articleId": "article-18",
+    "articleIndex": 18,
+    "articleTitle": "A Great Master of Humour",
+    "articleLabel": "?18? ? A Great Master of Humour",
+    "sourcePdfPage": 71,
+    "stem": "content",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "满足的；满意的"
+      },
+      {
+        "key": "B",
+        "text": "醉的"
+      },
+      {
+        "key": "C",
+        "text": "直到现在"
+      },
+      {
+        "key": "D",
+        "text": "挑出；辨别出"
+      }
+    ],
+    "answer": "A",
+    "explanation": "content 的中文含义是: 满足的；满意的??"
+  },
+  {
+    "id": "article-18-q2",
+    "type": "single",
+    "category": "A taste of English humour",
+    "articleId": "article-18",
+    "articleIndex": 18,
+    "articleTitle": "A Great Master of Humour",
+    "articleLabel": "?18? ? A Great Master of Humour",
+    "sourcePdfPage": 71,
+    "stem": "worn-out",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "低语，私下说"
+      },
+      {
+        "key": "B",
+        "text": "无家的，无家可归的"
+      },
+      {
+        "key": "C",
+        "text": "薄煎饼"
+      },
+      {
+        "key": "D",
+        "text": "磨破的；穿旧的；筋疲力尽的"
+      }
+    ],
+    "answer": "D",
+    "explanation": "worn-out 的中文含义是: 磨破的；穿旧的；筋疲力尽的??"
+  },
+  {
+    "id": "article-18-q3",
+    "type": "single",
+    "category": "A taste of English humour",
+    "articleId": "article-18",
+    "articleIndex": 18,
+    "articleTitle": "A Great Master of Humour",
+    "articleLabel": "?18? ? A Great Master of Humour",
+    "sourcePdfPage": 71,
+    "stem": "bored",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "厌烦的"
+      },
+      {
+        "key": "B",
+        "text": "暴风雪"
+      },
+      {
+        "key": "C",
+        "text": "功能；作用；起作用"
+      },
+      {
+        "key": "D",
+        "text": "曲默；滑稽"
+      }
+    ],
+    "answer": "A",
+    "explanation": "bored 的中文含义是: 厌烦的??"
+  },
+  {
+    "id": "article-18-q4",
+    "type": "single",
+    "category": "A taste of English humour",
+    "articleId": "article-18",
+    "articleIndex": 18,
+    "articleTitle": "A Great Master of Humour",
+    "articleLabel": "?18? ? A Great Master of Humour",
+    "sourcePdfPage": 71,
+    "stem": "moustache",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "遍及；贯穿；到处"
+      },
+      {
+        "key": "B",
+        "text": "小胡子"
+      },
+      {
+        "key": "C",
+        "text": "接近；方法；途径"
+      },
+      {
+        "key": "D",
+        "text": "幸运的；倪幸的"
+      }
+    ],
+    "answer": "B",
+    "explanation": "moustache 的中文含义是: 小胡子??"
+  },
+  {
+    "id": "article-18-q5",
+    "type": "single",
+    "category": "A taste of English humour",
+    "articleId": "article-18",
+    "articleIndex": 18,
+    "articleTitle": "A Great Master of Humour",
+    "articleLabel": "?18? ? A Great Master of Humour",
+    "sourcePdfPage": 71,
+    "stem": "gesture",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "咀嚼"
+      },
+      {
+        "key": "B",
+        "text": "穷的；缺少的"
+      },
+      {
+        "key": "C",
+        "text": "姿态；手势v做手势"
+      },
+      {
+        "key": "D",
+        "text": "口语的"
+      }
+    ],
+    "answer": "C",
+    "explanation": "gesture 的中文含义是: 姿态；手势v做手势??"
+  },
+  {
+    "id": "article-18-q6",
+    "type": "single",
+    "category": "A taste of English humour",
+    "articleId": "article-18",
+    "articleIndex": 18,
+    "articleTitle": "A Great Master of Humour",
+    "articleLabel": "?18? ? A Great Master of Humour",
+    "sourcePdfPage": 71,
+    "stem": "entertain",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "陈述；说明"
+      },
+      {
+        "key": "B",
+        "text": "面部的"
+      },
+      {
+        "key": "C",
+        "text": "时刻；场合"
+      },
+      {
+        "key": "D",
+        "text": "使欢乐"
+      }
+    ],
+    "answer": "D",
+    "explanation": "entertain 的中文含义是: 使欢乐??"
+  },
+  {
+    "id": "article-18-q7",
+    "type": "single",
+    "category": "A taste of English humour",
+    "articleId": "article-18",
+    "articleIndex": 18,
+    "articleTitle": "A Great Master of Humour",
+    "articleLabel": "?18? ? A Great Master of Humour",
+    "sourcePdfPage": 71,
+    "stem": "react",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "作出反应；回应"
+      },
+      {
+        "key": "B",
+        "text": "背对；背弃"
+      },
+      {
+        "key": "C",
+        "text": "代表；象征；描绘"
+      },
+      {
+        "key": "D",
+        "text": "战胜，克服"
+      }
+    ],
+    "answer": "A",
+    "explanation": "react 的中文含义是: 作出反应；回应??"
+  },
+  {
+    "id": "article-18-q8",
+    "type": "single",
+    "category": "A taste of English humour",
+    "articleId": "article-18",
+    "articleIndex": 18,
+    "articleTitle": "A Great Master of Humour",
+    "articleLabel": "?18? ? A Great Master of Humour",
+    "sourcePdfPage": 71,
+    "stem": "detective",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "挑出；辨别出"
+      },
+      {
+        "key": "B",
+        "text": "怒气；怒火"
+      },
+      {
+        "key": "C",
+        "text": "侦探"
+      },
+      {
+        "key": "D",
+        "text": "总的来说；通常"
+      }
+    ],
+    "answer": "C",
+    "explanation": "detective 的中文含义是: 侦探??"
+  },
+  {
+    "id": "article-18-q9",
+    "type": "single",
+    "category": "A taste of English humour",
+    "articleId": "article-18",
+    "articleIndex": 18,
+    "articleTitle": "A Great Master of Humour",
+    "articleLabel": "?18? ? A Great Master of Humour",
+    "sourcePdfPage": 71,
+    "stem": "drunk",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "醉的"
+      },
+      {
+        "key": "B",
+        "text": "主要的"
+      },
+      {
+        "key": "C",
+        "text": "薄煎饼"
+      },
+      {
+        "key": "D",
+        "text": "误会"
+      }
+    ],
+    "answer": "A",
+    "explanation": "drunk 的中文含义是: 醉的??"
+  },
+  {
+    "id": "article-18-q10",
+    "type": "single",
+    "category": "A taste of English humour",
+    "articleId": "article-18",
+    "articleIndex": 18,
+    "articleTitle": "A Great Master of Humour",
+    "articleLabel": "?18? ? A Great Master of Humour",
+    "sourcePdfPage": 71,
+    "stem": "slide",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "功能；作用；起作用"
+      },
+      {
+        "key": "B",
+        "text": "等级；军衔"
+      },
+      {
+        "key": "C",
+        "text": "打哈欠"
+      },
+      {
+        "key": "D",
+        "text": "幻灯片；滑道v滑行；滑动"
+      }
+    ],
+    "answer": "D",
+    "explanation": "slide 的中文含义是: 幻灯片；滑道v滑行；滑动??"
+  },
+  {
+    "id": "article-18-q11",
+    "type": "single",
+    "category": "A taste of English humour",
+    "articleId": "article-18",
+    "articleIndex": 18,
+    "articleTitle": "A Great Master of Humour",
+    "articleLabel": "?18? ? A Great Master of Humour",
+    "sourcePdfPage": 71,
+    "stem": "whisper",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "拳头"
+      },
+      {
+        "key": "B",
+        "text": "好奇地"
+      },
+      {
+        "key": "C",
+        "text": "低语，私下说"
+      },
+      {
+        "key": "D",
+        "text": "接近；方法；途径"
+      }
+    ],
+    "answer": "C",
+    "explanation": "whisper 的中文含义是: 低语，私下说??"
+  },
+  {
+    "id": "article-18-q12",
+    "type": "single",
+    "category": "A taste of English humour",
+    "articleId": "article-18",
+    "articleIndex": 18,
+    "articleTitle": "A Great Master of Humour",
+    "articleLabel": "?18? ? A Great Master of Humour",
+    "sourcePdfPage": 71,
+    "stem": "particular",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "猛冲；突进"
+      },
+      {
+        "key": "B",
+        "text": "特殊的；个别的n.细节；细目"
+      },
+      {
+        "key": "C",
+        "text": "口语的"
+      },
+      {
+        "key": "D",
+        "text": "主观的"
+      }
+    ],
+    "answer": "B",
+    "explanation": "particular 的中文含义是: 特殊的；个别的n.细节；细目??"
+  },
+  {
+    "id": "article-18-q13",
+    "type": "single",
+    "category": "A taste of English humour",
+    "articleId": "article-18",
+    "articleIndex": 18,
+    "articleTitle": "A Great Master of Humour",
+    "articleLabel": "?18? ? A Great Master of Humour",
+    "sourcePdfPage": 71,
+    "stem": "humour",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "曲默；滑稽"
+      },
+      {
+        "key": "B",
+        "text": "面部的"
+      },
+      {
+        "key": "C",
+        "text": "社团；联系；联想"
+      },
+      {
+        "key": "D",
+        "text": "真实地；真诚地；真正地"
+      }
+    ],
+    "answer": "A",
+    "explanation": "humour 的中文含义是: 曲默；滑稽??"
+  },
+  {
+    "id": "article-18-q14",
+    "type": "single",
+    "category": "A taste of English humour",
+    "articleId": "article-18",
+    "articleIndex": 18,
+    "articleTitle": "A Great Master of Humour",
+    "articleLabel": "?18? ? A Great Master of Humour",
+    "sourcePdfPage": 71,
+    "stem": "astonish",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "背对；背弃"
+      },
+      {
+        "key": "B",
+        "text": "宿舍"
+      },
+      {
+        "key": "C",
+        "text": "丢脸"
+      },
+      {
+        "key": "D",
+        "text": "使惊"
+      }
+    ],
+    "answer": "D",
+    "explanation": "astonish 的中文含义是: 使惊??"
+  },
+  {
+    "id": "article-18-q15",
+    "type": "single",
+    "category": "A taste of English humour",
+    "articleId": "article-18",
+    "articleIndex": 18,
+    "articleTitle": "A Great Master of Humour",
+    "articleLabel": "?18? ? A Great Master of Humour",
+    "sourcePdfPage": 71,
+    "stem": "throughout",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "遍及；贯穿；到处"
+      },
+      {
+        "key": "B",
+        "text": "迎接；问候"
+      },
+      {
+        "key": "C",
+        "text": "保护；保存；保留"
+      },
+      {
+        "key": "D",
+        "text": "怒气；怒火"
+      }
+    ],
+    "answer": "A",
+    "explanation": "throughout 的中文含义是: 遍及；贯穿；到处??"
+  },
+  {
+    "id": "article-18-q16",
+    "type": "single",
+    "category": "A taste of English humour",
+    "articleId": "article-18",
+    "articleIndex": 18,
+    "articleTitle": "A Great Master of Humour",
+    "articleLabel": "?18? ? A Great Master of Humour",
+    "sourcePdfPage": 71,
+    "stem": "up to now",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "误会"
+      },
+      {
+        "key": "B",
+        "text": "直到现在"
+      },
+      {
+        "key": "C",
+        "text": "提前"
+      },
+      {
+        "key": "D",
+        "text": "面颊，脸蛋"
+      }
+    ],
+    "answer": "B",
+    "explanation": "up to now 的中文含义是: 直到现在??"
+  },
+  {
+    "id": "article-18-q17",
+    "type": "single",
+    "category": "A taste of English humour",
+    "articleId": "article-18",
+    "articleIndex": 18,
+    "articleTitle": "A Great Master of Humour",
+    "articleLabel": "?18? ? A Great Master of Humour",
+    "sourcePdfPage": 71,
+    "stem": "badly off",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "保卫以免受"
+      },
+      {
+        "key": "B",
+        "text": "等级；军衔"
+      },
+      {
+        "key": "C",
+        "text": "穷的；缺少的"
+      },
+      {
+        "key": "D",
+        "text": "接近"
+      }
+    ],
+    "answer": "C",
+    "explanation": "badly off 的中文含义是: 穷的；缺少的??"
+  },
+  {
+    "id": "article-18-q18",
+    "type": "single",
+    "category": "A taste of English humour",
+    "articleId": "article-18",
+    "articleIndex": 18,
+    "articleTitle": "A Great Master of Humour",
+    "articleLabel": "?18? ? A Great Master of Humour",
+    "sourcePdfPage": 71,
+    "stem": "homeless",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "很可能"
+      },
+      {
+        "key": "B",
+        "text": "高速公路"
+      },
+      {
+        "key": "C",
+        "text": "好奇地"
+      },
+      {
+        "key": "D",
+        "text": "无家的，无家可归的"
+      }
+    ],
+    "answer": "D",
+    "explanation": "homeless 的中文含义是: 无家的，无家可归的??"
+  },
+  {
+    "id": "article-18-q19",
+    "type": "single",
+    "category": "A taste of English humour",
+    "articleId": "article-18",
+    "articleIndex": 18,
+    "articleTitle": "A Great Master of Humour",
+    "articleLabel": "?18? ? A Great Master of Humour",
+    "sourcePdfPage": 71,
+    "stem": "occasion",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "时刻；场合"
+      },
+      {
+        "key": "B",
+        "text": "布"
+      },
+      {
+        "key": "C",
+        "text": "少数；少数民族"
+      },
+      {
+        "key": "D",
+        "text": "猛冲；突进"
+      }
+    ],
+    "answer": "A",
+    "explanation": "occasion 的中文含义是: 时刻；场合??"
+  },
+  {
+    "id": "article-18-q20",
+    "type": "single",
+    "category": "A taste of English humour",
+    "articleId": "article-18",
+    "articleIndex": 18,
+    "articleTitle": "A Great Master of Humour",
+    "articleLabel": "?18? ? A Great Master of Humour",
+    "sourcePdfPage": 71,
+    "stem": "snowstorm",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "真实地；真诚地；真正地"
+      },
+      {
+        "key": "B",
+        "text": "推进，促进；前进"
+      },
+      {
+        "key": "C",
+        "text": "暴风雪"
+      },
+      {
+        "key": "D",
+        "text": "往返与两个定点之间的火车、汽车、飞机）班车；班机；航天飞机"
+      }
+    ],
+    "answer": "C",
+    "explanation": "snowstorm 的中文含义是: 暴风雪??"
+  },
+  {
+    "id": "article-18-q21",
+    "type": "single",
+    "category": "A taste of English humour",
+    "articleId": "article-18",
+    "articleIndex": 18,
+    "articleTitle": "A Great Master of Humour",
+    "articleLabel": "?18? ? A Great Master of Humour",
+    "sourcePdfPage": 71,
+    "stem": "overcome",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "战胜，克服"
+      },
+      {
+        "key": "B",
+        "text": "主题"
+      },
+      {
+        "key": "C",
+        "text": "丢脸"
+      },
+      {
+        "key": "D",
+        "text": "准入，接纳；承认"
+      }
+    ],
+    "answer": "A",
+    "explanation": "overcome 的中文含义是: 战胜，克服??"
+  },
+  {
+    "id": "article-18-q22",
+    "type": "single",
+    "category": "A taste of English humour",
+    "articleId": "article-18",
+    "articleIndex": 18,
+    "articleTitle": "A Great Master of Humour",
+    "articleLabel": "?18? ? A Great Master of Humour",
+    "sourcePdfPage": 71,
+    "stem": "fortunate",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "保护；保存；保留"
+      },
+      {
+        "key": "B",
+        "text": "有吸引力的事情；吸引"
+      },
+      {
+        "key": "C",
+        "text": "活跃起来"
+      },
+      {
+        "key": "D",
+        "text": "幸运的；倪幸的"
+      }
+    ],
+    "answer": "D",
+    "explanation": "fortunate 的中文含义是: 幸运的；倪幸的??"
+  },
+  {
+    "id": "article-18-q23",
+    "type": "single",
+    "category": "A taste of English humour",
+    "articleId": "article-18",
+    "articleIndex": 18,
+    "articleTitle": "A Great Master of Humour",
+    "articleLabel": "?18? ? A Great Master of Humour",
+    "sourcePdfPage": 71,
+    "stem": "pick out",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "复）轻便运动鞋"
+      },
+      {
+        "key": "B",
+        "text": "以而闻名"
+      },
+      {
+        "key": "C",
+        "text": "挑出；辨别出"
+      },
+      {
+        "key": "D",
+        "text": "提前"
+      }
+    ],
+    "answer": "C",
+    "explanation": "pick out 的中文含义是: 挑出；辨别出??"
+  },
+  {
+    "id": "article-18-q24",
+    "type": "single",
+    "category": "A taste of English humour",
+    "articleId": "article-18",
+    "articleIndex": 18,
+    "articleTitle": "A Great Master of Humour",
+    "articleLabel": "?18? ? A Great Master of Humour",
+    "sourcePdfPage": 71,
+    "stem": "chew",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "移居者；开拓者"
+      },
+      {
+        "key": "B",
+        "text": "咀嚼"
+      },
+      {
+        "key": "C",
+        "text": "接近"
+      },
+      {
+        "key": "D",
+        "text": "翻译家，译者"
+      }
+    ],
+    "answer": "B",
+    "explanation": "chew 的中文含义是: 咀嚼??"
+  },
+  {
+    "id": "article-18-q25",
+    "type": "single",
+    "category": "A taste of English humour",
+    "articleId": "article-18",
+    "articleIndex": 18,
+    "articleTitle": "A Great Master of Humour",
+    "articleLabel": "?18? ? A Great Master of Humour",
+    "sourcePdfPage": 71,
+    "stem": "pancake",
+    "question": "请选择正确的释义",
+    "options": [
+      {
+        "key": "A",
+        "text": "薄煎饼"
+      },
+      {
+        "key": "B",
+        "text": "高速公路"
+      },
+      {
+        "key": "C",
+        "text": "各种各样的；不同的"
+      },
+      {
+        "key": "D",
+        "text": "旅游）纪念品，纪念物"
+      }
+    ],
+    "answer": "A",
+    "explanation": "pancake 的中文含义是: 薄煎饼??"
+  }
+]

@@ -24,7 +24,8 @@
         </picker>
       </view>
 
-      <view v-if="question">
+      <view v-if="isLoading" class="empty">题库加载中...</view>
+      <view v-else-if="question">
         <text class="meta">{{ question.articleLabel }} · {{ question.category }} · 单选题</text>
         <text class="meta">当前题集：{{ sessionQuestions.length }} 题</text>
         <text class="meta">第 {{ currentIndex + 1 }} / {{ sessionQuestions.length }} 题</text>
@@ -98,13 +99,13 @@
       <text class="meta">文章总数：{{ articleOptions.length }} 篇</text>
       <text class="meta">最近练习：{{ lastPractice }}</text>
       <view class="bar large"><view class="fill warm" :style="{ width: overallProgress + '%' }"></view></view>
-      <text class="meta">总进度：{{ completedCount }} / {{ questionBank.length }}</text>
+      <text class="meta">总进度：{{ completedCount }} / {{ totalQuestionCount }}</text>
     </view>
   </view>
 </template>
 
 <script>
-import { articleOptions, questionBank } from '../../data/question-bank'
+import { articleOptions, loadArticleQuestions, loadMixedQuestions, totalQuestionCount } from '../../data/question-bank'
 import { addWrongQuestion, clearWrongBook, getStats, getWrongBook, removeWrongQuestion, saveStats, saveWrongBook } from '../../utils/storage'
 
 const modeValues = ['article', 'mixed']
@@ -128,8 +129,9 @@ function shuffleList(list) {
 export default {
   data() {
     return {
-      questionBank,
+      questionBank: [],
       articleOptions,
+      totalQuestionCount,
       tabs: ['刷题', '错题本', '统计'],
       tab: '刷题',
       practiceMode: 'article',
@@ -141,6 +143,9 @@ export default {
       result: emptyResult(),
       wrongBook: [],
       stats: getStats(),
+      loadedQuestionMap: {},
+      isLoading: false,
+      loadVersion: 0,
       liveSeconds: 0,
       startAt: 0,
       timer: null
@@ -177,7 +182,7 @@ export default {
       return this.sessionQuestions.length ? Math.round(((this.currentIndex + 1) / this.sessionQuestions.length) * 100) : 0
     },
     overallProgress() {
-      return this.questionBank.length ? Math.round((this.completedCount / this.questionBank.length) * 100) : 0
+      return this.totalQuestionCount ? Math.round((this.completedCount / this.totalQuestionCount) * 100) : 0
     },
     studyText() {
       const total = (this.stats.totalStudySeconds || 0) + this.liveSeconds
@@ -216,38 +221,13 @@ export default {
   },
   methods: {
     loadLocalState() {
-      const validIds = new Set(this.questionBank.map((item) => item.id))
-      const questionMap = this.questionBank.reduce((map, item) => {
-        map[item.id] = item
-        return map
-      }, {})
       const rawStats = getStats()
       this.stats = {
         ...rawStats,
-        completedQuestionIds: (rawStats.completedQuestionIds || []).filter((id) => validIds.has(id))
+        completedQuestionIds: rawStats.completedQuestionIds || []
       }
       saveStats(this.stats)
       this.wrongBook = getWrongBook()
-        .filter((item) => validIds.has(item.id))
-        .map((item) => {
-          const latest = questionMap[item.id]
-          return latest
-            ? {
-                ...item,
-                category: latest.category,
-                articleId: latest.articleId,
-                articleIndex: latest.articleIndex,
-                articleTitle: latest.articleTitle,
-                articleLabel: latest.articleLabel,
-                stem: latest.stem,
-                question: latest.question,
-                options: latest.options,
-                correctAnswer: latest.answer,
-                explanation: latest.explanation
-              }
-            : item
-        })
-      saveWrongBook(this.wrongBook)
     },
     findIndex(list, value) {
       return Math.max(list.indexOf(value), 0)
@@ -259,17 +239,82 @@ export default {
       const selected = this.articleOptions[event.detail.value]
       this.currentArticleId = selected ? selected.value : this.currentArticleId
     },
-    refreshQuestionSet() {
-      const base =
-        this.practiceMode === 'mixed'
-          ? this.questionBank
-          : this.questionBank.filter((item) => item.articleId === this.currentArticleId)
+    syncWrongBookWithLatest() {
+      let changed = false
+      const nextWrongBook = this.wrongBook.map((item) => {
+        const latest = this.loadedQuestionMap[item.id]
+        if (!latest) {
+          return item
+        }
 
-      this.sessionQuestions = shuffleList(base)
-      this.currentIndex = 0
-      this.selectedOption = ''
-      this.answered = false
-      this.result = emptyResult()
+        changed = true
+        return {
+          ...item,
+          category: latest.category,
+          articleId: latest.articleId,
+          articleIndex: latest.articleIndex,
+          articleTitle: latest.articleTitle,
+          articleLabel: latest.articleLabel,
+          stem: latest.stem,
+          question: latest.question,
+          options: latest.options,
+          correctAnswer: latest.answer,
+          explanation: latest.explanation
+        }
+      })
+
+      if (changed) {
+        this.wrongBook = nextWrongBook
+        saveWrongBook(nextWrongBook)
+      }
+    },
+    cacheQuestions(list) {
+      const nextMap = { ...this.loadedQuestionMap }
+      list.forEach((item) => {
+        nextMap[item.id] = item
+      })
+      this.loadedQuestionMap = nextMap
+      this.syncWrongBookWithLatest()
+    },
+    async refreshQuestionSet() {
+      const currentLoadVersion = this.loadVersion + 1
+      this.loadVersion = currentLoadVersion
+      this.isLoading = true
+
+      try {
+        const base =
+          this.practiceMode === 'mixed'
+            ? await loadMixedQuestions()
+            : await loadArticleQuestions(this.currentArticleId)
+
+        if (currentLoadVersion !== this.loadVersion) {
+          return
+        }
+
+        this.questionBank = base
+        this.cacheQuestions(base)
+        this.sessionQuestions = shuffleList(base)
+        this.currentIndex = 0
+        this.selectedOption = ''
+        this.answered = false
+        this.result = emptyResult()
+      } catch (error) {
+        if (currentLoadVersion !== this.loadVersion) {
+          return
+        }
+
+        this.questionBank = []
+        this.sessionQuestions = []
+        this.currentIndex = 0
+        this.selectedOption = ''
+        this.answered = false
+        this.result = emptyResult()
+        uni.showToast({ title: '题库加载失败', icon: 'none' })
+      } finally {
+        if (currentLoadVersion === this.loadVersion) {
+          this.isLoading = false
+        }
+      }
     },
     choose(key) {
       if (!this.answered) {
