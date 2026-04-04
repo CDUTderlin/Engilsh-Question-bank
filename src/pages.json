@@ -4,6 +4,7 @@
       "path": "pages/index/index",
       "style": {
         "navigationBarTitleText": "Snowy Enligsh",
+        "navigationStyle": "custom",
         "navigationBarBackgroundColor": "#FFF7EC",
         "navigationBarTextStyle": "black"
       }
