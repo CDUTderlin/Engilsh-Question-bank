@@ -1,132 +1,46 @@
-// 内置示例题库，后续可以替换为服务端下发的数据。
+// 题库来自文章《Fall in Love with English》。
+// 优先提取高考常见词汇与高频短语，统一做成四选一中文释义题。
 export const questionBank = [
-  {
-    id: 'vocab-1',
-    type: 'single',
-    category: '词汇',
-    difficulty: '初级',
-    stem: 'The new library provides a quiet environment for students to study after school.',
-    question: 'What is the closest meaning of "environment" in the sentence?',
-    options: [
-      { key: 'A', text: 'weather' },
-      { key: 'B', text: 'surroundings' },
-      { key: 'C', text: 'competition' },
-      { key: 'D', text: 'schedule' }
-    ],
-    answer: 'B',
-    explanation: 'environment 在这里表示“环境、周围条件”，与 surroundings 最接近。'
-  },
-  {
-    id: 'grammar-1',
-    type: 'blank',
-    category: '语法',
-    difficulty: '初级',
-    stem: 'She has lived in Shanghai ___ 2019.',
-    answer: 'since',
-    acceptableAnswers: ['since'],
-    explanation: '现在完成时搭配具体起点时间时，通常使用 since。'
-  },
-  {
-    id: 'reading-1',
-    type: 'single',
-    category: '阅读理解',
-    difficulty: '初级',
-    passage:
-      'Linda joins the school English club every Tuesday. She practices speaking with her classmates and watches short videos about daily conversations. After three months, she feels more confident when answering questions in class.',
-    question: 'Why does Linda feel more confident now?',
-    options: [
-      { key: 'A', text: 'She has practiced speaking regularly.' },
-      { key: 'B', text: 'She changed to a new school.' },
-      { key: 'C', text: 'She stopped watching videos.' },
-      { key: 'D', text: 'She only studies grammar rules.' }
-    ],
-    answer: 'A',
-    explanation: '文章提到她持续参加英语社团并练习口语，因此更自信。'
-  },
-  {
-    id: 'vocab-2',
-    type: 'blank',
-    category: '词汇',
-    difficulty: '中级',
-    stem: 'To improve your pronunciation, you should listen carefully and ___ the speaker.',
-    answer: 'imitate',
-    acceptableAnswers: ['imitate'],
-    explanation: 'imitate 表示“模仿”，符合句意。'
-  },
-  {
-    id: 'grammar-2',
-    type: 'single',
-    category: '语法',
-    difficulty: '中级',
-    stem: 'If he ____ harder last term, he would have passed the exam.',
-    question: 'Choose the correct verb form.',
-    options: [
-      { key: 'A', text: 'studies' },
-      { key: 'B', text: 'studied' },
-      { key: 'C', text: 'had studied' },
-      { key: 'D', text: 'has studied' }
-    ],
-    answer: 'C',
-    explanation: '这是与过去事实相反的虚拟语气，从句应用 had + 过去分词。'
-  },
-  {
-    id: 'reading-2',
-    type: 'single',
-    category: '阅读理解',
-    difficulty: '中级',
-    passage:
-      'A group of students built a small greenhouse on campus. They recorded the temperature every day and compared the growth of tomatoes and beans. Their science teacher said the project helped them learn by doing.',
-    question: 'What did the project help the students do?',
-    options: [
-      { key: 'A', text: 'Avoid science class' },
-      { key: 'B', text: 'Learn through practical work' },
-      { key: 'C', text: 'Travel around the city' },
-      { key: 'D', text: 'Sell vegetables online' }
-    ],
-    answer: 'B',
-    explanation: '文中明确说项目帮助他们“learn by doing”。'
-  },
-  {
-    id: 'vocab-3',
-    type: 'single',
-    category: '词汇',
-    difficulty: '高级',
-    stem: 'The scientist gave a brief summary before presenting the detailed data.',
-    question: 'What does "brief" most likely mean here?',
-    options: [
-      { key: 'A', text: 'short' },
-      { key: 'B', text: 'unclear' },
-      { key: 'C', text: 'humorous' },
-      { key: 'D', text: 'unexpected' }
-    ],
-    answer: 'A',
-    explanation: 'brief 表示“简短的”，与 short 含义最接近。'
-  },
-  {
-    id: 'grammar-3',
-    type: 'blank',
-    category: '语法',
-    difficulty: '高级',
-    stem: 'No sooner had the bell rung than the students ___ into the classroom.',
-    answer: 'rushed',
-    acceptableAnswers: ['rushed'],
-    explanation: 'no sooner...than... 结构中，后半句通常用一般过去时。'
-  },
-  {
-    id: 'reading-3',
-    type: 'single',
-    category: '阅读理解',
-    difficulty: '高级',
-    passage:
-      'More schools are introducing AI tools to support language learning. Teachers say these tools can provide instant feedback, but they also remind students to think independently and check whether the suggestions really fit the context.',
-    question: 'What is the main idea of the passage?',
-    options: [
-      { key: 'A', text: 'AI tools should replace teachers completely.' },
-      { key: 'B', text: 'Students should refuse all digital tools.' },
-      { key: 'C', text: 'AI tools are useful, but students still need critical thinking.' },
-      { key: 'D', text: 'Language learning only depends on instant feedback.' }
-    ],
-    answer: 'C',
-    explanation: '文章强调 AI 工具的帮助作用，同时也强调独立思考的重要性。'
-  }
+  { id: 'article-1', type: 'single', category: '单词', difficulty: '初级', stem: 'curtain', question: '选择最合适的中文意思', options: [{ key: 'A', text: '窗帘' }, { key: 'B', text: '地毯' }, { key: 'C', text: '抽屉' }, { key: 'D', text: '天花板' }], answer: 'A', explanation: 'curtain 表示“窗帘”。' },
+  { id: 'article-2', type: 'single', category: '单词', difficulty: '中级', stem: 'dusty', question: '选择最合适的中文意思', options: [{ key: 'A', text: '潮湿的' }, { key: 'B', text: '满是灰尘的' }, { key: 'C', text: '明亮的' }, { key: 'D', text: '整洁的' }], answer: 'B', explanation: 'dusty 表示“布满灰尘的”。' },
+  { id: 'article-3', type: 'single', category: '单词', difficulty: '初级', stem: 'teenager', question: '选择最合适的中文意思', options: [{ key: 'A', text: '裁判' }, { key: 'B', text: '青少年' }, { key: 'C', text: '游客' }, { key: 'D', text: '队长' }], answer: 'B', explanation: 'teenager 表示“青少年”。' },
+  { id: 'article-4', type: 'single', category: '短语', difficulty: '初级', stem: 'pack up', question: '选择最合适的中文意思', options: [{ key: 'A', text: '整理打包' }, { key: 'B', text: '彻底拒绝' }, { key: 'C', text: '马上开始' }, { key: 'D', text: '四处游荡' }], answer: 'A', explanation: 'pack up 表示“整理、打包”。' },
+  { id: 'article-5', type: 'single', category: '单词', difficulty: '初级', stem: 'overcoat', question: '选择最合适的中文意思', options: [{ key: 'A', text: '袜子' }, { key: 'B', text: '大衣' }, { key: 'C', text: '雨靴' }, { key: 'D', text: '腰带' }], answer: 'B', explanation: 'overcoat 表示“大衣”。' },
+  { id: 'article-6', type: 'single', category: '单词', difficulty: '初级', stem: 'suitcase', question: '选择最合适的中文意思', options: [{ key: 'A', text: '手提箱' }, { key: 'B', text: '奖杯' }, { key: 'C', text: '课本' }, { key: 'D', text: '海报' }], answer: 'A', explanation: 'suitcase 表示“手提箱”。' },
+  { id: 'article-7', type: 'single', category: '单词', difficulty: '初级', stem: 'alone', question: '选择最合适的中文意思', options: [{ key: 'A', text: '准时地' }, { key: 'B', text: '独自地' }, { key: 'C', text: '规律地' }, { key: 'D', text: '突然地' }], answer: 'B', explanation: 'alone 表示“单独地，独自”。' },
+  { id: 'article-8', type: 'single', category: '短语', difficulty: '中级', stem: 'at dusk', question: '选择最合适的中文意思', options: [{ key: 'A', text: '在清晨' }, { key: 'B', text: '在深夜' }, { key: 'C', text: '在黄昏' }, { key: 'D', text: '在假期' }], answer: 'C', explanation: 'at dusk 表示“在黄昏时”。' },
+  { id: 'article-9', type: 'single', category: '短语', difficulty: '中级', stem: 'thunder and lightning', question: '选择最合适的中文意思', options: [{ key: 'A', text: '雷电' }, { key: 'B', text: '霜和雪' }, { key: 'C', text: '暴雨和洪水' }, { key: 'D', text: '晨风和薄雾' }], answer: 'A', explanation: 'thunder and lightning 指“雷电”。' },
+  { id: 'article-10', type: 'single', category: '单词', difficulty: '初级', stem: 'outdoors', question: '选择最合适的中文意思', options: [{ key: 'A', text: '在楼上' }, { key: 'B', text: '在国外' }, { key: 'C', text: '在户外' }, { key: 'D', text: '在田里' }], answer: 'C', explanation: 'outdoors 表示“在户外”。' },
+  { id: 'article-11', type: 'single', category: '短语', difficulty: '中级', stem: 'go through', question: '选择最合适的中文意思', options: [{ key: 'A', text: '经历；忍受' }, { key: 'B', text: '拆开' }, { key: 'C', text: '领先于' }, { key: 'D', text: '忽视' }], answer: 'A', explanation: 'go through 在文中有“经历、忍受”之意。' },
+  { id: 'article-12', type: 'single', category: '单词', difficulty: '中级', stem: 'nagging', question: '选择最合适的中文意思', options: [{ key: 'A', text: '鼓励' }, { key: 'B', text: '唠叨' }, { key: 'C', text: '赞扬' }, { key: 'D', text: '安慰' }], answer: 'B', explanation: 'nagging 表示“唠叨、不断责备”。' },
+  { id: 'article-13', type: 'single', category: '短语', difficulty: '中级', stem: 'any longer', question: '选择最合适的中文意思', options: [{ key: 'A', text: '再也（不）' }, { key: 'B', text: '不久之后' }, { key: 'C', text: '一直以来' }, { key: 'D', text: '直到最后' }], answer: 'A', explanation: 'not...any longer 表示“不再”。' },
+  { id: 'article-14', type: 'single', category: '短语', difficulty: '中级', stem: 'get along well with', question: '选择最合适的中文意思', options: [{ key: 'A', text: '追上……' }, { key: 'B', text: '与……相处融洽' }, { key: 'C', text: '远离……' }, { key: 'D', text: '依赖……' }], answer: 'B', explanation: 'get along well with 表示“与……相处融洽”。' },
+  { id: 'article-15', type: 'single', category: '短语', difficulty: '中级', stem: 'be tired of', question: '选择最合适的中文意思', options: [{ key: 'A', text: '厌倦' }, { key: 'B', text: '擅长' }, { key: 'C', text: '熟悉' }, { key: 'D', text: '感谢' }], answer: 'A', explanation: 'be tired of 表示“厌倦”。' },
+  { id: 'article-16', type: 'single', category: '单词', difficulty: '初级', stem: 'join', question: '选择最合适的中文意思', options: [{ key: 'A', text: '怀疑' }, { key: 'B', text: '参加；加入' }, { key: 'C', text: '改进' }, { key: 'D', text: '接受' }], answer: 'B', explanation: 'join 表示“参加、加入”。' },
+  { id: 'article-17', type: 'single', category: '单词', difficulty: '中级', stem: 'suppose', question: '选择最合适的中文意思', options: [{ key: 'A', text: '假设；认为' }, { key: 'B', text: '命令' }, { key: 'C', text: '发现' }, { key: 'D', text: '训练' }], answer: 'A', explanation: 'suppose 表示“假设、认为”。' },
+  { id: 'article-18', type: 'single', category: '单词', difficulty: '初级', stem: 'dislike', question: '选择最合适的中文意思', options: [{ key: 'A', text: '依靠' }, { key: 'B', text: '记录' }, { key: 'C', text: '不喜欢' }, { key: 'D', text: '原谅' }], answer: 'C', explanation: 'dislike 表示“不喜欢”。' },
+  { id: 'article-19', type: 'single', category: '单词', difficulty: '初级', stem: 'ignore', question: '选择最合适的中文意思', options: [{ key: 'A', text: '忽视' }, { key: 'B', text: '鼓掌' }, { key: 'C', text: '提醒' }, { key: 'D', text: '连接' }], answer: 'A', explanation: 'ignore 表示“忽视”。' },
+  { id: 'article-20', type: 'single', category: '短语', difficulty: '中级', stem: 'on purpose', question: '选择最合适的中文意思', options: [{ key: 'A', text: '匆忙地' }, { key: 'B', text: '故意地' }, { key: 'C', text: '公平地' }, { key: 'D', text: '轮流地' }], answer: 'B', explanation: 'on purpose 表示“故意地”。' },
+  { id: 'article-21', type: 'single', category: '短语', difficulty: '初级', stem: 'as a result', question: '选择最合适的中文意思', options: [{ key: 'A', text: '结果' }, { key: 'B', text: '事实上' }, { key: 'C', text: '例如' }, { key: 'D', text: '总之' }], answer: 'A', explanation: 'as a result 表示“结果，因此”。' },
+  { id: 'article-22', type: 'single', category: '短语', difficulty: '中级', stem: 'add up to', question: '选择最合适的中文意思', options: [{ key: 'A', text: '抄写下来' }, { key: 'B', text: '总计达到' }, { key: 'C', text: '把……分开' }, { key: 'D', text: '逐渐消失' }], answer: 'B', explanation: 'add up to 表示“总计达到”。' },
+  { id: 'article-23', type: 'single', category: '单词', difficulty: '初级', stem: 'partner', question: '选择最合适的中文意思', options: [{ key: 'A', text: '伙伴' }, { key: 'B', text: '顾客' }, { key: 'C', text: '邻居' }, { key: 'D', text: '裁判' }], answer: 'A', explanation: 'partner 表示“伙伴、同伴”。' },
+  { id: 'article-24', type: 'single', category: '短语', difficulty: '中级', stem: 'be concerned about', question: '选择最合适的中文意思', options: [{ key: 'A', text: '对……负责' }, { key: 'B', text: '对……感兴趣' }, { key: 'C', text: '关心……' }, { key: 'D', text: '嘲笑……' }], answer: 'C', explanation: 'be concerned about 表示“关心、挂念”。' },
+  { id: 'article-25', type: 'single', category: '单词', difficulty: '初级', stem: 'exactly', question: '选择最合适的中文意思', options: [{ key: 'A', text: '确切地' }, { key: 'B', text: '偶然地' }, { key: 'C', text: '勇敢地' }, { key: 'D', text: '缓慢地' }], answer: 'A', explanation: 'exactly 表示“确切地、完全地”。' },
+  { id: 'article-26', type: 'single', category: '短语', difficulty: '中级', stem: 'suffer from', question: '选择最合适的中文意思', options: [{ key: 'A', text: '受……折磨；患……病' }, { key: 'B', text: '远离……' }, { key: 'C', text: '嘲笑……' }, { key: 'D', text: '依靠……' }], answer: 'A', explanation: 'suffer from 表示“遭受、患有”。' },
+  { id: 'article-27', type: 'single', category: '单词', difficulty: '中级', stem: 'entirely', question: '选择最合适的中文意思', options: [{ key: 'A', text: '偶尔地' }, { key: 'B', text: '完全地' }, { key: 'C', text: '严肃地' }, { key: 'D', text: '公开地' }], answer: 'B', explanation: 'entirely 表示“完全地”。' },
+  { id: 'article-28', type: 'single', category: '短语', difficulty: '中级', stem: 'disagree with', question: '选择最合适的中文意思', options: [{ key: 'A', text: '不同意……' }, { key: 'B', text: '依赖……' }, { key: 'C', text: '赞扬……' }, { key: 'D', text: '监督……' }], answer: 'A', explanation: 'disagree with 表示“不同意……”。' },
+  { id: 'article-29', type: 'single', category: '短语', difficulty: '初级', stem: 'in order to', question: '选择最合适的中文意思', options: [{ key: 'A', text: '以便；为了' }, { key: 'B', text: '尽管' }, { key: 'C', text: '除此之外' }, { key: 'D', text: '与此同时' }], answer: 'A', explanation: 'in order to 表示“为了，以便”。' },
+  { id: 'article-30', type: 'single', category: '短语', difficulty: '初级', stem: 'calm down', question: '选择最合适的中文意思', options: [{ key: 'A', text: '安静下来；冷静下来' }, { key: 'B', text: '蹲下' }, { key: 'C', text: '写下来' }, { key: 'D', text: '减速' }], answer: 'A', explanation: 'calm down 表示“平静下来”。' },
+  { id: 'article-31', type: 'single', category: '单词', difficulty: '中级', stem: 'settle', question: '选择最合适的中文意思', options: [{ key: 'A', text: '借出' }, { key: 'B', text: '解决；安顿' }, { key: 'C', text: '表演' }, { key: 'D', text: '浪费' }], answer: 'B', explanation: 'settle 在文中表示“解决”，也可表示“安顿”。' },
+  { id: 'article-32', type: 'single', category: '短语', difficulty: '初级', stem: 'face to face', question: '选择最合适的中文意思', options: [{ key: 'A', text: '依次地' }, { key: 'B', text: '面对面地' }, { key: 'C', text: '立刻' }, { key: 'D', text: '秘密地' }], answer: 'B', explanation: 'face to face 表示“面对面地”。' },
+  { id: 'article-33', type: 'single', category: '单词', difficulty: '中级', stem: 'swap', question: '选择最合适的中文意思', options: [{ key: 'A', text: '交换' }, { key: 'B', text: '保存' }, { key: 'C', text: '挑选' }, { key: 'D', text: '传播' }], answer: 'A', explanation: 'swap 表示“交换”。' },
+  { id: 'article-34', type: 'single', category: '单词', difficulty: '中级', stem: 'series', question: '选择最合适的中文意思', options: [{ key: 'A', text: '任务' }, { key: 'B', text: '数量' }, { key: 'C', text: '一系列；连续' }, { key: 'D', text: '态度' }], answer: 'C', explanation: 'series 表示“一系列”。' },
+  { id: 'article-35', type: 'single', category: '单词', difficulty: '初级', stem: 'tip', question: '选择最合适的中文意思', options: [{ key: 'A', text: '尖端' }, { key: 'B', text: '建议；小窍门' }, { key: 'C', text: '名单' }, { key: 'D', text: '速度' }], answer: 'B', explanation: 'tip 在 learning tips 中表示“建议、小窍门”。' },
+  { id: 'article-36', type: 'single', category: '短语', difficulty: '中级', stem: 'set down', question: '选择最合适的中文意思', options: [{ key: 'A', text: '推翻' }, { key: 'B', text: '记下；写下' }, { key: 'C', text: '整理好' }, { key: 'D', text: '放慢' }], answer: 'B', explanation: 'set down 表示“记下、写下”。' },
+  { id: 'article-37', type: 'single', category: '单词', difficulty: '中级', stem: 'highway', question: '选择最合适的中文意思', options: [{ key: 'A', text: '公路；捷径般的道路' }, { key: 'B', text: '岛屿' }, { key: 'C', text: '仓库' }, { key: 'D', text: '帐篷' }], answer: 'A', explanation: 'highway 本义是“公路”，文中比喻“提升英语的途径”。' },
+  { id: 'article-38', type: 'single', category: '单词', difficulty: '初级', stem: 'grateful', question: '选择最合适的中文意思', options: [{ key: 'A', text: '紧张的' }, { key: 'B', text: '感激的' }, { key: 'C', text: '严格的' }, { key: 'D', text: '诚实的' }], answer: 'B', explanation: 'grateful 表示“感激的”。' },
+  { id: 'article-39', type: 'single', category: '单词', difficulty: '初级', stem: 'power', question: '选择最合适的中文意思', options: [{ key: 'A', text: '力量' }, { key: 'B', text: '习惯' }, { key: 'C', text: '价格' }, { key: 'D', text: '位置' }], answer: 'A', explanation: 'power 表示“力量”。' },
+  { id: 'article-40', type: 'single', category: '单词', difficulty: '中级', stem: 'recover', question: '选择最合适的中文意思', options: [{ key: 'A', text: '隐藏' }, { key: 'B', text: '恢复' }, { key: 'C', text: '搬运' }, { key: 'D', text: '比较' }], answer: 'B', explanation: 'recover 表示“恢复”。' },
+  { id: 'article-41', type: 'single', category: '单词', difficulty: '初级', stem: 'upset', question: '选择最合适的中文意思', options: [{ key: 'A', text: '难过的；心烦的' }, { key: 'B', text: '兴奋的' }, { key: 'C', text: '宽松的' }, { key: 'D', text: '正式的' }], answer: 'A', explanation: 'upset 表示“心烦的、难过的”。' },
+  { id: 'article-42', type: 'single', category: '短语', difficulty: '初级', stem: 'fall in love with', question: '选择最合适的中文意思', options: [{ key: 'A', text: '远离……' }, { key: 'B', text: '依靠……' }, { key: 'C', text: '爱上……' }, { key: 'D', text: '向……学习' }], answer: 'C', explanation: 'fall in love with 表示“爱上……”。' }
 ]
