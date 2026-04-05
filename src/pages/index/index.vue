@@ -81,7 +81,12 @@
         <view class="bar"><view class="fill" :style="{ width: progress + '%' }"></view></view>
 
         <view class="block">
-          <text class="word-stem">{{ question.stem }}</text>
+          <view class="word-head">
+            <text class="word-stem">{{ question.stem }}</text>
+            <view class="speaker-btn" :class="{ disabled: currentAudioLoading || !currentAudioAvailable, playing: isPlayingPronunciation }" @tap="playCurrentPronunciation" @click="playCurrentPronunciation">
+              <text class="speaker-icon">🔊</text>
+            </view>
+          </view>
           <text class="question">{{ question.question }}</text>
         </view>
 
@@ -115,6 +120,7 @@
           <text>{{ result.correct ? '回答正确' : '回答错误，已加入错题本' }}</text>
           <text>正确答案：{{ showAnswer(question, question.answer) }}</text>
           <text>你的答案：{{ showAnswer(question, result.userAnswer) || '未作答' }}</text>
+          <text>近义词：{{ currentSynonymText }}</text>
           <text>解析：{{ question.explanation }}</text>
         </view>
       </view>
@@ -154,6 +160,7 @@
 <script>
 import { articleOptions, loadArticleQuestions, loadMixedQuestions, totalQuestionCount } from '../../data/question-bank'
 import { addPracticeRecord, addStudySeconds, addWrongQuestion, clearWrongBook, getStats, getWrongBook, removeWrongQuestion, saveStats, saveWrongBook } from '../../utils/storage'
+import { getLookupKey, getWordAudioUrls, getWordSynonyms } from '../../utils/word-network'
 
 const modeValues = ['article', 'mixed']
 const modeMap = {
@@ -217,7 +224,11 @@ export default {
       sessionAnsweredCount: 0,
       sessionCorrectCount: 0,
       sessionCompletedIds: [],
-      sessionAnswerMap: {}
+      sessionAnswerMap: {},
+      wordNetworkMap: {},
+      audioContext: null,
+      audioQueue: [],
+      isPlayingPronunciation: false
     }
   },
   computed: {
@@ -267,6 +278,27 @@ export default {
       const s = String(total % 60).padStart(2, '0')
       return `${h}:${m}:${s}`
     },
+    currentWordNetwork() {
+      const key = this.question ? getLookupKey(this.question.stem) : ''
+      return key ? this.wordNetworkMap[key] || {} : {}
+    },
+    currentAudioAvailable() {
+      return Array.isArray(this.currentWordNetwork.audioUrls) && this.currentWordNetwork.audioUrls.length > 0
+    },
+    currentAudioLoading() {
+      return Boolean(this.currentWordNetwork.audioLoading)
+    },
+    currentSynonymText() {
+      if (this.currentWordNetwork.synonymsLoading) {
+        return '获取中...'
+      }
+
+      if (Array.isArray(this.currentWordNetwork.synonyms) && this.currentWordNetwork.synonyms.length) {
+        return this.currentWordNetwork.synonyms.join(' / ')
+      }
+
+      return this.currentWordNetwork.synonymsFetched ? '暂未获取到' : '获取中...'
+    },
     lastPractice() {
       return this.stats.lastPracticedAt ? this.formatDate(this.stats.lastPracticedAt) : '暂无记录'
     }
@@ -279,9 +311,11 @@ export default {
   },
   onHide() {
     this.stopTimer()
+    this.stopPronunciationPlayback()
   },
   onUnload() {
     this.stopTimer()
+    this.stopPronunciationPlayback(true)
   },
   methods: {
     loadLocalState() {
@@ -313,6 +347,158 @@ export default {
     },
     openMyPage(url) {
       uni.navigateTo({ url })
+    },
+    getWordNetworkEntry(stem) {
+      const key = getLookupKey(stem)
+      return key ? this.wordNetworkMap[key] || null : null
+    },
+    updateWordNetwork(stem, patch) {
+      const key = getLookupKey(stem)
+      if (!key) {
+        return null
+      }
+
+      const nextEntry = {
+        ...(this.wordNetworkMap[key] || {}),
+        ...patch
+      }
+
+      this.wordNetworkMap = {
+        ...this.wordNetworkMap,
+        [key]: nextEntry
+      }
+
+      return nextEntry
+    },
+    ensureAudioContext() {
+      if (this.audioContext) {
+        return this.audioContext
+      }
+
+      const audioContext = uni.createInnerAudioContext()
+      audioContext.autoplay = false
+      audioContext.obeyMuteSwitch = false
+      audioContext.onEnded(() => {
+        this.playNextAudioInQueue()
+      })
+      audioContext.onStop(() => {
+        if (!this.audioQueue.length) {
+          this.isPlayingPronunciation = false
+        }
+      })
+      audioContext.onError(() => {
+        this.playNextAudioInQueue()
+      })
+      this.audioContext = audioContext
+      return audioContext
+    },
+    playNextAudioInQueue() {
+      const nextUrl = this.audioQueue.shift()
+      if (!nextUrl) {
+        this.isPlayingPronunciation = false
+        return
+      }
+
+      const audioContext = this.ensureAudioContext()
+      audioContext.src = nextUrl
+      audioContext.play()
+      this.isPlayingPronunciation = true
+    },
+    stopPronunciationPlayback(destroy = false) {
+      this.audioQueue = []
+      this.isPlayingPronunciation = false
+
+      if (!this.audioContext) {
+        return
+      }
+
+      this.audioContext.stop()
+      if (destroy) {
+        this.audioContext.destroy()
+        this.audioContext = null
+      }
+    },
+    playCurrentPronunciation() {
+      if (this.currentAudioLoading) {
+        uni.showToast({ title: '读音获取中', icon: 'none' })
+        return
+      }
+
+      const audioUrls = Array.isArray(this.currentWordNetwork.audioUrls) ? this.currentWordNetwork.audioUrls.filter(Boolean) : []
+      if (!audioUrls.length) {
+        uni.showToast({ title: '暂未获取到音频', icon: 'none' })
+        return
+      }
+
+      this.stopPronunciationPlayback()
+      this.audioQueue = audioUrls.slice(1)
+      const audioContext = this.ensureAudioContext()
+      audioContext.src = audioUrls[0]
+      audioContext.play()
+      this.isPlayingPronunciation = true
+    },
+    async ensureAudio(question) {
+      if (!question || !question.stem) {
+        return
+      }
+
+      const current = this.getWordNetworkEntry(question.stem)
+      if (current && (current.audioLoading || Array.isArray(current.audioUrls))) {
+        return
+      }
+
+      this.updateWordNetwork(question.stem, { audioLoading: true })
+
+      try {
+        const audioUrls = await getWordAudioUrls(question.stem)
+        this.updateWordNetwork(question.stem, {
+          audioUrls: Array.isArray(audioUrls) ? audioUrls : [],
+          audioLoading: false
+        })
+      } catch (error) {
+        this.updateWordNetwork(question.stem, {
+          audioUrls: [],
+          audioLoading: false
+        })
+      }
+    },
+    async ensureSynonyms(question) {
+      if (!question || !question.stem) {
+        return
+      }
+
+      const current = this.getWordNetworkEntry(question.stem)
+      if (current && (current.synonymsLoading || current.synonymsFetched)) {
+        return
+      }
+
+      this.updateWordNetwork(question.stem, { synonymsLoading: true })
+
+      try {
+        const synonyms = await getWordSynonyms(question.stem)
+        this.updateWordNetwork(question.stem, {
+          synonyms: Array.isArray(synonyms) ? synonyms : [],
+          synonymsFetched: true,
+          synonymsLoading: false
+        })
+      } catch (error) {
+        this.updateWordNetwork(question.stem, {
+          synonyms: [],
+          synonymsFetched: true,
+          synonymsLoading: false
+        })
+      }
+    },
+    prepareQuestionNetwork(question, options = {}) {
+      if (!question) {
+        return
+      }
+
+      this.ensureAudio(question)
+
+      if (options.withSynonyms) {
+        this.ensureSynonyms(question)
+      }
     },
     buildPracticeRecord() {
       if (!this.sessionAnsweredCount) {
@@ -375,6 +561,7 @@ export default {
     },
     clearPracticeView() {
       this.closeDropdown()
+      this.stopPronunciationPlayback()
       this.isPracticing = false
       this.questionBank = []
       this.sessionQuestions = []
@@ -499,6 +686,7 @@ export default {
         this.selectedOption = ''
         this.answered = false
         this.result = emptyResult()
+        this.prepareQuestionNetwork(this.sessionQuestions[0])
       } catch (error) {
         if (currentLoadVersion !== this.loadVersion) {
           return
@@ -539,6 +727,7 @@ export default {
       this.selectedOption = cached ? cached.selectedOption : ''
       this.answered = cached ? cached.answered : false
       this.result = cached ? { ...cached.result } : emptyResult()
+      this.prepareQuestionNetwork(currentQuestion, { withSynonyms: Boolean(cached && cached.answered) })
     },
     submit() {
       if (!this.question) {
@@ -583,6 +772,8 @@ export default {
       if (!correct) {
         this.wrongBook = addWrongQuestion(this.question, userAnswer)
       }
+
+      this.prepareQuestionNetwork(this.question, { withSynonyms: true })
     },
     showAnswer(item, answerKey) {
       const option = (item.options || []).find((entry) => entry.key === answerKey)
@@ -688,8 +879,13 @@ export default {
 .block,.wrong,.stat{margin-top:18rpx}
 .label,.title2{display:block;font-size:30rpx;font-weight:700;color:#243447}
 .plain,.question{font-size:28rpx;color:#334155}
-.word-stem{display:block;margin-top:14rpx;font-size:44rpx;font-weight:700;color:#1d4d7a;letter-spacing:1rpx}
+.word-head{display:flex;align-items:center;gap:14rpx;margin-top:14rpx}
+.word-stem{display:block;flex:1;min-width:0;font-size:44rpx;font-weight:700;color:#1d4d7a;letter-spacing:1rpx}
 .word-stem.small{font-size:34rpx}
+.speaker-btn{flex:none;display:flex;align-items:center;justify-content:center;width:56rpx;height:56rpx;border-radius:50%;background:#eef6ff;border:2rpx solid #d4e4f8}
+.speaker-btn.disabled{opacity:.45}
+.speaker-btn.playing{background:#e6fff1;border-color:#9bd4b2}
+.speaker-icon{font-size:28rpx;line-height:1}
 .question{margin-top:10rpx}
 .question-status{display:flex;align-items:center;justify-content:space-between;gap:16rpx;margin:22rpx 0 18rpx}
 .question-order-current{font-size:36rpx;font-weight:700;color:#243447}
