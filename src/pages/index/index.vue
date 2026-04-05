@@ -1,16 +1,20 @@
 <template>
   <view class="page" :class="{ 'with-bottom-tabs': !isPracticing }">
-    <view class="hero card">
-      <view class="hero-body">
-        <view class="hero-copy">
-          <text class="title">Snowy Enligsh</text>
-          <text class="sub">25 篇教材文章词汇题，支持按文章练习和混合刷题。</text>
-          <text class="hero-desc">题目优先选取高考常考词汇和短语，并在每次进入时自动打乱顺序。</text>
+    <view v-if="tab === '刷题'" class="card">
+      <view v-if="!isPracticing" class="hero hero-inline">
+        <view class="hero-body">
+          <image class="hero-logo" :src="heroLogo" mode="aspectFit" />
+          <view class="hero-copy">
+            <text class="title">Snowy Enligsh</text>
+            <text class="sub">25 篇教材文章词汇题，支持按文章练习和混合刷题。</text>
+            <text class="hero-desc">题目优先选取高考常考词汇和短语，并在每次进入时自动打乱顺序。</text>
+          </view>
         </view>
       </view>
-    </view>
+      <view v-else class="hero hero-inline practice-hero">
+        <image class="practice-hero-logo" :src="practiceHeroLogo" mode="aspectFit" />
+      </view>
 
-    <view v-if="tab === '刷题'" class="card">
       <view v-if="!isPracticing" class="setup">
         <text class="title2">开始新的练习</text>
         <text class="meta">先选择刷题模式，再开始答题。</text>
@@ -73,13 +77,10 @@
           </view>
           <button class="ghost mini exit-btn" @tap="exitPractice">退出答题</button>
         </view>
-        <text class="meta">{{ question.articleLabel }} · {{ question.category }} · 单选题</text>
-        <text class="meta">当前题集：{{ sessionQuestions.length }} 题</text>
-        <text class="meta">第 {{ currentIndex + 1 }} / {{ sessionQuestions.length }} 题</text>
+        <text class="meta">单选题</text>
         <view class="bar"><view class="fill" :style="{ width: progress + '%' }"></view></view>
 
         <view class="block">
-          <text class="label">题干</text>
           <text class="word-stem">{{ question.stem }}</text>
           <text class="question">{{ question.question }}</text>
         </view>
@@ -97,10 +98,17 @@
           </view>
         </view>
 
+        <view class="question-status">
+          <text class="meta">练习时间：{{ practiceStudyText }}</text>
+          <text class="meta question-order">
+            第 <text class="question-order-current">{{ currentIndex + 1 }}</text> / {{ sessionQuestions.length }} 题
+          </text>
+        </view>
         <view class="actions">
           <button class="ghost" :disabled="currentIndex === 0" @tap="prev">上一题</button>
           <button class="primary" v-if="!answered" @tap="submit">提交</button>
-          <button class="primary" v-else @tap="next">下一题</button>
+          <button class="primary" v-else-if="currentIndex < sessionQuestions.length - 1" @tap="next">下一题</button>
+          <button class="primary" v-else @tap="finishPractice">完成答题</button>
         </view>
 
         <view v-if="answered" class="result" :class="{ ok: result.correct, bad: !result.correct }">
@@ -114,52 +122,21 @@
     </view>
 
     <view v-if="tab === '我的'" class="card">
-      <view class="my-switch">
-        <view
-          v-for="item in mySections"
-          :key="item"
-          class="my-switch-item"
-          :class="{ on: mySection === item }"
-          @tap="mySection = item"
-        >
-          {{ item }}
-        </view>
-      </view>
-
-      <view v-if="mySection === '错题本'">
-        <view class="head">
-          <text class="title2">错题本</text>
-          <button class="ghost mini" :disabled="!wrongBook.length" @tap="clearWrongs">清空</button>
-        </view>
-        <view v-if="wrongBook.length">
-          <view v-for="item in wrongBook" :key="item.id" class="wrong">
-            <text class="meta">{{ item.articleLabel || item.articleTitle || item.category }} · 单选题</text>
-            <text class="meta">{{ item.category }}</text>
-            <text class="word-stem small">{{ item.stem || item.question }}</text>
-            <text class="question">{{ item.question }}</text>
-            <text v-for="option in item.options" :key="option.key" class="plain">{{ option.key }}. {{ option.text }}</text>
-            <text class="plain">正确答案：{{ showAnswer(item, item.correctAnswer) }}</text>
-            <text class="plain">你的答案：{{ showAnswer(item, item.userAnswer) || '未作答' }}</text>
-            <text class="plain">解析：{{ item.explanation }}</text>
-            <text class="meta">错误次数：{{ item.wrongCount }} · {{ formatDate(item.updatedAt) }}</text>
-            <button class="ghost mini" @tap="removeWrong(item.id)">移除</button>
+      <view class="my-entry-list">
+        <view class="my-entry" @tap="openMyPage('/pages/wrong-book/index')">
+          <view class="my-entry-copy">
+            <text class="my-entry-title">错题本</text>
+            <text class="my-entry-desc">查看做错的题目并继续复习</text>
           </view>
+          <text class="my-entry-arrow">›</text>
         </view>
-        <view v-else class="empty">错题会自动记录到这里</view>
-      </view>
-
-      <view v-else>
-        <text class="title2">学习统计</text>
-        <view class="stats">
-          <view class="stat"><text class="k">学习时长</text><text class="v">{{ studyText }}</text></view>
-          <view class="stat"><text class="k">完成题目</text><text class="v">{{ completedCount }}</text></view>
-          <view class="stat"><text class="k">作答次数</text><text class="v">{{ stats.answeredCount }}</text></view>
-          <view class="stat"><text class="k">正确率</text><text class="v">{{ accuracy }}%</text></view>
+        <view class="my-entry" @tap="openMyPage('/pages/stats/index')">
+          <view class="my-entry-copy">
+            <text class="my-entry-title">统计</text>
+            <text class="my-entry-desc">查看学习时长、完成量和正确率</text>
+          </view>
+          <text class="my-entry-arrow">›</text>
         </view>
-        <text class="meta">文章总数：{{ articleOptions.length }} 篇</text>
-        <text class="meta">最近练习：{{ lastPractice }}</text>
-        <view class="bar large"><view class="fill warm" :style="{ width: overallProgress + '%' }"></view></view>
-        <text class="meta">总进度：{{ completedCount }} / {{ totalQuestionCount }}</text>
       </view>
     </view>
 
@@ -176,7 +153,7 @@
 
 <script>
 import { articleOptions, loadArticleQuestions, loadMixedQuestions, totalQuestionCount } from '../../data/question-bank'
-import { addWrongQuestion, clearWrongBook, getStats, getWrongBook, removeWrongQuestion, saveStats, saveWrongBook } from '../../utils/storage'
+import { addPracticeRecord, addStudySeconds, addWrongQuestion, clearWrongBook, getStats, getWrongBook, removeWrongQuestion, saveStats, saveWrongBook } from '../../utils/storage'
 
 const modeValues = ['article', 'mixed']
 const modeMap = {
@@ -200,6 +177,8 @@ const practiceIcon = require('../../static/tab-practice.svg')
 const practiceActiveIcon = require('../../static/tab-practice-active.svg')
 const profileIcon = require('../../static/tab-profile.svg')
 const profileActiveIcon = require('../../static/tab-profile-active.svg')
+const heroLogo = require('../../static/snowy-english-logo.png')
+const practiceHeroLogo = require('../../static/snowy-english-logo-full.png')
 
 export default {
   data() {
@@ -213,9 +192,9 @@ export default {
         { key: '刷题', label: '刷题', icon: practiceIcon, activeIcon: practiceActiveIcon },
         { key: '我的', label: '我的', icon: profileIcon, activeIcon: profileActiveIcon }
       ],
+      heroLogo,
+      practiceHeroLogo,
       tab: '刷题',
-      mySections: ['错题本', '统计'],
-      mySection: '错题本',
       practiceMode: 'article',
       currentArticleId: articleOptions[0] ? articleOptions[0].value : '',
       sessionQuestions: [],
@@ -232,7 +211,13 @@ export default {
       startAt: 0,
       timer: null,
       isPracticing: false,
-      activeDropdown: ''
+      activeDropdown: '',
+      practiceStartedAt: 0,
+      practiceElapsedSeconds: 0,
+      sessionAnsweredCount: 0,
+      sessionCorrectCount: 0,
+      sessionCompletedIds: [],
+      sessionAnswerMap: {}
     }
   },
   computed: {
@@ -270,6 +255,13 @@ export default {
     },
     studyText() {
       const total = (this.stats.totalStudySeconds || 0) + this.liveSeconds
+      const h = String(Math.floor(total / 3600)).padStart(2, '0')
+      const m = String(Math.floor((total % 3600) / 60)).padStart(2, '0')
+      const s = String(total % 60).padStart(2, '0')
+      return `${h}:${m}:${s}`
+    },
+    practiceStudyText() {
+      const total = this.practiceElapsedSeconds
       const h = String(Math.floor(total / 3600)).padStart(2, '0')
       const m = String(Math.floor((total % 3600) / 60)).padStart(2, '0')
       const s = String(total % 60).padStart(2, '0')
@@ -319,16 +311,69 @@ export default {
       this.currentArticleId = selected ? selected.value : this.currentArticleId
       this.closeDropdown()
     },
-    async startPractice() {
-      this.closeDropdown()
-      this.isPracticing = true
-      await this.refreshQuestionSet()
+    openMyPage(url) {
+      uni.navigateTo({ url })
+    },
+    buildPracticeRecord() {
+      if (!this.sessionAnsweredCount) {
+        return null
+      }
 
-      if (!this.sessionQuestions.length) {
-        this.isPracticing = false
+      const durationSeconds = this.getCurrentPracticeDuration()
+      const details = this.sessionQuestions.map((question, index) => {
+        const cached = this.sessionAnswerMap[question.id] || {}
+        const userAnswer = cached.result ? cached.result.userAnswer : ''
+        const isCorrect = cached.result ? cached.result.correct : false
+
+        return {
+          id: question.id,
+          order: index + 1,
+          articleLabel: question.articleLabel,
+          category: question.category,
+          stem: question.stem,
+          question: question.question,
+          options: question.options || [],
+          userAnswer,
+          userAnswerText: userAnswer ? this.showAnswer(question, userAnswer) : '未作答',
+          correctAnswer: question.answer,
+          correctAnswerText: this.showAnswer(question, question.answer),
+          isCorrect,
+          explanation: question.explanation
+        }
+      })
+      const uniqueAnsweredCount = this.sessionCompletedIds.length
+      const wrongCount = this.sessionAnsweredCount - this.sessionCorrectCount
+      const accuracy = this.sessionAnsweredCount ? Math.round((this.sessionCorrectCount / this.sessionAnsweredCount) * 100) : 0
+      const finishedAt = new Date().toISOString()
+
+      return {
+        id: `practice-${Date.now()}`,
+        finishedAt,
+        durationSeconds,
+        totalQuestionCount: this.sessionQuestions.length,
+        mode: this.practiceMode,
+        modeLabel: this.selectedModeLabel,
+        articleId: this.practiceMode === 'article' ? this.currentArticleId : '',
+        articleLabel: this.practiceMode === 'article' ? this.selectedArticleLabel : '全部混合',
+        answeredCount: this.sessionAnsweredCount,
+        uniqueAnsweredCount,
+        correctCount: this.sessionCorrectCount,
+        wrongCount,
+        accuracy,
+        details,
+        wrongDetails: details.filter((item) => !item.isCorrect)
       }
     },
-    exitPractice() {
+    getCurrentPracticeDuration() {
+      if (!this.practiceStartedAt) {
+        return this.practiceElapsedSeconds
+      }
+
+      const liveDuration = Math.floor((Date.now() - this.practiceStartedAt) / 1000)
+      const safeDuration = Math.max(this.practiceElapsedSeconds, liveDuration)
+      return this.sessionAnsweredCount ? Math.max(1, safeDuration) : safeDuration
+    },
+    clearPracticeView() {
       this.closeDropdown()
       this.isPracticing = false
       this.questionBank = []
@@ -337,6 +382,62 @@ export default {
       this.selectedOption = ''
       this.answered = false
       this.result = emptyResult()
+      this.resetPracticeSessionState()
+    },
+    resetPracticeSessionState() {
+      this.practiceStartedAt = 0
+      this.practiceElapsedSeconds = 0
+      this.sessionAnsweredCount = 0
+      this.sessionCorrectCount = 0
+      this.sessionCompletedIds = []
+      this.sessionAnswerMap = {}
+    },
+    async startPractice() {
+      this.closeDropdown()
+      this.practiceStartedAt = Date.now()
+      this.practiceElapsedSeconds = 0
+      this.sessionAnsweredCount = 0
+      this.sessionCorrectCount = 0
+      this.sessionCompletedIds = []
+      this.isPracticing = true
+      await this.refreshQuestionSet()
+
+      if (!this.sessionQuestions.length) {
+        this.resetPracticeSessionState()
+        this.isPracticing = false
+      }
+    },
+    finishPractice() {
+      const record = this.buildPracticeRecord()
+      if (record) {
+        addPracticeRecord(record)
+      }
+      const durationSeconds = this.getCurrentPracticeDuration()
+      if (durationSeconds > 0) {
+        this.stats = addStudySeconds(durationSeconds)
+      }
+
+      this.clearPracticeView()
+      uni.showToast({ title: '已完成答题', icon: 'success' })
+    },
+    exitPractice() {
+      uni.showModal({
+        title: '确认退出',
+        content: '退出后，本次答题进度将会消失，是否继续退出？',
+        confirmText: '退出',
+        cancelText: '继续答题',
+        success: ({ confirm }) => {
+          if (!confirm) {
+            return
+          }
+
+          const durationSeconds = this.getCurrentPracticeDuration()
+          if (durationSeconds > 0) {
+            this.stats = addStudySeconds(durationSeconds)
+          }
+          this.clearPracticeView()
+        }
+      })
     },
     syncWrongBookWithLatest() {
       let changed = false
@@ -393,6 +494,7 @@ export default {
         this.questionBank = base
         this.cacheQuestions(base)
         this.sessionQuestions = shuffleList(base)
+        this.sessionAnswerMap = {}
         this.currentIndex = 0
         this.selectedOption = ''
         this.answered = false
@@ -426,15 +528,17 @@ export default {
       }
     },
     next() {
-      if (this.sessionQuestions.length) {
-        this.resetForMove((this.currentIndex + 1) % this.sessionQuestions.length)
+      if (this.currentIndex < this.sessionQuestions.length - 1) {
+        this.resetForMove(this.currentIndex + 1)
       }
     },
     resetForMove(index) {
       this.currentIndex = index
-      this.selectedOption = ''
-      this.answered = false
-      this.result = emptyResult()
+      const currentQuestion = this.sessionQuestions[index]
+      const cached = currentQuestion ? this.sessionAnswerMap[currentQuestion.id] : null
+      this.selectedOption = cached ? cached.selectedOption : ''
+      this.answered = cached ? cached.answered : false
+      this.result = cached ? { ...cached.result } : emptyResult()
     },
     submit() {
       if (!this.question) {
@@ -449,6 +553,21 @@ export default {
       const correct = userAnswer === this.question.answer
       this.answered = true
       this.result = { correct, userAnswer }
+      this.sessionAnswerMap = {
+        ...this.sessionAnswerMap,
+        [this.question.id]: {
+          selectedOption: userAnswer,
+          answered: true,
+          result: { correct, userAnswer }
+        }
+      }
+      const nextCompletedIds = new Set(this.sessionCompletedIds)
+      nextCompletedIds.add(this.question.id)
+      this.sessionCompletedIds = [...nextCompletedIds]
+      this.sessionAnsweredCount += 1
+      if (correct) {
+        this.sessionCorrectCount += 1
+      }
 
       const ids = new Set(this.stats.completedQuestionIds || [])
       ids.add(this.question.id)
@@ -483,22 +602,19 @@ export default {
       this.liveSeconds = 0
       this.timer = setInterval(() => {
         this.liveSeconds = Math.floor((Date.now() - this.startAt) / 1000)
+        if (this.isPracticing && this.practiceStartedAt) {
+          this.practiceElapsedSeconds = Math.floor((Date.now() - this.practiceStartedAt) / 1000)
+        }
       }, 1000)
     },
     stopTimer() {
       if (!this.startAt) {
         return
       }
-      const extra = Math.floor((Date.now() - this.startAt) / 1000)
       clearInterval(this.timer)
       this.timer = null
       this.startAt = 0
       this.liveSeconds = 0
-      this.stats = {
-        ...this.stats,
-        totalStudySeconds: (this.stats.totalStudySeconds || 0) + extra
-      }
-      saveStats(this.stats)
     },
     formatDate(value) {
       const date = new Date(value)
@@ -521,14 +637,18 @@ export default {
 .page.with-bottom-tabs{padding-bottom:152rpx}
 .card{background:#fff;border-radius:24rpx;padding:24rpx;margin-bottom:20rpx;box-shadow:0 12rpx 32rpx rgba(0,0,0,.06)}
 .hero{background:radial-gradient(circle at top left,rgba(255,227,182,.65),transparent 36%),linear-gradient(135deg,#fff4df,#ffffff);padding:28rpx 30rpx}
-.hero-body{display:flex;align-items:flex-start}
+.hero-inline{margin-bottom:20rpx}
+.hero-body{display:flex;align-items:center;gap:22rpx}
+.hero-logo{width:192rpx;height:192rpx;flex:none}
+.practice-hero{display:flex;justify-content:center;align-items:center;padding:10rpx 24rpx;background:#fff}
+.practice-hero-logo{width:180rpx;height:180rpx}
 .hero-copy{flex:1;min-width:0}
 .title{display:block;font-size:42rpx;font-weight:700;color:#233447}
 .sub,.meta,.k,.hero-desc{display:block;color:#64748b}
 .sub,.plain,.meta,.question,.result text,.hero-desc{line-height:1.7}
 .sub{margin-top:8rpx}
 .hero-desc{font-size:25rpx;margin-top:10rpx;color:#52708b}
-.tabs,.actions,.head,.stats,.my-switch{display:flex;gap:12rpx;flex-wrap:wrap}
+.tabs,.actions,.head,.stats{display:flex;gap:12rpx;flex-wrap:wrap}
 .filters{display:flex;flex-direction:column;gap:16rpx}
 .tab,.picker,.stat,.option,.result,.picker-button{border-radius:18rpx}
 .tab{flex:1;text-align:center;padding:18rpx 0;background:#eef2f7;color:#51606f}
@@ -538,9 +658,12 @@ export default {
 .bottom-tab.on{background:linear-gradient(180deg,#f3f8ff,#eef7f4);color:#1f7a59;box-shadow:inset 0 0 0 2rpx rgba(62,157,115,.08)}
 .tab-icon{width:40rpx;height:40rpx}
 .tab-label{font-size:24rpx;font-weight:600;line-height:1.2}
-.my-switch{margin-bottom:20rpx;padding:10rpx;background:#f7f9fc;border-radius:20rpx}
-.my-switch-item{flex:1;text-align:center;padding:16rpx 0;border-radius:16rpx;font-size:26rpx;color:#607080;background:transparent}
-.my-switch-item.on{background:#243447;color:#fff;box-shadow:0 10rpx 22rpx rgba(36,52,71,.12)}
+.my-entry-list{display:flex;flex-direction:column;gap:14rpx}
+.my-entry{display:flex;align-items:center;justify-content:space-between;gap:18rpx;padding:24rpx 22rpx;background:#f7f9fc;border:2rpx solid #e1e7ef;border-radius:20rpx;box-shadow:0 8rpx 22rpx rgba(53,74,98,.05)}
+.my-entry-copy{display:flex;flex-direction:column;gap:6rpx;min-width:0}
+.my-entry-title{font-size:30rpx;font-weight:700;color:#243447}
+.my-entry-desc{font-size:24rpx;line-height:1.6;color:#64748b}
+.my-entry-arrow{font-size:42rpx;line-height:1;color:#90a0b2}
 .setup{display:flex;flex-direction:column;gap:14rpx}
 .setup-row{position:relative;display:flex;align-items:center;justify-content:space-between;gap:20rpx;padding:10rpx 2rpx}
 .setup-row.open{z-index:70}
@@ -568,6 +691,8 @@ export default {
 .word-stem{display:block;margin-top:14rpx;font-size:44rpx;font-weight:700;color:#1d4d7a;letter-spacing:1rpx}
 .word-stem.small{font-size:34rpx}
 .question{margin-top:10rpx}
+.question-status{display:flex;align-items:center;justify-content:space-between;gap:16rpx;margin:22rpx 0 18rpx}
+.question-order-current{font-size:36rpx;font-weight:700;color:#243447}
 .option{display:flex;gap:16rpx;padding:18rpx;background:#f8fafc;margin-top:12rpx;border:2rpx solid transparent}
 .option.on{border-color:#f6b35e;background:#fff4e5}
 .option.ok{border-color:#39a56d;background:#eaf8f1}
@@ -588,6 +713,9 @@ export default {
 .stats .stat{width:calc(50% - 6rpx);padding:20rpx;background:#f8fafc}
 .v{display:block;font-size:34rpx;font-weight:700;color:#243447;margin-top:8rpx}
 @media (max-width: 640px){
+  .hero-body{align-items:flex-start}
+  .hero-logo{width:162rpx;height:162rpx}
+  .practice-hero-logo{width:156rpx;height:156rpx}
   .title{font-size:38rpx}
 }
 </style>

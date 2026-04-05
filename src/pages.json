@@ -8,6 +8,22 @@
         "navigationBarBackgroundColor": "#FFF7EC",
         "navigationBarTextStyle": "black"
       }
+    },
+    {
+      "path": "pages/wrong-book/index",
+      "style": {
+        "navigationBarTitleText": "错题本",
+        "navigationBarBackgroundColor": "#FFF7EC",
+        "navigationBarTextStyle": "black"
+      }
+    },
+    {
+      "path": "pages/stats/index",
+      "style": {
+        "navigationBarTitleText": "统计",
+        "navigationBarBackgroundColor": "#FFF7EC",
+        "navigationBarTextStyle": "black"
+      }
     }
   ],
   "globalStyle": {

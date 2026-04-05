@@ -1,5 +1,6 @@
 const WRONG_BOOK_KEY = 'english-practice-wrong-book'
 const STATS_KEY = 'english-practice-stats'
+const PRACTICE_RECORDS_KEY = 'english-practice-records'
 
 const defaultStats = {
   answeredCount: 0,
@@ -78,4 +79,30 @@ export function saveStats(stats) {
     ...defaultStats,
     ...stats
   })
+}
+
+export function addStudySeconds(seconds) {
+  const safeSeconds = Math.max(0, Number(seconds || 0))
+  const stats = getStats()
+  const nextStats = {
+    ...stats,
+    totalStudySeconds: (stats.totalStudySeconds || 0) + safeSeconds
+  }
+  saveStats(nextStats)
+  return nextStats
+}
+
+export function getPracticeRecords() {
+  return uni.getStorageSync(PRACTICE_RECORDS_KEY) || []
+}
+
+export function savePracticeRecords(records) {
+  uni.setStorageSync(PRACTICE_RECORDS_KEY, records)
+}
+
+export function addPracticeRecord(record) {
+  const records = getPracticeRecords()
+  const nextRecords = [record].concat(records).slice(0, 50)
+  savePracticeRecords(nextRecords)
+  return nextRecords
 }
