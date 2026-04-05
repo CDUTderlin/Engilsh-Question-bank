@@ -6,8 +6,7 @@
           <image class="hero-logo" :src="heroLogo" mode="aspectFit" />
           <view class="hero-copy">
             <text class="title">Snowy Enligsh</text>
-            <text class="sub">25 篇教材文章词汇题，支持按文章练习和混合刷题。</text>
-            <text class="hero-desc">题目优先选取高考常考词汇和短语，并在每次进入时自动打乱顺序。</text>
+            <text class="sub">本题库由唐雪雪老师精心挑选，包含了25篇精选教材文章的词汇题。</text>
           </view>
         </view>
       </view>
@@ -165,8 +164,9 @@ import { getLookupKey, getWordAudioUrls, getWordSynonyms } from '../../utils/wor
 const modeValues = ['article', 'mixed']
 const modeMap = {
   article: '按文章出题',
-  mixed: '全部混合'
+  mixed: '混合出题'
 }
+const MIXED_QUESTION_COUNT = 25
 const emptyResult = () => ({ correct: false, userAnswer: '' })
 
 function shuffleList(list) {
@@ -540,7 +540,7 @@ export default {
         mode: this.practiceMode,
         modeLabel: this.selectedModeLabel,
         articleId: this.practiceMode === 'article' ? this.currentArticleId : '',
-        articleLabel: this.practiceMode === 'article' ? this.selectedArticleLabel : '全部混合',
+        articleLabel: this.practiceMode === 'article' ? this.selectedArticleLabel : '混合出题',
         answeredCount: this.sessionAnsweredCount,
         uniqueAnsweredCount,
         correctCount: this.sessionCorrectCount,
@@ -678,9 +678,14 @@ export default {
           return
         }
 
-        this.questionBank = base
-        this.cacheQuestions(base)
-        this.sessionQuestions = shuffleList(base)
+        const currentSet =
+          this.practiceMode === 'mixed'
+            ? shuffleList(base).slice(0, MIXED_QUESTION_COUNT)
+            : shuffleList(base)
+
+        this.questionBank = currentSet
+        this.cacheQuestions(currentSet)
+        this.sessionQuestions = currentSet
         this.sessionAnswerMap = {}
         this.currentIndex = 0
         this.selectedOption = ''
@@ -909,7 +914,7 @@ export default {
 .stats .stat{width:calc(50% - 6rpx);padding:20rpx;background:#f8fafc}
 .v{display:block;font-size:34rpx;font-weight:700;color:#243447;margin-top:8rpx}
 @media (max-width: 640px){
-  .hero-body{align-items:flex-start}
+  .hero-body{align-items:center}
   .hero-logo{width:162rpx;height:162rpx}
   .practice-hero-logo{width:156rpx;height:156rpx}
   .title{font-size:38rpx}

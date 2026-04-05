@@ -4,11 +4,10 @@ const MAX_SYNONYMS = 2
 
 // 国内优先：
 // 1. 读音：直接走有道词典语音地址，免密钥，国内访问更稳。
-// 2. 近义词：建议走你自己的后端/云函数代理国内词典服务，避免把密钥放前端。
+// 2. 近义词：走可在国内访问的公开接口 Datamuse，前端可直接请求。
 const WORD_NETWORK_CONFIG = {
   audioBaseUrl: 'https://dict.youdao.com/dictvoice',
-  audioType: 2,
-  synonymProxyUrl: ''
+  audioType: 2
 }
 
 let memoryCache = null
@@ -119,23 +118,21 @@ async function loadAudioUrls(stem) {
 }
 
 async function loadSynonyms(stem) {
-  if (!WORD_NETWORK_CONFIG.synonymProxyUrl) {
-    return []
-  }
-
   const normalized = normalizeStem(stem)
   if (!normalized) {
     return []
   }
 
-  const payload = await requestJson(WORD_NETWORK_CONFIG.synonymProxyUrl, { stem: normalized, max: MAX_SYNONYMS })
-  const rawSynonyms =
-    (payload && payload.synonyms) ||
-    (payload && payload.data && payload.data.synonyms) ||
-    []
+  const exact = await requestJson(`https://api.datamuse.com/words?rel_syn=${encodeURIComponent(normalized)}&max=${MAX_SYNONYMS}`)
+  let rawSynonyms = Array.isArray(exact) ? exact.map((item) => item && item.word) : []
+
+  if (!rawSynonyms.length) {
+    const similar = await requestJson(`https://api.datamuse.com/words?ml=${encodeURIComponent(normalized)}&max=${MAX_SYNONYMS}`)
+    rawSynonyms = Array.isArray(similar) ? similar.map((item) => item && item.word) : []
+  }
 
   return uniq(
-    (Array.isArray(rawSynonyms) ? rawSynonyms : [])
+    rawSynonyms
       .map((item) => String(item || '').trim())
       .filter((item) => item && item.toLowerCase() !== normalized)
   ).slice(0, MAX_SYNONYMS)

@@ -140,13 +140,27 @@
         <view v-for="item in filteredWrongBook" :key="item.id" class="wrong">
           <text class="meta">{{ item.articleLabel || item.articleTitle || item.category }} · 单选题</text>
           <text class="meta">{{ item.category }}</text>
-          <text class="word-stem">{{ item.stem || item.question }}</text>
+          <view class="word-head">
+            <text class="word-stem">{{ item.stem || item.question }}</text>
+            <view class="speaker-btn" :class="{ disabled: isWrongAudioLoading(item) || !hasWrongAudio(item), playing: isPlayingWrongStem(item) }" @tap="playWrongPronunciation(item)" @click="playWrongPronunciation(item)">
+              <text class="speaker-icon">🔊</text>
+            </view>
+          </view>
           <text class="question">{{ item.question }}</text>
-          <text v-for="option in item.options" :key="option.key" class="plain">{{ option.key }}. {{ option.text }}</text>
+          <view class="option-grid">
+            <view v-for="option in item.options" :key="option.key" class="option-cell">
+              <text class="option-key">{{ option.key }}</text>
+              <text class="option-text">{{ option.text }}</text>
+            </view>
+          </view>
           <text class="plain">正确答案：{{ showAnswer(item, item.correctAnswer) }}</text>
           <text class="plain">最近一次答案：{{ showAnswer(item, item.userAnswer) || '未作答' }}</text>
+          <text class="plain">近义词：{{ getWrongSynonymText(item) }}</text>
           <text class="plain">解析：{{ item.explanation }}</text>
-          <text class="meta">错误次数：{{ item.wrongCount }} · {{ formatDate(item.updatedAt) }}</text>
+          <view class="wrong-foot">
+            <text class="meta">错误次数：{{ item.wrongCount }}</text>
+            <text class="meta wrong-time">{{ formatDate(item.updatedAt) }}</text>
+          </view>
           <button class="ghost mini" @tap="removeWrong(item.id)">移除</button>
         </view>
       </view>
@@ -161,6 +175,7 @@
 <script>
 import { articleOptions } from '../../data/question-bank'
 import { addStudySeconds, clearWrongBook, getWrongBook, removeWrongQuestion } from '../../utils/storage'
+import { getLookupKey, getWordAudioUrls, getWordSynonyms } from '../../utils/word-network'
 
 export default {
   data() {
@@ -180,7 +195,11 @@ export default {
       sortDirection: 'desc',
       draftSortField: 'time',
       draftSortDirection: 'desc',
-      pageStartedAt: 0
+      pageStartedAt: 0,
+      wordNetworkMap: {},
+      audioContext: null,
+      audioQueue: [],
+      playingStemKey: ''
     }
   },
   computed: {
@@ -258,12 +277,15 @@ export default {
     this.wrongBook = getWrongBook()
     this.activePanel = ''
     this.pageStartedAt = Date.now()
+    this.hydrateWrongWordNetwork(this.wrongBook)
   },
   onHide() {
     this.flushStudyTime()
+    this.stopPronunciationPlayback()
   },
   onUnload() {
     this.flushStudyTime()
+    this.stopPronunciationPlayback(true)
   },
   methods: {
     flushStudyTime() {
@@ -277,6 +299,182 @@ export default {
       const option = (item.options || []).find((entry) => entry.key === answerKey)
       return option ? `${option.key}. ${option.text}` : answerKey
     },
+    getWordNetworkEntry(stem) {
+      const key = getLookupKey(stem)
+      return key ? this.wordNetworkMap[key] || null : null
+    },
+    updateWordNetwork(stem, patch) {
+      const key = getLookupKey(stem)
+      if (!key) {
+        return null
+      }
+
+      this.wordNetworkMap = {
+        ...this.wordNetworkMap,
+        [key]: {
+          ...(this.wordNetworkMap[key] || {}),
+          ...patch
+        }
+      }
+
+      return this.wordNetworkMap[key]
+    },
+    ensureAudioContext() {
+      if (this.audioContext) {
+        return this.audioContext
+      }
+
+      const audioContext = uni.createInnerAudioContext()
+      audioContext.autoplay = false
+      audioContext.obeyMuteSwitch = false
+      audioContext.onEnded(() => {
+        this.playNextAudioInQueue()
+      })
+      audioContext.onStop(() => {
+        if (!this.audioQueue.length) {
+          this.playingStemKey = ''
+        }
+      })
+      audioContext.onError(() => {
+        this.playNextAudioInQueue()
+      })
+      this.audioContext = audioContext
+      return audioContext
+    },
+    playNextAudioInQueue() {
+      const nextUrl = this.audioQueue.shift()
+      if (!nextUrl) {
+        this.playingStemKey = ''
+        return
+      }
+
+      const audioContext = this.ensureAudioContext()
+      audioContext.src = nextUrl
+      audioContext.play()
+    },
+    stopPronunciationPlayback(destroy = false) {
+      this.audioQueue = []
+      this.playingStemKey = ''
+
+      if (!this.audioContext) {
+        return
+      }
+
+      this.audioContext.stop()
+      if (destroy) {
+        this.audioContext.destroy()
+        this.audioContext = null
+      }
+    },
+    async ensureWrongAudio(item) {
+      if (!item || !item.stem) {
+        return
+      }
+
+      const current = this.getWordNetworkEntry(item.stem)
+      if (current && (current.audioLoading || Array.isArray(current.audioUrls))) {
+        return
+      }
+
+      this.updateWordNetwork(item.stem, { audioLoading: true })
+
+      try {
+        const audioUrls = await getWordAudioUrls(item.stem)
+        this.updateWordNetwork(item.stem, {
+          audioUrls: Array.isArray(audioUrls) ? audioUrls : [],
+          audioLoading: false
+        })
+      } catch (error) {
+        this.updateWordNetwork(item.stem, {
+          audioUrls: [],
+          audioLoading: false
+        })
+      }
+    },
+    async ensureWrongSynonyms(item) {
+      if (!item || !item.stem) {
+        return
+      }
+
+      const current = this.getWordNetworkEntry(item.stem)
+      if (current && (current.synonymsLoading || current.synonymsFetched)) {
+        return
+      }
+
+      this.updateWordNetwork(item.stem, { synonymsLoading: true })
+
+      try {
+        const synonyms = await getWordSynonyms(item.stem)
+        this.updateWordNetwork(item.stem, {
+          synonyms: Array.isArray(synonyms) ? synonyms : [],
+          synonymsFetched: true,
+          synonymsLoading: false
+        })
+      } catch (error) {
+        this.updateWordNetwork(item.stem, {
+          synonyms: [],
+          synonymsFetched: true,
+          synonymsLoading: false
+        })
+      }
+    },
+    hydrateWrongWordNetwork(list) {
+      ;(list || []).forEach((item) => {
+        this.ensureWrongAudio(item)
+        this.ensureWrongSynonyms(item)
+      })
+    },
+    hasWrongAudio(item) {
+      const current = this.getWordNetworkEntry(item && item.stem)
+      return Boolean(current && Array.isArray(current.audioUrls) && current.audioUrls.length)
+    },
+    isWrongAudioLoading(item) {
+      const current = this.getWordNetworkEntry(item && item.stem)
+      return Boolean(current && current.audioLoading)
+    },
+    getWrongSynonymText(item) {
+      const current = this.getWordNetworkEntry(item && item.stem)
+      if (!current) {
+        return '获取中...'
+      }
+
+      if (current.synonymsLoading) {
+        return '获取中...'
+      }
+
+      if (Array.isArray(current.synonyms) && current.synonyms.length) {
+        return current.synonyms.join(' / ')
+      }
+
+      return current.synonymsFetched ? '暂未获取到' : '获取中...'
+    },
+    isPlayingWrongStem(item) {
+      return this.playingStemKey && this.playingStemKey === getLookupKey(item && item.stem)
+    },
+    playWrongPronunciation(item) {
+      if (!item || !item.stem) {
+        return
+      }
+
+      if (this.isWrongAudioLoading(item)) {
+        uni.showToast({ title: '读音获取中', icon: 'none' })
+        return
+      }
+
+      const current = this.getWordNetworkEntry(item.stem)
+      const audioUrls = current && Array.isArray(current.audioUrls) ? current.audioUrls.filter(Boolean) : []
+      if (!audioUrls.length) {
+        uni.showToast({ title: '暂未获取到音频', icon: 'none' })
+        return
+      }
+
+      this.stopPronunciationPlayback()
+      this.audioQueue = audioUrls.slice(1)
+      this.playingStemKey = getLookupKey(item.stem)
+      const audioContext = this.ensureAudioContext()
+      audioContext.src = audioUrls[0]
+      audioContext.play()
+    },
     clearWrongs() {
       uni.showModal({
         title: '确认清空',
@@ -286,6 +484,8 @@ export default {
         success: ({ confirm }) => {
           if (confirm) {
             this.wrongBook = clearWrongBook()
+            this.wordNetworkMap = {}
+            this.stopPronunciationPlayback()
           }
         }
       })
@@ -363,6 +563,10 @@ export default {
         success: ({ confirm }) => {
           if (confirm) {
             this.wrongBook = removeWrongQuestion(id)
+            this.hydrateWrongWordNetwork(this.wrongBook)
+            if (!this.wrongBook.some((item) => this.isPlayingWrongStem(item))) {
+              this.stopPronunciationPlayback()
+            }
           }
         }
       })
@@ -420,8 +624,19 @@ export default {
 .meta,.plain,.question{display:block;font-size:28rpx;line-height:1.7;color:#334155}
 .meta{font-size:24rpx;color:#64748b}
 .wrong{margin-top:18rpx;padding:22rpx;background:#f8fafc;border-radius:20rpx}
-.word-stem{display:block;margin-top:14rpx;font-size:34rpx;font-weight:700;color:#1d4d7a}
+.word-head{display:flex;align-items:center;gap:14rpx;margin-top:14rpx}
+.word-stem{display:block;flex:1;min-width:0;font-size:34rpx;font-weight:700;color:#1d4d7a}
 .question{margin-top:10rpx}
+.option-grid{display:flex;flex-wrap:wrap;gap:14rpx 0;margin-top:14rpx;padding:16rpx 14rpx;background:#f3f7fb;border:2rpx solid #e3ebf3;border-radius:16rpx}
+.option-cell{display:flex;align-items:flex-start;gap:12rpx;box-sizing:border-box;width:50%;padding:8rpx 10rpx}
+.option-key{flex:none;display:flex;align-items:center;justify-content:center;width:40rpx;height:40rpx;border-radius:50%;background:#e7eef7;font-size:22rpx;font-weight:700;line-height:1;color:#294766}
+.option-text{flex:1;min-width:0;font-size:25rpx;line-height:1.7;color:#334155;word-break:break-word}
+.wrong-foot{display:flex;align-items:center;justify-content:space-between;gap:16rpx;margin-top:8rpx}
+.wrong-time{text-align:right}
+.speaker-btn{flex:none;display:flex;align-items:center;justify-content:center;width:52rpx;height:52rpx;border-radius:50%;background:#eef6ff;border:2rpx solid #d4e4f8}
+.speaker-btn.disabled{opacity:.45}
+.speaker-btn.playing{background:#e6fff1;border-color:#9bd4b2}
+.speaker-icon{font-size:26rpx;line-height:1}
 .ghost{margin:0;border-radius:999rpx;font-size:28rpx;background:#fff;color:#435163;border:2rpx solid #d8e0ea}
 .primary{margin:0;border-radius:999rpx;font-size:28rpx;background:#e47d36;color:#fff}
 .mini{flex:none;min-width:140rpx;font-size:24rpx}
@@ -431,6 +646,8 @@ export default {
 @media (max-width: 560px){
   .filters{padding:18rpx}
   .filter-bar{gap:16rpx}
-  .filter-trigger{flex-basis:100%;max-width:none;font-size:26rpx}
+  .filter-trigger{flex:1 1 0;max-width:none;min-width:0;font-size:24rpx;padding:14rpx 12rpx}
+  .filter-trigger-text{font-size:23rpx}
+  .option-cell{width:100%;padding-right:0}
 }
 </style>
