@@ -1,5 +1,5 @@
 <template>
-  <view class="page">
+  <view class="page" :class="{ 'with-bottom-tabs': !isPracticing }">
     <view class="hero card">
       <view class="hero-body">
         <view class="hero-copy">
@@ -10,22 +10,69 @@
       </view>
     </view>
 
-    <view class="tabs">
-      <view v-for="item in tabs" :key="item" class="tab" :class="{ on: tab === item }" @tap="tab = item">{{ item }}</view>
-    </view>
-
     <view v-if="tab === '刷题'" class="card">
-      <view class="filters">
-        <picker :range="modeLabels" :value="findIndex(modeLabels, selectedModeLabel)" @change="setMode">
-          <view class="picker">模式：{{ selectedModeLabel }}</view>
-        </picker>
-        <picker v-if="practiceMode === 'article'" :range="articleLabels" :value="selectedArticleIndex" @change="setArticle">
-          <view class="picker">文章：{{ selectedArticleLabel }}</view>
-        </picker>
+      <view v-if="!isPracticing" class="setup">
+        <text class="title2">开始新的练习</text>
+        <text class="meta">先选择刷题模式，再开始答题。</text>
+        <view class="filters">
+          <view class="setup-row" :class="{ open: activeDropdown === 'mode' }">
+            <text class="setup-label">模式：</text>
+            <view class="picker-trigger">
+              <view class="picker-button" @tap.stop="toggleDropdown('mode')" @click.stop="toggleDropdown('mode')">
+                <text class="picker-value">{{ selectedModeLabel }}</text>
+                <text class="picker-arrow" :class="{ open: activeDropdown === 'mode' }">▼</text>
+              </view>
+              <view v-if="activeDropdown === 'mode'" class="dropdown-menu" @tap.stop>
+                <view
+                  v-for="item in modeOptions"
+                  :key="item.value"
+                  class="dropdown-item"
+                  :class="{ on: practiceMode === item.value }"
+                  @tap.stop="selectMode(item.value)"
+                  @click.stop="selectMode(item.value)"
+                >
+                  <text class="dropdown-text">{{ item.label }}</text>
+                  <text v-if="practiceMode === item.value" class="dropdown-check">✓</text>
+                </view>
+              </view>
+            </view>
+          </view>
+          <view v-if="practiceMode === 'article'" class="setup-row" :class="{ open: activeDropdown === 'article' }">
+            <text class="setup-label">文章：</text>
+            <view class="picker-trigger">
+              <view class="picker-button" @tap.stop="toggleDropdown('article')" @click.stop="toggleDropdown('article')">
+                <text class="picker-value">{{ selectedArticleLabel }}</text>
+                <text class="picker-arrow" :class="{ open: activeDropdown === 'article' }">▼</text>
+              </view>
+              <scroll-view v-if="activeDropdown === 'article'" class="dropdown-menu article-menu" scroll-y @tap.stop>
+                <view
+                  v-for="(label, index) in articleLabels"
+                  :key="label"
+                  class="dropdown-item"
+                  :class="{ on: selectedArticleIndex === index }"
+                  @tap.stop="selectArticle(index)"
+                  @click.stop="selectArticle(index)"
+                >
+                  <text class="dropdown-text">{{ label }}</text>
+                  <text v-if="selectedArticleIndex === index" class="dropdown-check">✓</text>
+                </view>
+              </scroll-view>
+            </view>
+          </view>
+        </view>
+        <button class="primary start-btn" :disabled="isLoading" @tap="startPractice">
+          {{ isLoading ? '题库加载中...' : '开始答题' }}
+        </button>
       </view>
-
-      <view v-if="isLoading" class="empty">题库加载中...</view>
+      <view v-else-if="isLoading" class="empty">题库加载中...</view>
       <view v-else-if="question">
+        <view class="head practice-head">
+          <view>
+            <text class="meta">当前模式：{{ selectedModeLabel }}</text>
+            <text class="meta" v-if="practiceMode === 'article'">当前文章：{{ selectedArticleLabel }}</text>
+          </view>
+          <button class="ghost mini exit-btn" @tap="exitPractice">退出答题</button>
+        </view>
         <text class="meta">{{ question.articleLabel }} · {{ question.category }} · 单选题</text>
         <text class="meta">当前题集：{{ sessionQuestions.length }} 题</text>
         <text class="meta">第 {{ currentIndex + 1 }} / {{ sessionQuestions.length }} 题</text>
@@ -66,41 +113,64 @@
       <view v-else class="empty">当前模式下暂无题目</view>
     </view>
 
-    <view v-if="tab === '错题本'" class="card">
-      <view class="head">
-        <text class="title2">错题本</text>
-        <button class="ghost mini" :disabled="!wrongBook.length" @tap="clearWrongs">清空</button>
-      </view>
-      <view v-if="wrongBook.length">
-        <view v-for="item in wrongBook" :key="item.id" class="wrong">
-          <text class="meta">{{ item.articleLabel || item.articleTitle || item.category }} · 单选题</text>
-          <text class="meta">{{ item.category }}</text>
-          <text class="word-stem small">{{ item.stem || item.question }}</text>
-          <text class="question">{{ item.question }}</text>
-          <text v-for="option in item.options" :key="option.key" class="plain">{{ option.key }}. {{ option.text }}</text>
-          <text class="plain">正确答案：{{ showAnswer(item, item.correctAnswer) }}</text>
-          <text class="plain">你的答案：{{ showAnswer(item, item.userAnswer) || '未作答' }}</text>
-          <text class="plain">解析：{{ item.explanation }}</text>
-          <text class="meta">错误次数：{{ item.wrongCount }} · {{ formatDate(item.updatedAt) }}</text>
-          <button class="ghost mini" @tap="removeWrong(item.id)">移除</button>
+    <view v-if="tab === '我的'" class="card">
+      <view class="my-switch">
+        <view
+          v-for="item in mySections"
+          :key="item"
+          class="my-switch-item"
+          :class="{ on: mySection === item }"
+          @tap="mySection = item"
+        >
+          {{ item }}
         </view>
       </view>
-      <view v-else class="empty">错题会自动记录到这里</view>
+
+      <view v-if="mySection === '错题本'">
+        <view class="head">
+          <text class="title2">错题本</text>
+          <button class="ghost mini" :disabled="!wrongBook.length" @tap="clearWrongs">清空</button>
+        </view>
+        <view v-if="wrongBook.length">
+          <view v-for="item in wrongBook" :key="item.id" class="wrong">
+            <text class="meta">{{ item.articleLabel || item.articleTitle || item.category }} · 单选题</text>
+            <text class="meta">{{ item.category }}</text>
+            <text class="word-stem small">{{ item.stem || item.question }}</text>
+            <text class="question">{{ item.question }}</text>
+            <text v-for="option in item.options" :key="option.key" class="plain">{{ option.key }}. {{ option.text }}</text>
+            <text class="plain">正确答案：{{ showAnswer(item, item.correctAnswer) }}</text>
+            <text class="plain">你的答案：{{ showAnswer(item, item.userAnswer) || '未作答' }}</text>
+            <text class="plain">解析：{{ item.explanation }}</text>
+            <text class="meta">错误次数：{{ item.wrongCount }} · {{ formatDate(item.updatedAt) }}</text>
+            <button class="ghost mini" @tap="removeWrong(item.id)">移除</button>
+          </view>
+        </view>
+        <view v-else class="empty">错题会自动记录到这里</view>
+      </view>
+
+      <view v-else>
+        <text class="title2">学习统计</text>
+        <view class="stats">
+          <view class="stat"><text class="k">学习时长</text><text class="v">{{ studyText }}</text></view>
+          <view class="stat"><text class="k">完成题目</text><text class="v">{{ completedCount }}</text></view>
+          <view class="stat"><text class="k">作答次数</text><text class="v">{{ stats.answeredCount }}</text></view>
+          <view class="stat"><text class="k">正确率</text><text class="v">{{ accuracy }}%</text></view>
+        </view>
+        <text class="meta">文章总数：{{ articleOptions.length }} 篇</text>
+        <text class="meta">最近练习：{{ lastPractice }}</text>
+        <view class="bar large"><view class="fill warm" :style="{ width: overallProgress + '%' }"></view></view>
+        <text class="meta">总进度：{{ completedCount }} / {{ totalQuestionCount }}</text>
+      </view>
     </view>
 
-    <view v-if="tab === '统计'" class="card">
-      <text class="title2">学习统计</text>
-      <view class="stats">
-        <view class="stat"><text class="k">学习时长</text><text class="v">{{ studyText }}</text></view>
-        <view class="stat"><text class="k">完成题目</text><text class="v">{{ completedCount }}</text></view>
-        <view class="stat"><text class="k">作答次数</text><text class="v">{{ stats.answeredCount }}</text></view>
-        <view class="stat"><text class="k">正确率</text><text class="v">{{ accuracy }}%</text></view>
+    <view v-if="!isPracticing" class="tabs bottom-tabs">
+      <view v-for="item in bottomTabs" :key="item.key" class="tab bottom-tab" :class="{ on: tab === item.key }" @tap="tab = item.key">
+        <image class="tab-icon" :src="tab === item.key ? item.activeIcon : item.icon" mode="aspectFit" />
+        <text class="tab-label">{{ item.label }}</text>
       </view>
-      <text class="meta">文章总数：{{ articleOptions.length }} 篇</text>
-      <text class="meta">最近练习：{{ lastPractice }}</text>
-      <view class="bar large"><view class="fill warm" :style="{ width: overallProgress + '%' }"></view></view>
-      <text class="meta">总进度：{{ completedCount }} / {{ totalQuestionCount }}</text>
     </view>
+
+    <view v-if="activeDropdown" class="select-overlay" @tap="closeDropdown" @click="closeDropdown"></view>
   </view>
 </template>
 
@@ -126,14 +196,26 @@ function shuffleList(list) {
   return result
 }
 
+const practiceIcon = require('../../static/tab-practice.svg')
+const practiceActiveIcon = require('../../static/tab-practice-active.svg')
+const profileIcon = require('../../static/tab-profile.svg')
+const profileActiveIcon = require('../../static/tab-profile-active.svg')
+
 export default {
   data() {
     return {
       questionBank: [],
       articleOptions,
+      modeOptions: modeValues.map((value) => ({ value, label: modeMap[value] })),
       totalQuestionCount,
-      tabs: ['刷题', '错题本', '统计'],
+      tabs: ['刷题', '我的'],
+      bottomTabs: [
+        { key: '刷题', label: '刷题', icon: practiceIcon, activeIcon: practiceActiveIcon },
+        { key: '我的', label: '我的', icon: profileIcon, activeIcon: profileActiveIcon }
+      ],
       tab: '刷题',
+      mySections: ['错题本', '统计'],
+      mySection: '错题本',
       practiceMode: 'article',
       currentArticleId: articleOptions[0] ? articleOptions[0].value : '',
       sessionQuestions: [],
@@ -148,7 +230,9 @@ export default {
       loadVersion: 0,
       liveSeconds: 0,
       startAt: 0,
-      timer: null
+      timer: null,
+      isPracticing: false,
+      activeDropdown: ''
     }
   },
   computed: {
@@ -195,23 +279,11 @@ export default {
       return this.stats.lastPracticedAt ? this.formatDate(this.stats.lastPracticedAt) : '暂无记录'
     }
   },
-  watch: {
-    practiceMode() {
-      this.refreshQuestionSet()
-    },
-    currentArticleId() {
-      if (this.practiceMode === 'article') {
-        this.refreshQuestionSet()
-      }
-    }
-  },
   onLoad() {
     this.loadLocalState()
-    this.refreshQuestionSet()
   },
   onShow() {
     this.startTimer()
-    this.refreshQuestionSet()
   },
   onHide() {
     this.stopTimer()
@@ -232,12 +304,39 @@ export default {
     findIndex(list, value) {
       return Math.max(list.indexOf(value), 0)
     },
-    setMode(event) {
-      this.practiceMode = modeValues[event.detail.value]
+    toggleDropdown(name) {
+      this.activeDropdown = this.activeDropdown === name ? '' : name
     },
-    setArticle(event) {
-      const selected = this.articleOptions[event.detail.value]
+    closeDropdown() {
+      this.activeDropdown = ''
+    },
+    selectMode(value) {
+      this.practiceMode = value
+      this.closeDropdown()
+    },
+    selectArticle(index) {
+      const selected = this.articleOptions[index]
       this.currentArticleId = selected ? selected.value : this.currentArticleId
+      this.closeDropdown()
+    },
+    async startPractice() {
+      this.closeDropdown()
+      this.isPracticing = true
+      await this.refreshQuestionSet()
+
+      if (!this.sessionQuestions.length) {
+        this.isPracticing = false
+      }
+    },
+    exitPractice() {
+      this.closeDropdown()
+      this.isPracticing = false
+      this.questionBank = []
+      this.sessionQuestions = []
+      this.currentIndex = 0
+      this.selectedOption = ''
+      this.answered = false
+      this.result = emptyResult()
     },
     syncWrongBookWithLatest() {
       let changed = false
@@ -418,7 +517,8 @@ export default {
 </script>
 
 <style>
-.page{min-height:100vh;padding:24rpx;background:linear-gradient(180deg,#fff8ef,#f1f5fb)}
+.page{min-height:100vh;padding:24rpx;box-sizing:border-box;background:linear-gradient(180deg,#fff8ef,#f1f5fb)}
+.page.with-bottom-tabs{padding-bottom:152rpx}
 .card{background:#fff;border-radius:24rpx;padding:24rpx;margin-bottom:20rpx;box-shadow:0 12rpx 32rpx rgba(0,0,0,.06)}
 .hero{background:radial-gradient(circle at top left,rgba(255,227,182,.65),transparent 36%),linear-gradient(135deg,#fff4df,#ffffff);padding:28rpx 30rpx}
 .hero-body{display:flex;align-items:flex-start}
@@ -428,11 +528,36 @@ export default {
 .sub,.plain,.meta,.question,.result text,.hero-desc{line-height:1.7}
 .sub{margin-top:8rpx}
 .hero-desc{font-size:25rpx;margin-top:10rpx;color:#52708b}
-.tabs,.filters,.actions,.head,.stats{display:flex;gap:12rpx;flex-wrap:wrap}
-.tab,.picker,.stat,.option,.result{border-radius:18rpx}
+.tabs,.actions,.head,.stats,.my-switch{display:flex;gap:12rpx;flex-wrap:wrap}
+.filters{display:flex;flex-direction:column;gap:16rpx}
+.tab,.picker,.stat,.option,.result,.picker-button{border-radius:18rpx}
 .tab{flex:1;text-align:center;padding:18rpx 0;background:#eef2f7;color:#51606f}
 .tab.on{background:#243447;color:#fff}
-.picker{padding:16rpx 18rpx;background:#f7f9fc;color:#3f4d5c;font-size:25rpx}
+.bottom-tabs{position:fixed;left:24rpx;right:24rpx;bottom:24rpx;z-index:20;align-items:center;padding:14rpx 18rpx;background:rgba(255,255,255,.96);border-radius:28rpx;box-shadow:0 14rpx 36rpx rgba(24,39,75,.12);backdrop-filter:blur(12px)}
+.bottom-tab{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8rpx;min-height:104rpx;padding:12rpx 0;background:transparent;color:#7b8794;transition:all .2s ease}
+.bottom-tab.on{background:linear-gradient(180deg,#f3f8ff,#eef7f4);color:#1f7a59;box-shadow:inset 0 0 0 2rpx rgba(62,157,115,.08)}
+.tab-icon{width:40rpx;height:40rpx}
+.tab-label{font-size:24rpx;font-weight:600;line-height:1.2}
+.my-switch{margin-bottom:20rpx;padding:10rpx;background:#f7f9fc;border-radius:20rpx}
+.my-switch-item{flex:1;text-align:center;padding:16rpx 0;border-radius:16rpx;font-size:26rpx;color:#607080;background:transparent}
+.my-switch-item.on{background:#243447;color:#fff;box-shadow:0 10rpx 22rpx rgba(36,52,71,.12)}
+.setup{display:flex;flex-direction:column;gap:14rpx}
+.setup-row{position:relative;display:flex;align-items:center;justify-content:space-between;gap:20rpx;padding:10rpx 2rpx}
+.setup-row.open{z-index:70}
+.setup-label{flex:none;font-size:28rpx;font-weight:600;color:#334155}
+.picker-trigger{position:relative;flex:1;min-width:0}
+.picker-button{display:flex;align-items:center;justify-content:space-between;padding:18rpx 22rpx;background:linear-gradient(180deg,#f8fbff,#f2f7fc);border:2rpx solid #dde6f0;box-shadow:0 10rpx 24rpx rgba(86,107,137,.08)}
+.picker-value{flex:1;min-width:0;font-size:26rpx;color:#314254}
+.picker-arrow{margin-left:20rpx;font-size:20rpx;color:#7a8a9a;transition:transform .2s ease}
+.picker-arrow.open{transform:rotate(180deg)}
+.dropdown-menu{position:absolute;top:calc(100% + 12rpx);left:0;right:0;width:100%;max-height:360rpx;padding:10rpx;box-sizing:border-box;background:#fff;border:2rpx solid #dde6f0;border-radius:22rpx;box-shadow:0 18rpx 36rpx rgba(26,44,72,.16);overflow:hidden;overflow-x:hidden;z-index:71}
+.article-menu{height:360rpx;width:100%}
+.dropdown-item{display:flex;align-items:center;justify-content:space-between;gap:16rpx;padding:18rpx 20rpx;border-radius:16rpx}
+.dropdown-item + .dropdown-item{margin-top:6rpx}
+.dropdown-item.on{background:#eef7f4}
+.dropdown-text{flex:1;font-size:26rpx;color:#334155;line-height:1.5}
+.dropdown-check{font-size:24rpx;font-weight:700;color:#1f7a59}
+.select-overlay{position:fixed;inset:0;background:rgba(15,23,42,.18);z-index:60}
 .bar{height:14rpx;background:#edf2f7;border-radius:999rpx;overflow:hidden;margin:12rpx 0 18rpx}
 .bar.large{height:18rpx}
 .fill{height:100%;background:linear-gradient(90deg,#f59f42,#ea5f3d)}
@@ -451,8 +576,11 @@ export default {
 .option-text{flex:1;font-size:28rpx;color:#334155}
 .primary,.ghost{flex:1;margin:0;border-radius:999rpx;font-size:28rpx}
 .primary{background:#e47d36;color:#fff}
+.start-btn{margin-top:8rpx}
 .ghost{background:#fff;color:#435163;border:2rpx solid #d8e0ea}
 .mini{flex:none;min-width:140rpx;font-size:24rpx}
+.practice-head{align-items:center;justify-content:space-between;margin-bottom:8rpx}
+.exit-btn{min-width:180rpx}
 .result{display:flex;flex-direction:column;gap:8rpx;padding:18rpx;margin-top:18rpx}
 .result.ok{background:#effaf3}
 .result.bad{background:#fff3ef}
