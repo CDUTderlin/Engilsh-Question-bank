@@ -16,7 +16,6 @@
             class="filter-trigger"
             :class="{ active: hasArticleFilter || activePanel === 'article' }"
             @tap.stop="openFilterPanel('article')"
-            @click.stop="openFilterPanel('article')"
           >
             <text class="filter-trigger-text">文章筛选</text>
             <text class="filter-trigger-arrow" :class="{ open: activePanel === 'article' }">▼</text>
@@ -25,7 +24,6 @@
             class="filter-trigger"
             :class="{ active: hasDateFilter || activePanel === 'date' }"
             @tap.stop="openFilterPanel('date')"
-            @click.stop="openFilterPanel('date')"
           >
             <text class="filter-trigger-text">时间筛选</text>
             <text class="filter-trigger-arrow" :class="{ open: activePanel === 'date' }">▼</text>
@@ -34,7 +32,6 @@
             class="filter-trigger"
             :class="{ active: hasCustomSort || activePanel === 'sort' }"
             @tap.stop="openFilterPanel('sort')"
-            @click.stop="openFilterPanel('sort')"
           >
             <text class="filter-trigger-text">排序</text>
             <text class="filter-trigger-arrow" :class="{ open: activePanel === 'sort' }">▼</text>
@@ -47,15 +44,14 @@
           <text v-if="hasCustomSort" class="filter-chip">排序：{{ currentSortSummary }}</text>
         </view>
 
-        <view v-if="activePanel === 'article'" class="filter-dropdown" @tap.stop @click.stop>
+        <view v-if="activePanel === 'article'" class="filter-dropdown" @tap.stop>
           <scroll-view class="filter-options" scroll-y>
             <view
               v-for="item in articleFilterOptions"
-              :key="item.value || 'all'"
+              :key="item.key"
               class="filter-option"
               :class="{ on: draftArticleId === item.value }"
               @tap.stop="chooseDraftArticle(item.value)"
-              @click.stop="chooseDraftArticle(item.value)"
             >
               <text class="filter-option-text">{{ item.label }}</text>
               <text v-if="draftArticleId === item.value" class="filter-option-check">✓</text>
@@ -67,7 +63,7 @@
           </view>
         </view>
 
-        <view v-if="activePanel === 'date'" class="filter-dropdown" @tap.stop @click.stop>
+        <view v-if="activePanel === 'date'" class="filter-dropdown" @tap.stop>
           <view class="date-row">
             <text class="date-label">开始日期</text>
             <picker mode="date" :value="draftStartDate" @change="setDraftStartDate">
@@ -86,7 +82,7 @@
           </view>
         </view>
 
-        <view v-if="activePanel === 'sort'" class="filter-dropdown" @tap.stop @click.stop>
+        <view v-if="activePanel === 'sort'" class="filter-dropdown" @tap.stop>
           <view class="sort-block">
             <text class="sort-label">排序依据</text>
             <view class="sort-segment">
@@ -94,7 +90,6 @@
                 class="sort-pill"
                 :class="{ on: draftSortField === 'time' }"
                 @tap.stop="chooseDraftSortField('time')"
-                @click.stop="chooseDraftSortField('time')"
               >
                 时间
               </view>
@@ -102,7 +97,6 @@
                 class="sort-pill"
                 :class="{ on: draftSortField === 'wrongCount' }"
                 @tap.stop="chooseDraftSortField('wrongCount')"
-                @click.stop="chooseDraftSortField('wrongCount')"
               >
                 错误次数
               </view>
@@ -115,7 +109,6 @@
                 class="sort-pill"
                 :class="{ on: draftSortDirection === 'desc' }"
                 @tap.stop="chooseDraftSortDirection('desc')"
-                @click.stop="chooseDraftSortDirection('desc')"
               >
                 降序
               </view>
@@ -123,7 +116,6 @@
                 class="sort-pill"
                 :class="{ on: draftSortDirection === 'asc' }"
                 @tap.stop="chooseDraftSortDirection('asc')"
-                @click.stop="chooseDraftSortDirection('asc')"
               >
                 升序
               </view>
@@ -142,7 +134,7 @@
           <text class="meta">{{ item.category }}</text>
           <view class="word-head">
             <text class="word-stem">{{ item.stem || item.question }}</text>
-            <view class="speaker-btn" :class="{ disabled: isWrongAudioLoading(item) || !hasWrongAudio(item), playing: isPlayingWrongStem(item) }" @tap="playWrongPronunciation(item)" @click="playWrongPronunciation(item)">
+            <view class="speaker-btn" :class="{ disabled: isWrongAudioLoading(item) || !hasWrongAudio(item), playing: isPlayingWrongStem(item) }" @tap="playWrongPronunciation(item)">
               <text class="speaker-icon">🔊</text>
             </view>
           </view>
@@ -168,7 +160,7 @@
       <view v-else class="empty">{{ wrongBook.length ? '当前筛选条件下没有错题' : '错题会自动记录到这里' }}</view>
     </view>
 
-    <view v-if="activePanel" class="overlay" @tap="closeFilterPanel" @click="closeFilterPanel"></view>
+    <view v-if="activePanel" class="overlay" @tap="closeFilterPanel"></view>
   </view>
 </template>
 
@@ -181,8 +173,8 @@ export default {
   data() {
     return {
       wrongBook: [],
-      articleFilterOptions: [{ value: '', label: '全部文章' }].concat(
-        articleOptions.map((item) => ({ value: item.value, label: item.label }))
+      articleFilterOptions: [{ key: 'all', value: '', label: '全部文章' }].concat(
+        articleOptions.map((item) => ({ key: item.value, value: item.value, label: item.label }))
       ),
       selectedArticleId: '',
       startDate: '',

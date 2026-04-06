@@ -5,7 +5,7 @@
         <view class="hero-body">
           <image class="hero-logo" :src="heroLogo" mode="aspectFit" />
           <view class="hero-copy">
-            <text class="title">Snowy Enligsh</text>
+            <text class="title">Snowy English</text>
             <text class="sub">本题库由唐雪雪老师精心挑选，包含了25篇精选教材文章的词汇题。</text>
           </view>
         </view>
@@ -21,7 +21,7 @@
           <view class="setup-row" :class="{ open: activeDropdown === 'mode' }">
             <text class="setup-label">模式：</text>
             <view class="picker-trigger">
-              <view class="picker-button" @tap.stop="toggleDropdown('mode')" @click.stop="toggleDropdown('mode')">
+              <view class="picker-button" @tap.stop="toggleDropdown('mode')">
                 <text class="picker-value">{{ selectedModeLabel }}</text>
                 <text class="picker-arrow" :class="{ open: activeDropdown === 'mode' }">▼</text>
               </view>
@@ -32,7 +32,6 @@
                   class="dropdown-item"
                   :class="{ on: practiceMode === item.value }"
                   @tap.stop="selectMode(item.value)"
-                  @click.stop="selectMode(item.value)"
                 >
                   <text class="dropdown-text">{{ item.label }}</text>
                   <text v-if="practiceMode === item.value" class="dropdown-check">✓</text>
@@ -43,7 +42,7 @@
           <view v-if="practiceMode === 'article'" class="setup-row" :class="{ open: activeDropdown === 'article' }">
             <text class="setup-label">文章：</text>
             <view class="picker-trigger">
-              <view class="picker-button" @tap.stop="toggleDropdown('article')" @click.stop="toggleDropdown('article')">
+              <view class="picker-button" @tap.stop="toggleDropdown('article')">
                 <text class="picker-value">{{ selectedArticleLabel }}</text>
                 <text class="picker-arrow" :class="{ open: activeDropdown === 'article' }">▼</text>
               </view>
@@ -54,7 +53,6 @@
                   class="dropdown-item"
                   :class="{ on: selectedArticleIndex === index }"
                   @tap.stop="selectArticle(index)"
-                  @click.stop="selectArticle(index)"
                 >
                   <text class="dropdown-text">{{ label }}</text>
                   <text v-if="selectedArticleIndex === index" class="dropdown-check">✓</text>
@@ -82,7 +80,7 @@
         <view class="block">
           <view class="word-head">
             <text class="word-stem">{{ question.stem }}</text>
-            <view class="speaker-btn" :class="{ disabled: currentAudioLoading || !currentAudioAvailable, playing: isPlayingPronunciation }" @tap="playCurrentPronunciation" @click="playCurrentPronunciation">
+            <view class="speaker-btn" :class="{ disabled: currentAudioLoading || !currentAudioAvailable, playing: isPlayingPronunciation }" @tap="playCurrentPronunciation">
               <text class="speaker-icon">🔊</text>
             </view>
           </view>
@@ -152,7 +150,7 @@
       </view>
     </view>
 
-    <view v-if="activeDropdown" class="select-overlay" @tap="closeDropdown" @click="closeDropdown"></view>
+    <view v-if="activeDropdown" class="select-overlay" @tap="closeDropdown"></view>
   </view>
 </template>
 

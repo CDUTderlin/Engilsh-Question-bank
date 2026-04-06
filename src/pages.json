@@ -3,7 +3,7 @@
     {
       "path": "pages/index/index",
       "style": {
-        "navigationBarTitleText": "Snowy Enligsh",
+        "navigationBarTitleText": "Snowy English",
         "navigationStyle": "custom",
         "navigationBarBackgroundColor": "#FFF7EC",
         "navigationBarTextStyle": "black"
@@ -28,7 +28,7 @@
   ],
   "globalStyle": {
     "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "Snowy Enligsh",
+    "navigationBarTitleText": "Snowy English",
     "navigationBarBackgroundColor": "#FFF7EC",
     "backgroundColor": "#F5F7FB"
   }

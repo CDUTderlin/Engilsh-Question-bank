@@ -30,12 +30,14 @@
             <text class="record-line">正确 {{ record.correctCount }} · 错误 {{ record.wrongCount }} · 正确率：{{ record.accuracy }}%</text>
             <view class="record-actions">
               <button
+                v-if="isH5"
                 class="primary mini report-btn"
                 :disabled="generatingRecordId === record.id"
                 @tap="downloadReport(record)"
               >
                 {{ generatingRecordId === record.id ? '生成中...' : '生成 PDF 报告' }}
               </button>
+              <text v-else class="report-note">PDF 报告仅支持 H5 网页端导出</text>
             </view>
           </view>
         </view>
@@ -49,6 +51,8 @@
 import { articleOptions, totalQuestionCount } from '../../data/question-bank'
 import { getPracticeRecords, getStats } from '../../utils/storage'
 
+const IS_H5 = process.env.UNI_PLATFORM === 'h5'
+
 export default {
   data() {
     return {
@@ -56,7 +60,8 @@ export default {
       totalQuestionCount,
       stats: getStats(),
       practiceRecords: getPracticeRecords(),
-      generatingRecordId: ''
+      generatingRecordId: '',
+      isH5: IS_H5
     }
   },
   computed: {
@@ -157,6 +162,7 @@ export default {
 .record-time,.record-line{display:block;font-size:24rpx;line-height:1.7;color:#64748b}
 .record-line{margin-top:4rpx}
 .record-actions{display:flex;justify-content:flex-end;margin-top:16rpx}
+.report-note{display:block;font-size:24rpx;line-height:1.6;color:#94a3b8}
 .primary{margin:0;border-radius:999rpx;font-size:28rpx;background:#e47d36;color:#fff}
 .mini{flex:none;min-width:180rpx;font-size:24rpx}
 .report-btn[disabled]{opacity:.65}
