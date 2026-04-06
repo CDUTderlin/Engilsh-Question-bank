@@ -305,6 +305,7 @@ export default {
     this.loadLocalState()
   },
   onShow() {
+    this.loadLocalState()
     this.startTimer()
   },
   onHide() {
