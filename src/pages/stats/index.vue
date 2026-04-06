@@ -33,17 +33,33 @@
                 v-if="isH5"
                 class="primary mini report-btn"
                 :disabled="generatingRecordId === record.id"
-                @tap="downloadReport(record)"
+                @tap="exportReport(record)"
               >
                 {{ generatingRecordId === record.id ? '生成中...' : '生成 PDF 报告' }}
               </button>
-              <text v-else class="report-note">PDF 报告仅支持 H5 网页端导出</text>
+              <button
+                v-else-if="isMpWeixin"
+                class="primary mini report-btn"
+                :disabled="generatingRecordId === record.id"
+                @tap="exportReport(record)"
+              >
+                {{ generatingRecordId === record.id ? '生成中...' : '生成图片报告' }}
+              </button>
+              <text v-else class="report-note">当前平台暂不支持导出报告</text>
             </view>
           </view>
         </view>
         <view v-else class="empty">完成一次答题后，这里会自动生成练习记录</view>
       </view>
     </view>
+
+    <canvas
+      canvas-id="practice-report-canvas"
+      class="report-canvas"
+      :style="{ width: canvasWidth + 'px', height: canvasHeight + 'px' }"
+      :width="canvasWidth"
+      :height="canvasHeight"
+    />
   </view>
 </template>
 
@@ -52,6 +68,7 @@ import { articleOptions, totalQuestionCount } from '../../data/question-bank'
 import { getPracticeRecords, getStats } from '../../utils/storage'
 
 const IS_H5 = process.env.UNI_PLATFORM === 'h5'
+const IS_MP_WEIXIN = process.env.UNI_PLATFORM === 'mp-weixin'
 
 export default {
   data() {
@@ -61,7 +78,10 @@ export default {
       stats: getStats(),
       practiceRecords: getPracticeRecords(),
       generatingRecordId: '',
-      isH5: IS_H5
+      isH5: IS_H5,
+      isMpWeixin: IS_MP_WEIXIN,
+      canvasWidth: 1,
+      canvasHeight: 1
     }
   },
   computed: {
@@ -87,7 +107,7 @@ export default {
     this.practiceRecords = getPracticeRecords()
   },
   methods: {
-    async downloadReport(record) {
+    async exportReport(record) {
       if (!record) {
         return
       }
@@ -100,20 +120,90 @@ export default {
       this.generatingRecordId = record.id
 
       // #ifdef H5
-      try {
-        const { downloadPracticeRecordPdf } = await import('../../utils/practice-report')
-        await downloadPracticeRecordPdf(record)
-      } catch (error) {
-        uni.showToast({ title: '报告生成失败，请稍后重试', icon: 'none' })
-      } finally {
-        this.generatingRecordId = ''
+      if (this.isH5) {
+        try {
+          const { downloadPracticeRecordPdf } = await import('../../utils/practice-report')
+          await downloadPracticeRecordPdf(record)
+        } catch (error) {
+          uni.showToast({ title: '报告生成失败，请稍后重试', icon: 'none' })
+        } finally {
+          this.generatingRecordId = ''
+        }
+        return
       }
       // #endif
 
-      // #ifndef H5
-      this.generatingRecordId = ''
-      uni.showToast({ title: '当前仅支持网页端下载 PDF 报告', icon: 'none' })
+      // #ifdef MP-WEIXIN
+      if (this.isMpWeixin) {
+        try {
+          await this.generateImageReport(record)
+        } catch (error) {
+          uni.showToast({ title: '图片报告生成失败，请稍后重试', icon: 'none' })
+        } finally {
+          this.generatingRecordId = ''
+        }
+        return
+      }
       // #endif
+
+      this.generatingRecordId = ''
+      uni.showToast({ title: '当前平台暂不支持导出报告', icon: 'none' })
+    },
+    async generateImageReport(record) {
+      const { createPracticeRecordImageLayout, renderPracticeRecordImage } = await import('../../utils/practice-report-mp')
+      const layout = createPracticeRecordImageLayout(record)
+
+      this.canvasWidth = layout.width
+      this.canvasHeight = layout.height
+      await this.waitForNextTick()
+
+      const context = uni.createCanvasContext('practice-report-canvas', this)
+      renderPracticeRecordImage(context, record, layout)
+      await this.drawCanvas(context)
+      const filePath = await this.exportCanvasImage()
+      await this.openImagePreview(filePath)
+    },
+    waitForNextTick() {
+      return new Promise((resolve) => {
+        this.$nextTick(resolve)
+      })
+    },
+    drawCanvas(context) {
+      return new Promise((resolve) => {
+        context.draw(false, () => {
+          setTimeout(resolve, 120)
+        })
+      })
+    },
+    exportCanvasImage() {
+      return new Promise((resolve, reject) => {
+        uni.canvasToTempFilePath(
+          {
+            canvasId: 'practice-report-canvas',
+            fileType: 'png',
+            quality: 1,
+            success: ({ tempFilePath }) => resolve(tempFilePath),
+            fail: reject
+          },
+          this
+        )
+      })
+    },
+    openImagePreview(filePath) {
+      return new Promise((resolve) => {
+        uni.showModal({
+          title: '图片报告已生成',
+          content: '打开预览后，请长按图片保存到相册。',
+          showCancel: false,
+          success: () => {
+            uni.previewImage({
+              current: filePath,
+              urls: [filePath],
+              complete: resolve
+            })
+          }
+        })
+      })
     },
     formatDate(value) {
       const date = new Date(value)
@@ -166,6 +256,7 @@ export default {
 .primary{margin:0;border-radius:999rpx;font-size:28rpx;background:#e47d36;color:#fff}
 .mini{flex:none;min-width:180rpx;font-size:24rpx}
 .report-btn[disabled]{opacity:.65}
+.report-canvas{position:fixed;left:-9999px;top:-9999px;opacity:0;pointer-events:none}
 .empty{text-align:center;color:#64748b;padding:30rpx 0}
 @media (max-width: 560px){
   .stats{gap:10rpx}
