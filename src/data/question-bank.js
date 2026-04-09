@@ -67,16 +67,21 @@ function buildQuestionList(rows, meaningPool) {
     const meta = articleMetaMap[row.articleId] || {}
     const questionIndex = (perArticleCount[row.articleId] || 0) + 1
     perArticleCount[row.articleId] = questionIndex
+    const displayMeaning = row.meaningSummary || row.meaning
 
     const optionTexts = shuffleBySeed(
-      [row.meaning].concat(getDistractors(meaningPool, row.meaning, globalIndex + questionIndex)),
+      [displayMeaning].concat(getDistractors(meaningPool, displayMeaning, globalIndex + questionIndex)),
       globalIndex + 1
     )
     const options = optionTexts.map((text, index) => ({
       key: optionKeys[index],
       text
     }))
-    const correctOption = options.find((item) => item.text === row.meaning)
+    const correctOption = options.find((item) => item.text === displayMeaning)
+    const explanationLines = [`${row.stem} 的中文意思是：${displayMeaning}`]
+    if (row.meaningSummary && row.meaning && row.meaning !== row.meaningSummary) {
+      explanationLines.push(`完整释义：${row.meaning}`)
+    }
 
     return {
       id: `${row.articleId}-q${questionIndex}`,
@@ -91,7 +96,10 @@ function buildQuestionList(rows, meaningPool) {
       question: '请选择最恰当的中文释义。',
       options,
       answer: correctOption ? correctOption.key : 'A',
-      explanation: `${row.stem} 的中文意思是：${row.meaning}`
+      meaning: row.meaning,
+      meaningSummary: displayMeaning,
+      meanings: row.meanings || [],
+      explanation: explanationLines.join('\n')
     }
   })
 }

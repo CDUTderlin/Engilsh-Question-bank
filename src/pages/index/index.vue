@@ -117,8 +117,27 @@
           <text>{{ result.correct ? '回答正确' : '回答错误，已加入错题本' }}</text>
           <text>正确答案：{{ showAnswer(question, question.answer) }}</text>
           <text>你的答案：{{ showAnswer(question, result.userAnswer) || '未作答' }}</text>
-          <text>近义词：{{ currentSynonymText }}</text>
           <text>解析：{{ question.explanation }}</text>
+
+          <view v-if="currentWordMeta.isSingleWord" class="word-meta-card">
+            <text class="word-meta-title">单词拓展</text>
+            <view class="word-meta-section">
+              <text class="word-meta-label">近义词</text>
+              <text class="word-meta-inline">{{ currentSynonymText }}</text>
+            </view>
+            <view class="word-meta-section">
+              <text class="word-meta-label">词性变化</text>
+              <view v-if="currentWordMeta.groupedRelatedForms.length" class="word-meta-groups compact">
+                <view v-for="group in currentWordMeta.groupedRelatedForms" :key="group.key" class="word-meta-group">
+                  <text class="word-meta-group-title compact">{{ group.label }}</text>
+                  <view class="word-meta-list compact">
+                    <text v-for="item in group.items" :key="item.word" class="word-meta-item compact">{{ item.word }}</text>
+                  </view>
+                </view>
+              </view>
+              <text v-else class="word-meta-empty">暂无本地词形变化</text>
+            </view>
+          </view>
         </view>
       </view>
       <view v-else class="empty">当前模式下暂无题目</view>
@@ -158,6 +177,7 @@
 import { articleOptions, loadArticleQuestions, loadMixedQuestions, totalQuestionCount } from '../../data/question-bank'
 import { addPracticeRecord, addStudySeconds, addWrongQuestion, clearWrongBook, getStats, getWrongBook, removeWrongQuestion, saveStats, saveWrongBook } from '../../utils/storage'
 import { getLookupKey, getWordAudioUrls, getWordSynonyms } from '../../utils/word-network'
+import { getWordMeta } from '../../utils/word-meta'
 
 const modeValues = ['article', 'mixed']
 const modeMap = {
@@ -296,6 +316,9 @@ export default {
       }
 
       return this.currentWordNetwork.synonymsFetched ? '暂未获取到' : '获取中...'
+    },
+    currentWordMeta() {
+      return this.question ? getWordMeta(this.question.stem) : { isSingleWord: false, posTags: [], relatedForms: [], groupedRelatedForms: [] }
     },
     lastPractice() {
       return this.stats.lastPracticedAt ? this.formatDate(this.stats.lastPracticedAt) : '暂无记录'
@@ -909,6 +932,22 @@ export default {
 .result{display:flex;flex-direction:column;gap:8rpx;padding:18rpx;margin-top:18rpx}
 .result.ok{background:#effaf3}
 .result.bad{background:#fff3ef}
+.word-meta-card{margin-top:12rpx;padding:18rpx;background:rgba(255,255,255,.72);border:2rpx solid rgba(216,224,234,.88);border-radius:18rpx}
+.word-meta-title{display:block;font-size:27rpx;font-weight:700;color:#243447}
+.word-meta-section + .word-meta-section{margin-top:12rpx}
+.word-meta-label{display:block;font-size:24rpx;font-weight:600;color:#526171}
+.word-meta-inline{display:block;margin-top:10rpx;font-size:23rpx;line-height:1.7;color:#334155}
+.word-meta-groups{display:flex;flex-direction:column;gap:12rpx;margin-top:10rpx}
+.word-meta-groups.compact{gap:10rpx}
+.word-meta-group{padding:14rpx 16rpx;background:#f8fafc;border-radius:16rpx}
+.word-meta-group-title{display:block;font-size:23rpx;font-weight:700;color:#445566}
+.word-meta-group-title.compact{font-size:22rpx;line-height:1.2}
+.word-meta-tags,.word-meta-list{display:flex;flex-wrap:wrap;gap:10rpx;margin-top:10rpx}
+.word-meta-list.compact{gap:8rpx;margin-top:8rpx}
+.word-meta-tag{padding:8rpx 16rpx;background:#f4f7fb;border-radius:999rpx;font-size:22rpx;color:#324558}
+.word-meta-item{padding:10rpx 16rpx;background:#ffffff;border-radius:999rpx;font-size:23rpx;line-height:1.5;color:#334155}
+.word-meta-item.compact{padding:8rpx 14rpx;font-size:22rpx;line-height:1.25}
+.word-meta-empty{display:block;margin-top:10rpx;font-size:23rpx;color:#7a8a9a}
 .empty{text-align:center;color:#64748b;padding:30rpx 0}
 .stats .stat{width:calc(50% - 6rpx);padding:20rpx;background:#f8fafc}
 .v{display:block;font-size:34rpx;font-weight:700;color:#243447;margin-top:8rpx}

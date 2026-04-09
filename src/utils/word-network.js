@@ -1,13 +1,12 @@
-const CACHE_KEY = 'snowy-english-word-network-cache-v3'
+const CACHE_KEY = 'snowy-english-word-network-cache-v4'
 const REQUEST_TIMEOUT = 6000
 const MAX_SYNONYMS = 2
 
 // 国内优先：
-// 1. 读音：直接走有道词典语音地址，免密钥，国内访问更稳。
+// 1. 读音：改用有道 speech 接口，支持整词或整段短语一次性返回音频。
 // 2. 近义词：走可在国内访问的公开接口 Datamuse，前端可直接请求。
 const WORD_NETWORK_CONFIG = {
-  audioBaseUrl: 'https://dict.youdao.com/dictvoice',
-  audioType: 2
+  audioBaseUrl: 'https://dict.youdao.com/speech'
 }
 
 let memoryCache = null
@@ -71,19 +70,22 @@ function getLookupKey(stem) {
   return normalizeStem(stem)
 }
 
-function getAudioTokens(stem) {
+function getAudioQuery(stem) {
   const normalized = normalizeStem(stem)
   if (!normalized) {
-    return []
+    return ''
   }
 
-  const tokens = normalized.match(/[a-zA-Z]+(?:['-][a-zA-Z]+)*/g) || []
-  return uniq(tokens).slice(0, 4)
+  return normalized
 }
 
-function buildAudioUrl(token) {
-  const query = encodeURIComponent(token)
-  return `${WORD_NETWORK_CONFIG.audioBaseUrl}?audio=${query}&type=${WORD_NETWORK_CONFIG.audioType}`
+function buildAudioUrl(stem) {
+  const query = getAudioQuery(stem)
+  if (!query) {
+    return ''
+  }
+
+  return `${WORD_NETWORK_CONFIG.audioBaseUrl}?audio=${encodeURIComponent(query)}`
 }
 
 function getCacheEntry(stem) {
@@ -113,8 +115,8 @@ function updateCacheEntry(stem, patch) {
 }
 
 async function loadAudioUrls(stem) {
-  const tokens = getAudioTokens(stem)
-  return uniq(tokens.map((token) => buildAudioUrl(token)))
+  const audioUrl = buildAudioUrl(stem)
+  return audioUrl ? [audioUrl] : []
 }
 
 async function loadSynonyms(stem) {
