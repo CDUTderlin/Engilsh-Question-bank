@@ -2,10 +2,10 @@ import articleCatalog from './question-bank/articles'
 
 // #ifndef H5
 import questionRowsSource from './question-bank/questions'
-import meaningPoolSource from './question-bank/meaning-pool'
 // #endif
 
 const optionKeys = ['A', 'B', 'C', 'D']
+const singleWordPattern = /^[A-Za-z]+(?:[-'][A-Za-z]+)*$/
 const articleMetaMap = articleCatalog.reduce((map, item) => {
   map[item.articleId] = item
   return map
@@ -14,7 +14,6 @@ const articleMetaMap = articleCatalog.reduce((map, item) => {
 const articleCache = {}
 let mixedCachePromise = null
 let questionRowsPromise = null
-let meaningPoolPromise = null
 
 function getArticleIndex(articleId) {
   const match = /article-(\d+)/.exec(articleId || '')
@@ -45,32 +44,140 @@ function shuffleBySeed(list, seed) {
   return result
 }
 
-function getDistractors(pool, correctMeaning, seed) {
-  const distractors = []
-  let step = 1
+function getDisplayMeaning(row) {
+  return row.meaningSummary || row.meaning
+}
 
-  while (distractors.length < 3 && step < pool.length + 8) {
-    const candidate = pool[(seed + step * 7) % pool.length]
-    if (candidate !== correctMeaning && !distractors.includes(candidate)) {
+function isSingleWordStem(stem) {
+  return singleWordPattern.test((stem || '').trim())
+}
+
+function getStemType(row) {
+  return isSingleWordStem(row.stem) ? 'word' : 'phrase'
+}
+
+function getMeaningPosTags(row) {
+  if (Array.isArray(row.meanings) && row.meanings.length) {
+    return row.meanings
+      .map((item) => item && item.pos)
+      .filter(Boolean)
+  }
+
+  const displayMeaning = getDisplayMeaning(row)
+  const match = /^(n|v|vt|vi|adj|adv|prep|pron|conj|int|num|aux|abbr|art|det)\./.exec(displayMeaning || '')
+  return match ? [`${match[1]}.`] : []
+}
+
+function countMeaningClauses(text) {
+  return String(text || '')
+    .split('；')
+    .map((item) => item.trim())
+    .filter(Boolean).length
+}
+
+function scoreCandidate(currentRow, candidateRow) {
+  const currentType = getStemType(currentRow)
+  const candidateType = getStemType(candidateRow)
+  const currentMeaning = getDisplayMeaning(currentRow)
+  const candidateMeaning = getDisplayMeaning(candidateRow)
+  const currentPosTags = getMeaningPosTags(currentRow)
+  const candidatePosTags = getMeaningPosTags(candidateRow)
+  const candidatePosSet = new Set(candidatePosTags)
+  const sharedPosCount = currentPosTags.filter((tag) => candidatePosSet.has(tag)).length
+
+  let score = 0
+
+  if (currentType === candidateType) {
+    score += 120
+  } else {
+    score -= 60
+  }
+
+  if (currentType === 'word') {
+    if (currentPosTags.length && candidatePosTags.length) {
+      score += sharedPosCount * 70
+      if (currentPosTags[0] === candidatePosTags[0]) {
+        score += 50
+      }
+      if (sharedPosCount === 0) {
+        score -= 70
+      }
+      if (currentPosTags.length > 1 && candidatePosTags.length > 1) {
+        score += 16
+      }
+      score -= Math.abs(currentPosTags.length - candidatePosTags.length) * 8
+    }
+  } else {
+    const currentTokenCount = currentRow.stem.trim().split(/\s+/).length
+    const candidateTokenCount = candidateRow.stem.trim().split(/\s+/).length
+    score -= Math.abs(currentTokenCount - candidateTokenCount) * 12
+  }
+
+  score -= Math.abs(currentMeaning.length - candidateMeaning.length) * 1.5
+  score -= Math.abs(countMeaningClauses(currentMeaning) - countMeaningClauses(candidateMeaning)) * 10
+  score -= Math.abs(currentRow.stem.length - candidateRow.stem.length) * 0.8
+
+  return score
+}
+
+function buildArticleRowMap(rows) {
+  return rows.reduce((map, row) => {
+    if (!map[row.articleId]) {
+      map[row.articleId] = []
+    }
+
+    map[row.articleId].push(row)
+    return map
+  }, {})
+}
+
+function getDistractors(articleRows, currentRow, correctMeaning, seed) {
+  const randomizedCandidates = shuffleBySeed(
+    articleRows.filter((row) => row.stem !== currentRow.stem || row.meaning !== currentRow.meaning),
+    seed
+  )
+
+  const rankedCandidates = randomizedCandidates
+    .map((row, index) => ({
+      row,
+      score: scoreCandidate(currentRow, row),
+      index
+    }))
+    .sort((left, right) => {
+      if (right.score !== left.score) {
+        return right.score - left.score
+      }
+
+      return left.index - right.index
+    })
+
+  const distractors = []
+  const seen = new Set()
+
+  rankedCandidates.forEach(({ row }) => {
+    const candidate = getDisplayMeaning(row)
+    if (candidate && candidate !== correctMeaning && !seen.has(candidate) && distractors.length < 3) {
+      seen.add(candidate)
       distractors.push(candidate)
     }
-    step += 1
-  }
+  })
 
   return distractors
 }
 
-function buildQuestionList(rows, meaningPool) {
+function buildQuestionList(rows, allRows = rows) {
   const perArticleCount = {}
+  const articleRowMap = buildArticleRowMap(allRows)
 
   return rows.map((row, globalIndex) => {
     const meta = articleMetaMap[row.articleId] || {}
     const questionIndex = (perArticleCount[row.articleId] || 0) + 1
     perArticleCount[row.articleId] = questionIndex
-    const displayMeaning = row.meaningSummary || row.meaning
+    const displayMeaning = getDisplayMeaning(row)
+    const articleRows = articleRowMap[row.articleId] || []
 
     const optionTexts = shuffleBySeed(
-      [displayMeaning].concat(getDistractors(meaningPool, displayMeaning, globalIndex + questionIndex)),
+      [displayMeaning].concat(getDistractors(articleRows, row, displayMeaning, globalIndex + questionIndex)),
       globalIndex + 1
     )
     const options = optionTexts.map((text, index) => ({
@@ -138,21 +245,6 @@ async function loadQuestionRows() {
   return rows.slice()
 }
 
-async function loadMeaningPool() {
-  if (!meaningPoolPromise) {
-    // #ifdef H5
-    meaningPoolPromise = requestJson('meaning-pool.json')
-    // #endif
-
-    // #ifndef H5
-    meaningPoolPromise = Promise.resolve(meaningPoolSource)
-    // #endif
-  }
-
-  const meanings = await meaningPoolPromise
-  return meanings.slice()
-}
-
 export const articleOptions = articleCatalog.map((item) => ({
   value: item.articleId,
   label: formatArticleLabel(item.articleId),
@@ -169,11 +261,8 @@ export async function loadArticleQuestions(articleId) {
   }
 
   if (!articleCache[articleId]) {
-    articleCache[articleId] = Promise.all([loadQuestionRows(), loadMeaningPool()]).then(([rows, meaningPool]) =>
-      buildQuestionList(
-        rows.filter((item) => item.articleId === articleId),
-        meaningPool
-      )
+    articleCache[articleId] = loadQuestionRows().then((rows) =>
+      buildQuestionList(rows.filter((item) => item.articleId === articleId))
     )
   }
 
@@ -183,9 +272,7 @@ export async function loadArticleQuestions(articleId) {
 
 export async function loadMixedQuestions() {
   if (!mixedCachePromise) {
-    mixedCachePromise = Promise.all([loadQuestionRows(), loadMeaningPool()]).then(([rows, meaningPool]) =>
-      buildQuestionList(rows, meaningPool)
-    )
+    mixedCachePromise = loadQuestionRows().then((rows) => buildQuestionList(rows, rows))
   }
 
   const questions = await mixedCachePromise

@@ -155,7 +155,7 @@ function buildDetailLayout(detail, contentWidth) {
   const optionWidth = contentWidth - 24
   const stemLines = wrapText(detail.stem, contentWidth, 30)
   const questionLines = wrapText(detail.question, contentWidth, 22)
-  const optionLines = (detail.options || []).map((option) => wrapText(`${option.key}. ${option.text}`, optionWidth, 20))
+  const optionLines = (detail.options || []).map((option) => wrapText(option.text, optionWidth, 20))
   const userAnswerLines = wrapText(`你的答案：${sanitizeText(detail.userAnswerText, '未作答')}`, contentWidth, 20)
   const correctAnswerLines = wrapText(`正确答案：${sanitizeText(detail.correctAnswerText)}`, contentWidth, 20)
   const explanationLines = wrapText(`解析：${sanitizeText(detail.explanation, '暂无解析')}`, contentWidth, 20)
@@ -379,4 +379,3 @@ export function renderPracticeRecordImage(ctx, record, layout) {
   ctx.setFontSize(18)
   ctx.fillText('图片生成完成后，请在预览中长按保存到相册。', PAGE_PADDING, pageHeight - 40)
 }
-

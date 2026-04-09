@@ -33,7 +33,7 @@ function formatDuration(totalSeconds) {
 
 function buildQuestionSection(detail) {
   const options = (detail.options || [])
-    .map((option) => `<div class="option">${escapeHtml(option.key)}. ${escapeHtml(option.text)}</div>`)
+    .map((option) => `<div class="option">${escapeHtml(option.text)}</div>`)
     .join('')
 
   return `

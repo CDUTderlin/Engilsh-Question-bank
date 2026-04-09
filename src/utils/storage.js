@@ -10,8 +10,33 @@ const defaultStats = {
   lastPracticedAt: ''
 }
 
+function extractMeaningFromExplanation(explanation) {
+  const text = String(explanation || '')
+  const fullMatch = text.match(/完整释义：([^\n]+)/)
+  if (fullMatch && fullMatch[1]) {
+    return fullMatch[1].trim()
+  }
+
+  const briefMatch = text.match(/中文意思是：([^\n]+)/)
+  return briefMatch && briefMatch[1] ? briefMatch[1].trim() : ''
+}
+
+function normalizeWrongEntry(item) {
+  const fallbackMeaning = extractMeaningFromExplanation(item && item.explanation)
+  const meaning = item && item.meaning ? item.meaning : fallbackMeaning
+  const meaningSummary = item && item.meaningSummary ? item.meaningSummary : meaning
+
+  return {
+    ...item,
+    meaning,
+    meaningSummary,
+    meanings: Array.isArray(item && item.meanings) ? item.meanings : []
+  }
+}
+
 export function getWrongBook() {
-  return uni.getStorageSync(WRONG_BOOK_KEY) || []
+  const wrongBook = uni.getStorageSync(WRONG_BOOK_KEY) || []
+  return wrongBook.map(normalizeWrongEntry)
 }
 
 export function saveWrongBook(list) {
@@ -37,6 +62,9 @@ export function addWrongQuestion(question, userAnswer) {
     correctAnswer: question.answer,
     userAnswer,
     explanation: question.explanation || '',
+    meaning: question.meaning || '',
+    meaningSummary: question.meaningSummary || question.meaning || '',
+    meanings: question.meanings || [],
     wrongCount: 1,
     updatedAt: new Date().toISOString()
   }

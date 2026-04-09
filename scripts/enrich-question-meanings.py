@@ -14,8 +14,6 @@ from urllib.request import Request, urlopen
 ROOT = Path(__file__).resolve().parents[1]
 QUESTIONS_JS_PATH = ROOT / "src" / "data" / "question-bank" / "questions.js"
 QUESTIONS_JSON_PATH = ROOT / "src" / "static" / "question-bank" / "questions.json"
-MEANING_POOL_JS_PATH = ROOT / "src" / "data" / "question-bank" / "meaning-pool.js"
-MEANING_POOL_JSON_PATH = ROOT / "src" / "static" / "question-bank" / "meaning-pool.json"
 CACHE_PATH = ROOT / "scripts" / "cache" / "youdao-question-meanings.json"
 
 WORD_PATTERN = re.compile(r"[A-Za-z]+(?:[-'][A-Za-z]+)*")
@@ -346,29 +344,14 @@ def enrich_rows(rows: List[dict]) -> List[dict]:
     return enriched_rows
 
 
-def build_meaning_pool(rows: List[dict]) -> List[str]:
-    result = []
-    seen = set()
-    for row in rows:
-        meaning_text = row.get("meaningSummary") or row["meaning"]
-        if meaning_text not in seen:
-            seen.add(meaning_text)
-            result.append(meaning_text)
-    return result
-
-
 def main() -> None:
     questions = load_js_array(QUESTIONS_JS_PATH)
     enriched_rows = enrich_rows(questions)
-    meaning_pool = build_meaning_pool(enriched_rows)
 
     write_js_array(QUESTIONS_JS_PATH, enriched_rows)
     write_json(QUESTIONS_JSON_PATH, enriched_rows)
-    write_js_array(MEANING_POOL_JS_PATH, meaning_pool)
-    write_json(MEANING_POOL_JSON_PATH, meaning_pool)
 
     print(f"updated {len(enriched_rows)} question rows")
-    print(f"updated {len(meaning_pool)} meaning pool entries")
 
 
 if __name__ == "__main__":

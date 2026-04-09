@@ -95,7 +95,6 @@
             :class="answered ? (option.key === question.answer ? 'ok' : (selectedOption === option.key ? 'bad' : '')) : (selectedOption === option.key ? 'on' : '')"
             @tap="choose(option.key)"
           >
-            <text class="option-key">{{ option.key }}</text>
             <text class="option-text">{{ option.text }}</text>
           </view>
         </view>
@@ -117,7 +116,6 @@
           <text>{{ result.correct ? '回答正确' : '回答错误，已加入错题本' }}</text>
           <text>正确答案：{{ showAnswer(question, question.answer) }}</text>
           <text>你的答案：{{ showAnswer(question, result.userAnswer) || '未作答' }}</text>
-          <text>解析：{{ question.explanation }}</text>
 
           <view v-if="currentWordMeta.isSingleWord" class="word-meta-card">
             <text class="word-meta-title">单词拓展</text>
@@ -186,6 +184,10 @@ const modeMap = {
 }
 const MIXED_QUESTION_COUNT = 25
 const emptyResult = () => ({ correct: false, userAnswer: '' })
+const practiceIcon = require('../../static/tab-practice.svg')
+const practiceActiveIcon = require('../../static/tab-practice-active.svg')
+const profileIcon = require('../../static/tab-profile.svg')
+const profileActiveIcon = require('../../static/tab-profile-active.svg')
 
 function shuffleList(list) {
   const result = list.slice()
@@ -198,10 +200,6 @@ function shuffleList(list) {
   return result
 }
 
-const practiceIcon = require('../../static/tab-practice.svg')
-const practiceActiveIcon = require('../../static/tab-practice-active.svg')
-const profileIcon = require('../../static/tab-profile.svg')
-const profileActiveIcon = require('../../static/tab-profile-active.svg')
 const heroLogo = require('../../static/snowy-english-logo.png')
 const practiceHeroLogo = require('../../static/snowy-english-logo-full.png')
 
@@ -804,7 +802,7 @@ export default {
     },
     showAnswer(item, answerKey) {
       const option = (item.options || []).find((entry) => entry.key === answerKey)
-      return option ? `${option.key}. ${option.text}` : answerKey
+      return option ? option.text : answerKey
     },
     clearWrongs() {
       this.wrongBook = clearWrongBook()
@@ -916,11 +914,10 @@ export default {
 .question{margin-top:10rpx}
 .question-status{display:flex;align-items:center;justify-content:space-between;gap:16rpx;margin:22rpx 0 18rpx}
 .question-order-current{font-size:36rpx;font-weight:700;color:#243447}
-.option{display:flex;gap:16rpx;padding:18rpx;background:#f8fafc;margin-top:12rpx;border:2rpx solid transparent}
+.option{display:flex;padding:18rpx 20rpx;background:#f8fafc;margin-top:12rpx;border:2rpx solid transparent;border-radius:16rpx}
 .option.on{border-color:#f6b35e;background:#fff4e5}
 .option.ok{border-color:#39a56d;background:#eaf8f1}
 .option.bad{border-color:#e57373;background:#fff1f1}
-.option-key{width:44rpx;height:44rpx;line-height:44rpx;text-align:center;border-radius:50%;background:#e8eef5}
 .option-text{flex:1;font-size:28rpx;color:#334155}
 .primary,.ghost{flex:1;margin:0;border-radius:999rpx;font-size:28rpx}
 .primary{background:#e47d36;color:#fff}

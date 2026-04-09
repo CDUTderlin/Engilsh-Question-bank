@@ -131,24 +131,34 @@
       <view v-if="filteredWrongBook.length">
         <view v-for="item in filteredWrongBook" :key="item.id" class="wrong">
           <text class="meta">{{ item.articleLabel || item.articleTitle || item.category }} · 单选题</text>
-          <text class="meta">{{ item.category }}</text>
           <view class="word-head">
             <text class="word-stem">{{ item.stem || item.question }}</text>
             <view class="speaker-btn" :class="{ disabled: isWrongAudioLoading(item) || !hasWrongAudio(item), playing: isPlayingWrongStem(item) }" @tap="playWrongPronunciation(item)">
               <text class="speaker-icon">🔊</text>
             </view>
           </view>
-          <text class="question">{{ item.question }}</text>
-          <view class="option-grid">
-            <view v-for="option in item.options" :key="option.key" class="option-cell">
-              <text class="option-key">{{ option.key }}</text>
-              <text class="option-text">{{ option.text }}</text>
+          <view class="wrong-detail-card">
+            <view class="wrong-detail-section">
+              <text class="wrong-detail-label">完整释义</text>
+              <text class="wrong-detail-text">{{ getWrongMeaningText(item) }}</text>
+            </view>
+            <view class="wrong-detail-section">
+              <text class="wrong-detail-label">近义词</text>
+              <text class="wrong-detail-text">{{ getWrongSynonymText(item) }}</text>
+            </view>
+            <view v-if="getWrongWordMeta(item).isSingleWord" class="wrong-detail-section">
+              <text class="wrong-detail-label">词性变化</text>
+              <view v-if="getWrongWordMeta(item).groupedRelatedForms.length" class="word-meta-groups compact">
+                <view v-for="group in getWrongWordMeta(item).groupedRelatedForms" :key="group.key" class="word-meta-group">
+                  <text class="word-meta-group-title compact">{{ group.label }}</text>
+                  <view class="word-meta-list compact">
+                    <text v-for="entry in group.items" :key="entry.word" class="word-meta-item compact">{{ entry.word }}</text>
+                  </view>
+                </view>
+              </view>
+              <text v-else class="word-meta-empty">暂无本地词形变化</text>
             </view>
           </view>
-          <text class="plain">正确答案：{{ showAnswer(item, item.correctAnswer) }}</text>
-          <text class="plain">最近一次答案：{{ showAnswer(item, item.userAnswer) || '未作答' }}</text>
-          <text class="plain">近义词：{{ getWrongSynonymText(item) }}</text>
-          <text class="plain">解析：{{ item.explanation }}</text>
           <view class="wrong-foot">
             <text class="meta">错误次数：{{ item.wrongCount }}</text>
             <text class="meta wrong-time">{{ formatDate(item.updatedAt) }}</text>
@@ -168,6 +178,7 @@
 import { articleOptions } from '../../data/question-bank'
 import { addStudySeconds, clearWrongBook, getWrongBook, removeWrongQuestion } from '../../utils/storage'
 import { getLookupKey, getWordAudioUrls, getWordSynonyms } from '../../utils/word-network'
+import { getWordMeta } from '../../utils/word-meta'
 
 export default {
   data() {
@@ -286,10 +297,6 @@ export default {
       }
       addStudySeconds(Math.floor((Date.now() - this.pageStartedAt) / 1000))
       this.pageStartedAt = 0
-    },
-    showAnswer(item, answerKey) {
-      const option = (item.options || []).find((entry) => entry.key === answerKey)
-      return option ? `${option.key}. ${option.text}` : answerKey
     },
     getWordNetworkEntry(stem) {
       const key = getLookupKey(stem)
@@ -439,6 +446,16 @@ export default {
       }
 
       return current.synonymsFetched ? '暂未获取到' : '获取中...'
+    },
+    getWrongMeaningText(item) {
+      return item && item.meaning ? item.meaning : '暂无完整释义'
+    },
+    getWrongWordMeta(item) {
+      if (!item || !item.stem) {
+        return { isSingleWord: false, posTags: [], relatedForms: [], groupedRelatedForms: [] }
+      }
+
+      return getWordMeta(item.stem)
     },
     isPlayingWrongStem(item) {
       return this.playingStemKey && this.playingStemKey === getLookupKey(item && item.stem)
@@ -618,11 +635,20 @@ export default {
 .wrong{margin-top:18rpx;padding:22rpx;background:#f8fafc;border-radius:20rpx}
 .word-head{display:flex;align-items:center;gap:14rpx;margin-top:14rpx}
 .word-stem{display:block;flex:1;min-width:0;font-size:34rpx;font-weight:700;color:#1d4d7a}
-.question{margin-top:10rpx}
-.option-grid{display:flex;flex-wrap:wrap;gap:14rpx 0;margin-top:14rpx;padding:16rpx 14rpx;background:#f3f7fb;border:2rpx solid #e3ebf3;border-radius:16rpx}
-.option-cell{display:flex;align-items:flex-start;gap:12rpx;box-sizing:border-box;width:50%;padding:8rpx 10rpx}
-.option-key{flex:none;display:flex;align-items:center;justify-content:center;width:40rpx;height:40rpx;border-radius:50%;background:#e7eef7;font-size:22rpx;font-weight:700;line-height:1;color:#294766}
-.option-text{flex:1;min-width:0;font-size:25rpx;line-height:1.7;color:#334155;word-break:break-word}
+.wrong-detail-card{margin-top:16rpx;padding:18rpx;background:rgba(255,255,255,.9);border:2rpx solid #e1e8f0;border-radius:18rpx}
+.wrong-detail-section + .wrong-detail-section{margin-top:14rpx}
+.wrong-detail-label{display:block;font-size:24rpx;font-weight:600;color:#526171}
+.wrong-detail-text{display:block;margin-top:10rpx;font-size:25rpx;line-height:1.7;color:#334155}
+.word-meta-groups{display:flex;flex-direction:column;gap:12rpx;margin-top:10rpx}
+.word-meta-groups.compact{gap:10rpx}
+.word-meta-group{padding:14rpx 16rpx;background:#f8fafc;border-radius:16rpx}
+.word-meta-group-title{display:block;font-size:23rpx;font-weight:700;color:#445566}
+.word-meta-group-title.compact{font-size:22rpx;line-height:1.2}
+.word-meta-list{display:flex;flex-wrap:wrap;gap:10rpx;margin-top:10rpx}
+.word-meta-list.compact{gap:8rpx;margin-top:8rpx}
+.word-meta-item{padding:10rpx 16rpx;background:#ffffff;border-radius:999rpx;font-size:23rpx;line-height:1.5;color:#334155}
+.word-meta-item.compact{padding:8rpx 14rpx;font-size:22rpx;line-height:1.25}
+.word-meta-empty{display:block;margin-top:10rpx;font-size:23rpx;color:#7a8a9a}
 .wrong-foot{display:flex;align-items:center;justify-content:space-between;gap:16rpx;margin-top:8rpx}
 .wrong-time{text-align:right}
 .speaker-btn{flex:none;display:flex;align-items:center;justify-content:center;width:52rpx;height:52rpx;border-radius:50%;background:#eef6ff;border:2rpx solid #d4e4f8}
@@ -640,6 +666,5 @@ export default {
   .filter-bar{gap:16rpx}
   .filter-trigger{flex:1 1 0;max-width:none;min-width:0;font-size:24rpx;padding:14rpx 12rpx}
   .filter-trigger-text{font-size:23rpx}
-  .option-cell{width:100%;padding-right:0}
 }
 </style>
