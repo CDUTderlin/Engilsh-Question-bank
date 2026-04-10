@@ -11,7 +11,12 @@
         </view>
       </view>
       <view v-else class="hero hero-inline practice-hero">
-        <image class="practice-hero-logo" :src="practiceHeroLogo" mode="aspectFit" />
+        <view class="practice-topbar">
+          <view class="practice-back-btn" @tap="exitPractice">
+            <view class="practice-back-icon"></view>
+          </view>
+          <text v-if="practiceMode === 'article'" class="practice-topbar-title">{{ selectedArticleLabel }}</text>
+        </view>
       </view>
 
       <view v-if="!isPracticing" class="setup">
@@ -67,24 +72,21 @@
       </view>
       <view v-else-if="isLoading" class="empty">题库加载中...</view>
       <view v-else-if="question">
-        <view class="head practice-head">
-          <view>
-            <text class="meta">当前模式：{{ selectedModeLabel }}</text>
-            <text class="meta" v-if="practiceMode === 'article'">当前文章：{{ selectedArticleLabel }}</text>
-          </view>
-          <button class="ghost mini exit-btn" @tap="exitPractice">退出答题</button>
-        </view>
-        <text class="meta">单选题</text>
-        <view class="bar"><view class="fill" :style="{ width: progress + '%' }"></view></view>
-
         <view class="block">
-          <view class="word-head">
-            <text class="word-stem">{{ question.stem }}</text>
-            <view class="speaker-btn" :class="{ disabled: currentAudioLoading || !currentAudioAvailable, playing: isPlayingPronunciation }" @tap="playCurrentPronunciation">
+          <view class="word-head focus" :class="{ phrase: !currentWordMeta.isSingleWord }">
+            <view class="word-canvas-shell">
+              <canvas
+                type="2d"
+                canvas-id="practiceStemCanvas"
+                id="practiceStemCanvas"
+                class="word-stem-canvas"
+                :style="stemCanvasStyle"
+              ></canvas>
+            </view>
+            <view class="speaker-btn speaker-btn-corner" :class="{ disabled: currentAudioLoading || !currentAudioAvailable, playing: isPlayingPronunciation }" @tap="playCurrentPronunciation">
               <text class="speaker-icon">🔊</text>
             </view>
           </view>
-          <text class="question">{{ question.question }}</text>
         </view>
 
         <view>
@@ -122,18 +124,6 @@
             <view class="word-meta-section">
               <text class="word-meta-label">近义词</text>
               <text class="word-meta-inline">{{ currentSynonymText }}</text>
-            </view>
-            <view class="word-meta-section">
-              <text class="word-meta-label">词性变化</text>
-              <view v-if="currentWordMeta.groupedRelatedForms.length" class="word-meta-groups compact">
-                <view v-for="group in currentWordMeta.groupedRelatedForms" :key="group.key" class="word-meta-group">
-                  <text class="word-meta-group-title compact">{{ group.label }}</text>
-                  <view class="word-meta-list compact">
-                    <text v-for="item in group.items" :key="item.word" class="word-meta-item compact">{{ item.word }}</text>
-                  </view>
-                </view>
-              </view>
-              <text v-else class="word-meta-empty">暂无本地词形变化</text>
             </view>
           </view>
         </view>
@@ -174,7 +164,7 @@
 <script>
 import { articleOptions, loadArticleQuestions, loadMixedQuestions, totalQuestionCount } from '../../data/question-bank'
 import { addPracticeRecord, addStudySeconds, addWrongQuestion, clearWrongBook, getStats, getWrongBook, removeWrongQuestion, saveStats, saveWrongBook } from '../../utils/storage'
-import { getLookupKey, getWordAudioUrls, getWordSynonyms } from '../../utils/word-network'
+import { getLookupKey, getWordAudioUrls, getWordSynonyms, resolvePlayableAudioUrl } from '../../utils/word-network'
 import { getWordMeta } from '../../utils/word-meta'
 
 const modeValues = ['article', 'mixed']
@@ -188,6 +178,9 @@ const practiceIcon = require('../../static/tab-practice.svg')
 const practiceActiveIcon = require('../../static/tab-practice-active.svg')
 const profileIcon = require('../../static/tab-profile.svg')
 const profileActiveIcon = require('../../static/tab-profile-active.svg')
+const STEM_CANVAS_ID = 'practiceStemCanvas'
+const STEM_CANVAS_HEIGHT_RPX = 136
+const STEM_CANVAS_FALLBACK_WIDTH_RPX = 520
 
 function shuffleList(list) {
   const result = list.slice()
@@ -201,8 +194,6 @@ function shuffleList(list) {
 }
 
 const heroLogo = require('../../static/snowy-english-logo.png')
-const practiceHeroLogo = require('../../static/snowy-english-logo-full.png')
-
 export default {
   data() {
     return {
@@ -216,7 +207,6 @@ export default {
         { key: '我的', label: '我的', icon: profileIcon, activeIcon: profileActiveIcon }
       ],
       heroLogo,
-      practiceHeroLogo,
       tab: '刷题',
       practiceMode: 'article',
       currentArticleId: articleOptions[0] ? articleOptions[0].value : '',
@@ -244,7 +234,13 @@ export default {
       wordNetworkMap: {},
       audioContext: null,
       audioQueue: [],
-      isPlayingPronunciation: false
+      isPlayingPronunciation: false,
+      isPreparingPronunciation: false,
+      audioPlaybackToken: 0,
+      stemCanvasWidth: 0,
+      stemCanvasHeight: 0,
+      stemCanvasTimer: null,
+      stemCanvasRenderVersion: 0
     }
   },
   computed: {
@@ -302,7 +298,7 @@ export default {
       return Array.isArray(this.currentWordNetwork.audioUrls) && this.currentWordNetwork.audioUrls.length > 0
     },
     currentAudioLoading() {
-      return Boolean(this.currentWordNetwork.audioLoading)
+      return Boolean(this.currentWordNetwork.audioLoading || this.isPreparingPronunciation)
     },
     currentSynonymText() {
       if (this.currentWordNetwork.synonymsLoading) {
@@ -318,8 +314,43 @@ export default {
     currentWordMeta() {
       return this.question ? getWordMeta(this.question.stem) : { isSingleWord: false, posTags: [], relatedForms: [], groupedRelatedForms: [] }
     },
+    stemCanvasStyle() {
+      const width = Math.max(this.stemCanvasWidth || this.getDefaultStemCanvasWidth(), 1)
+      const height = Math.max(this.stemCanvasHeight || this.getDefaultStemCanvasHeight(), 1)
+      return `width:${width}px;height:${height}px;`
+    },
+    currentStemClasses() {
+      if (!this.question) {
+        return {}
+      }
+
+      if (!this.currentWordMeta.isSingleWord) {
+        return {
+          phrase: true
+        }
+      }
+
+      const stemLength = String(this.question.stem || '').replace(/[^a-zA-Z]/g, '').length
+      return {
+        compact: stemLength >= 10,
+        tight: stemLength >= 14
+      }
+    },
     lastPractice() {
       return this.stats.lastPracticedAt ? this.formatDate(this.stats.lastPracticedAt) : '暂无记录'
+    }
+  },
+  watch: {
+    question() {
+      this.queueStemCanvasRender()
+    },
+    isPracticing(value) {
+      if (value) {
+        this.queueStemCanvasRender()
+        return
+      }
+
+      this.clearStemCanvasTimer()
     }
   },
   onLoad() {
@@ -328,16 +359,248 @@ export default {
   onShow() {
     this.loadLocalState()
     this.startTimer()
+    if (this.isPracticing && this.question) {
+      this.queueStemCanvasRender()
+    }
   },
   onHide() {
     this.stopTimer()
     this.stopPronunciationPlayback()
+    this.clearStemCanvasTimer()
   },
   onUnload() {
     this.stopTimer()
     this.stopPronunciationPlayback(true)
+    this.clearStemCanvasTimer()
   },
   methods: {
+    getRpxUnit() {
+      const systemInfo = uni.getSystemInfoSync()
+      return systemInfo.windowWidth / 750
+    },
+    getDefaultStemCanvasWidth() {
+      return Math.round(STEM_CANVAS_FALLBACK_WIDTH_RPX * this.getRpxUnit())
+    },
+    getDefaultStemCanvasHeight() {
+      return Math.round(STEM_CANVAS_HEIGHT_RPX * this.getRpxUnit())
+    },
+    clearStemCanvasTimer() {
+      if (!this.stemCanvasTimer) {
+        return
+      }
+
+      clearTimeout(this.stemCanvasTimer)
+      this.stemCanvasTimer = null
+    },
+    queueStemCanvasRender() {
+      if (!this.isPracticing || !this.question) {
+        return
+      }
+
+      this.clearStemCanvasTimer()
+      const renderVersion = this.stemCanvasRenderVersion + 1
+      this.stemCanvasRenderVersion = renderVersion
+
+      this.$nextTick(() => {
+        this.stemCanvasTimer = setTimeout(() => {
+          this.renderStemCanvas(renderVersion)
+        }, 16)
+      })
+    },
+    resolveStemCanvas2d() {
+      return new Promise((resolve) => {
+        const defaultWidth = this.getDefaultStemCanvasWidth()
+        const defaultHeight = this.getDefaultStemCanvasHeight()
+        const query = uni.createSelectorQuery().in(this)
+
+        query.select('.word-canvas-shell').boundingClientRect()
+        query.select('#practiceStemCanvas').fields({ node: true, size: true })
+        query.exec((results) => {
+          const shellRect = results && results[0] ? results[0] : null
+          const canvasResult = results && results[1] ? results[1] : null
+          const width = shellRect && shellRect.width ? Math.round(shellRect.width) : defaultWidth
+          const height = shellRect && shellRect.height ? Math.round(shellRect.height) : defaultHeight
+
+          this.stemCanvasWidth = width
+          this.stemCanvasHeight = height
+
+          if (!canvasResult || !canvasResult.node) {
+            resolve(null)
+            return
+          }
+
+          const dpr = Math.max(uni.getSystemInfoSync().pixelRatio || 1, 1)
+          const canvas = canvasResult.node
+          const context = canvas.getContext('2d')
+
+          canvas.width = Math.max(Math.round(width * dpr), 1)
+          canvas.height = Math.max(Math.round(height * dpr), 1)
+
+          if (typeof context.setTransform === 'function') {
+            context.setTransform(1, 0, 0, 1, 0, 0)
+          }
+          context.clearRect(0, 0, canvas.width, canvas.height)
+          if (typeof context.setTransform === 'function') {
+            context.setTransform(dpr, 0, 0, dpr, 0, 0)
+          } else if (typeof context.scale === 'function') {
+            context.scale(dpr, dpr)
+          }
+
+          resolve({ canvas, context, width, height })
+        })
+      })
+    },
+    setStemCanvasFont(context, fontSize) {
+      context.font = `600 ${fontSize}px sans-serif`
+    },
+    async renderStemCanvas(renderVersion = this.stemCanvasRenderVersion) {
+      if (!this.question || renderVersion !== this.stemCanvasRenderVersion) {
+        return
+      }
+
+      const canvasState = await this.resolveStemCanvas2d()
+      if (!canvasState || renderVersion !== this.stemCanvasRenderVersion) {
+        return
+      }
+
+      const { context, width, height } = canvasState
+      const stem = String(this.question.stem || '').trim()
+      const layout = this.currentWordMeta.isSingleWord
+        ? this.getSingleWordCanvasLayout(context, stem, width)
+        : this.getPhraseCanvasLayout(context, stem, width)
+
+      context.fillStyle = '#173f69'
+      context.textAlign = 'center'
+      context.textBaseline = 'middle'
+      this.setStemCanvasFont(context, layout.fontSize)
+
+      if (layout.lines.length === 1) {
+        context.fillText(layout.lines[0], width / 2, height / 2)
+        return
+      }
+
+      const totalHeight = (layout.lines.length - 1) * layout.lineHeight
+      const startY = (height / 2) - (totalHeight / 2)
+      layout.lines.forEach((line, index) => {
+        context.fillText(line, width / 2, startY + index * layout.lineHeight)
+      })
+    },
+    getSingleWordCanvasLayout(context, text, maxWidth) {
+      const cleanedLength = String(text || '').replace(/[^a-zA-Z]/g, '').length
+      let fontSize = 31
+
+      if (cleanedLength >= 14) {
+        fontSize = 24
+      } else if (cleanedLength >= 10) {
+        fontSize = 27
+      }
+
+      const minFontSize = 20
+      const targetWidth = Math.max(maxWidth - 6, 1)
+
+      while (fontSize > minFontSize) {
+        this.setStemCanvasFont(context, fontSize)
+        if (context.measureText(text).width <= targetWidth) {
+          break
+        }
+        fontSize -= 1
+      }
+
+      return {
+        fontSize,
+        lineHeight: Math.round(fontSize * 1.25),
+        lines: [text]
+      }
+    },
+    getPhraseCanvasLayout(context, text, maxWidth) {
+      const targetWidth = Math.max(maxWidth - 8, 1)
+      let fontSize = 24
+      const minFontSize = 18
+      let lines = [text]
+
+      while (fontSize >= minFontSize) {
+        this.setStemCanvasFont(context, fontSize)
+        lines = this.wrapStemText(context, text, targetWidth)
+        if (lines.length <= 2) {
+          break
+        }
+        fontSize -= 1
+      }
+
+      if (lines.length > 2) {
+        this.setStemCanvasFont(context, fontSize)
+        lines = this.wrapStemText(context, text, targetWidth, 3)
+      }
+
+      return {
+        fontSize,
+        lineHeight: Math.round(fontSize * 1.35),
+        lines
+      }
+    },
+    wrapStemText(context, text, maxWidth, maxLines = 2) {
+      const tokens = String(text || '').split(/\s+/).filter(Boolean)
+      if (!tokens.length) {
+        return ['']
+      }
+
+      const lines = []
+      let currentLine = ''
+
+      tokens.forEach((token) => {
+        const candidate = currentLine ? `${currentLine} ${token}` : token
+        if (context.measureText(candidate).width <= maxWidth) {
+          currentLine = candidate
+          return
+        }
+
+        if (currentLine) {
+          lines.push(currentLine)
+        }
+
+        if (context.measureText(token).width <= maxWidth) {
+          currentLine = token
+          return
+        }
+
+        const broken = this.breakLongToken(context, token, maxWidth)
+        currentLine = ''
+        broken.forEach((segment) => {
+          if (segment && lines.length < maxLines - 1) {
+            lines.push(segment)
+          } else if (segment) {
+            currentLine = currentLine ? `${currentLine}${segment}` : segment
+          }
+        })
+      })
+
+      if (currentLine) {
+        lines.push(currentLine)
+      }
+
+      return lines.filter(Boolean).slice(0, maxLines)
+    },
+    breakLongToken(context, token, maxWidth) {
+      const segments = []
+      let current = ''
+
+      Array.from(token).forEach((char) => {
+        const candidate = `${current}${char}`
+        if (!current || context.measureText(candidate).width <= maxWidth) {
+          current = candidate
+          return
+        }
+
+        segments.push(current)
+        current = char
+      })
+
+      if (current) {
+        segments.push(current)
+      }
+
+      return segments
+    },
     loadLocalState() {
       const rawStats = getStats()
       this.stats = {
@@ -395,6 +658,13 @@ export default {
         return this.audioContext
       }
 
+      if (typeof uni.setInnerAudioOption === 'function') {
+        uni.setInnerAudioOption({
+          obeyMuteSwitch: false,
+          mixWithOther: true
+        })
+      }
+
       const audioContext = uni.createInnerAudioContext()
       audioContext.autoplay = false
       audioContext.obeyMuteSwitch = false
@@ -406,26 +676,95 @@ export default {
           this.isPlayingPronunciation = false
         }
       })
-      audioContext.onError(() => {
+      audioContext.onError((error) => {
+        this.handlePronunciationError(error)
         this.playNextAudioInQueue()
       })
       this.audioContext = audioContext
       return audioContext
     },
-    playNextAudioInQueue() {
+    waitForAudioCanplay(audioContext, playbackToken) {
+      return new Promise((resolve) => {
+        let settled = false
+        let timer = null
+
+        const cleanup = () => {
+          if (timer) {
+            clearTimeout(timer)
+            timer = null
+          }
+
+          if (typeof audioContext.offCanplay === 'function') {
+            audioContext.offCanplay(handleCanplay)
+          }
+        }
+
+        const finish = (callback) => {
+          if (settled || playbackToken !== this.audioPlaybackToken) {
+            return
+          }
+
+          settled = true
+          cleanup()
+          callback()
+        }
+
+        const handleCanplay = () => {
+          finish(() => resolve())
+        }
+
+        if (typeof audioContext.onCanplay === 'function') {
+          audioContext.onCanplay(handleCanplay)
+        }
+
+        timer = setTimeout(() => {
+          finish(() => resolve())
+        }, 1200)
+      })
+    },
+    async playNextAudioInQueue() {
       const nextUrl = this.audioQueue.shift()
       if (!nextUrl) {
+        this.isPreparingPronunciation = false
         this.isPlayingPronunciation = false
         return
       }
 
-      const audioContext = this.ensureAudioContext()
-      audioContext.src = nextUrl
-      audioContext.play()
-      this.isPlayingPronunciation = true
+      const playbackToken = this.audioPlaybackToken
+      this.isPreparingPronunciation = true
+
+      try {
+        const playableUrl = await resolvePlayableAudioUrl(nextUrl)
+        if (!playableUrl || playbackToken !== this.audioPlaybackToken) {
+          return
+        }
+
+        const audioContext = this.ensureAudioContext()
+        audioContext.src = playableUrl
+        await this.waitForAudioCanplay(audioContext, playbackToken)
+        if (playbackToken !== this.audioPlaybackToken) {
+          return
+        }
+
+        audioContext.play()
+        this.isPlayingPronunciation = true
+      } catch (error) {
+        if (playbackToken !== this.audioPlaybackToken) {
+          return
+        }
+
+        this.handlePronunciationError(error)
+        this.playNextAudioInQueue()
+      } finally {
+        if (playbackToken === this.audioPlaybackToken) {
+          this.isPreparingPronunciation = false
+        }
+      }
     },
     stopPronunciationPlayback(destroy = false) {
+      this.audioPlaybackToken += 1
       this.audioQueue = []
+      this.isPreparingPronunciation = false
       this.isPlayingPronunciation = false
 
       if (!this.audioContext) {
@@ -438,7 +777,15 @@ export default {
         this.audioContext = null
       }
     },
-    playCurrentPronunciation() {
+    handlePronunciationError(error) {
+      const detail =
+        (error && (error.errMsg || error.errCode || error.message)) ||
+        'unknown'
+
+      console.error('[pronunciation] playback failed:', detail, error)
+      uni.showToast({ title: '发音加载失败', icon: 'none' })
+    },
+    async playCurrentPronunciation() {
       if (this.currentAudioLoading) {
         uni.showToast({ title: '读音获取中', icon: 'none' })
         return
@@ -451,11 +798,9 @@ export default {
       }
 
       this.stopPronunciationPlayback()
-      this.audioQueue = audioUrls.slice(1)
-      const audioContext = this.ensureAudioContext()
-      audioContext.src = audioUrls[0]
-      audioContext.play()
-      this.isPlayingPronunciation = true
+      this.audioPlaybackToken += 1
+      this.audioQueue = audioUrls.slice()
+      await this.playNextAudioInQueue()
     },
     async ensureAudio(question) {
       if (!question || !question.stem) {
@@ -582,6 +927,8 @@ export default {
     clearPracticeView() {
       this.closeDropdown()
       this.stopPronunciationPlayback()
+      this.clearStemCanvasTimer()
+      this.stemCanvasRenderVersion += 1
       this.isPracticing = false
       this.questionBank = []
       this.sessionQuestions = []
@@ -856,7 +1203,11 @@ export default {
 .hero-inline{margin-bottom:20rpx}
 .hero-body{display:flex;align-items:center;gap:22rpx}
 .hero-logo{width:192rpx;height:192rpx;flex:none}
-.practice-hero{display:flex;justify-content:center;align-items:center;padding:10rpx 24rpx;background:#fff}
+.practice-hero{display:flex;flex-direction:column;align-items:flex-start;padding:0 12rpx 4rpx;background:transparent}
+.practice-topbar{position:relative;display:flex;align-items:center;justify-content:center;width:100%;min-height:72rpx;padding:4rpx 0 10rpx;box-sizing:border-box;margin-bottom:18rpx}
+.practice-back-btn{position:absolute;left:4rpx;top:50%;display:flex;align-items:center;justify-content:center;width:64rpx;min-width:64rpx;height:64rpx;transform:translateY(-50%)}
+.practice-back-icon{width:18rpx;height:18rpx;border-left:4rpx solid #324558;border-bottom:4rpx solid #324558;transform:rotate(45deg);box-sizing:border-box}
+.practice-topbar-title{max-width:72%;padding:0 36rpx;font-size:24rpx;font-weight:600;line-height:1.5;color:#435163;text-align:center;pointer-events:none}
 .practice-hero-logo{width:180rpx;height:180rpx}
 .hero-copy{flex:1;min-width:0}
 .title{display:block;font-size:42rpx;font-weight:700;color:#233447}
@@ -904,28 +1255,35 @@ export default {
 .block,.wrong,.stat{margin-top:18rpx}
 .label,.title2{display:block;font-size:30rpx;font-weight:700;color:#243447}
 .plain,.question{font-size:28rpx;color:#334155}
+.block{display:flex;align-items:center;justify-content:center;min-height:228rpx;margin-top:12rpx;padding:28rpx;background:linear-gradient(180deg,#fff7eb,#ffffff);border:2rpx solid #f1dfc8;border-radius:26rpx;box-shadow:0 14rpx 32rpx rgba(228,125,54,.09)}
 .word-head{display:flex;align-items:center;gap:14rpx;margin-top:14rpx}
+.word-head.focus{position:relative;justify-content:center;align-items:center;gap:16rpx;width:100%;min-height:160rpx;margin-top:0}
+.word-head.focus.phrase{align-items:center}
+.word-canvas-shell{position:relative;z-index:1;flex:1;min-width:0;display:flex;align-items:center;justify-content:center;min-height:136rpx}
+.word-stem-canvas{display:block;width:100%;height:100%}
 .word-stem{display:block;flex:1;min-width:0;font-size:44rpx;font-weight:700;color:#1d4d7a;letter-spacing:1rpx}
+.word-stem.centered{flex:0 1 auto;max-width:calc(100% - 78rpx);font-size:62rpx;line-height:1.2;text-align:center;letter-spacing:2rpx;color:#173f69;white-space:nowrap}
+.word-stem.centered.compact{font-size:54rpx}
+.word-stem.centered.tight{font-size:48rpx}
+.word-stem.centered.phrase{max-width:calc(100% - 78rpx);font-size:48rpx;line-height:1.35;white-space:normal;word-break:break-word;overflow-wrap:anywhere}
 .word-stem.small{font-size:34rpx}
 .speaker-btn{flex:none;display:flex;align-items:center;justify-content:center;width:56rpx;height:56rpx;border-radius:50%;background:#eef6ff;border:2rpx solid #d4e4f8}
+.speaker-btn-corner{position:relative;z-index:3;width:58rpx;height:58rpx;background:rgba(242,248,255,.92);border-color:#d5e3f2;box-shadow:0 6rpx 16rpx rgba(59,92,138,.08)}
 .speaker-btn.disabled{opacity:.45}
 .speaker-btn.playing{background:#e6fff1;border-color:#9bd4b2}
-.speaker-icon{font-size:28rpx;line-height:1}
-.question{margin-top:10rpx}
-.question-status{display:flex;align-items:center;justify-content:space-between;gap:16rpx;margin:22rpx 0 18rpx}
+.speaker-icon{font-size:26rpx;line-height:1}
+.question-status{display:flex;align-items:center;justify-content:space-between;gap:16rpx;margin:24rpx 0 14rpx}
 .question-order-current{font-size:36rpx;font-weight:700;color:#243447}
-.option{display:flex;padding:18rpx 20rpx;background:#f8fafc;margin-top:12rpx;border:2rpx solid transparent;border-radius:16rpx}
+.option{display:flex;padding:22rpx 24rpx;background:#f8fafc;margin-top:16rpx;border:2rpx solid transparent;border-radius:18rpx}
 .option.on{border-color:#f6b35e;background:#fff4e5}
 .option.ok{border-color:#39a56d;background:#eaf8f1}
 .option.bad{border-color:#e57373;background:#fff1f1}
-.option-text{flex:1;font-size:28rpx;color:#334155}
+.option-text{flex:1;font-size:29rpx;line-height:1.65;color:#334155}
 .primary,.ghost{flex:1;margin:0;border-radius:999rpx;font-size:28rpx}
 .primary{background:#e47d36;color:#fff}
 .start-btn{margin-top:8rpx}
 .ghost{background:#fff;color:#435163;border:2rpx solid #d8e0ea}
 .mini{flex:none;min-width:140rpx;font-size:24rpx}
-.practice-head{align-items:center;justify-content:space-between;margin-bottom:8rpx}
-.exit-btn{min-width:180rpx}
 .result{display:flex;flex-direction:column;gap:8rpx;padding:18rpx;margin-top:18rpx}
 .result.ok{background:#effaf3}
 .result.bad{background:#fff3ef}

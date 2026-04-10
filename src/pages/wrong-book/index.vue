@@ -128,46 +128,69 @@
         </view>
       </view>
 
-      <view v-if="filteredWrongBook.length">
-        <view v-for="item in filteredWrongBook" :key="item.id" class="wrong">
-          <text class="meta">{{ item.articleLabel || item.articleTitle || item.category }} · 单选题</text>
-          <view class="word-head">
-            <text class="word-stem">{{ item.stem || item.question }}</text>
-            <view class="speaker-btn" :class="{ disabled: isWrongAudioLoading(item) || !hasWrongAudio(item), playing: isPlayingWrongStem(item) }" @tap="playWrongPronunciation(item)">
-              <text class="speaker-icon">🔊</text>
-            </view>
+      <view v-if="filteredWrongBook.length" class="wrong-list">
+        <view v-for="(item, index) in filteredWrongBook" :key="item.id" class="wrong wrong-brief" @tap="openWrongDetail(index)">
+          <text class="wrong-brief-stem">{{ item.stem || item.question }}</text>
+          <text class="wrong-brief-meaning">{{ getWrongListMeaning(item) }}</text>
+          <view class="wrong-brief-foot">
+            <text class="meta">{{ item.articleLabel || item.articleTitle || item.category }}</text>
+            <text class="wrong-brief-arrow">›</text>
           </view>
-          <view class="wrong-detail-card">
-            <view class="wrong-detail-section">
-              <text class="wrong-detail-label">完整释义</text>
-              <text class="wrong-detail-text">{{ getWrongMeaningText(item) }}</text>
-            </view>
-            <view class="wrong-detail-section">
-              <text class="wrong-detail-label">近义词</text>
-              <text class="wrong-detail-text">{{ getWrongSynonymText(item) }}</text>
-            </view>
-            <view v-if="getWrongWordMeta(item).isSingleWord" class="wrong-detail-section">
-              <text class="wrong-detail-label">词性变化</text>
-              <view v-if="getWrongWordMeta(item).groupedRelatedForms.length" class="word-meta-groups compact">
-                <view v-for="group in getWrongWordMeta(item).groupedRelatedForms" :key="group.key" class="word-meta-group">
-                  <text class="word-meta-group-title compact">{{ group.label }}</text>
-                  <view class="word-meta-list compact">
-                    <text v-for="entry in group.items" :key="entry.word" class="word-meta-item compact">{{ entry.word }}</text>
-                  </view>
-                </view>
-              </view>
-              <text v-else class="word-meta-empty">暂无本地词形变化</text>
-            </view>
-          </view>
-          <view class="wrong-foot">
-            <text class="meta">错误次数：{{ item.wrongCount }}</text>
-            <text class="meta wrong-time">{{ formatDate(item.updatedAt) }}</text>
-          </view>
-          <button class="ghost mini" @tap="removeWrong(item.id)">移除</button>
         </view>
       </view>
 
       <view v-else class="empty">{{ wrongBook.length ? '当前筛选条件下没有错题' : '错题会自动记录到这里' }}</view>
+    </view>
+
+    <view v-if="detailVisible && filteredWrongBook.length" class="detail-overlay" @tap="closeWrongDetail">
+      <view class="detail-sheet" @tap.stop>
+        <view class="detail-sheet-head">
+          <text class="detail-sheet-hint">左右滑动查看上一条或下一条</text>
+          <text class="detail-sheet-close" @tap="closeWrongDetail">关闭</text>
+        </view>
+        <swiper class="detail-swiper" :current="detailIndex" @change="handleDetailSwiperChange">
+          <swiper-item v-for="item in filteredWrongBook" :key="item.id">
+            <scroll-view class="detail-scroll" scroll-y>
+              <view class="detail-card">
+                <text class="meta">{{ item.articleLabel || item.articleTitle || item.category }} · 单选题</text>
+                <view class="detail-word-head">
+                  <text class="detail-word-stem">{{ item.stem || item.question }}</text>
+                  <view class="speaker-btn" :class="{ disabled: isWrongAudioLoading(item) || !hasWrongAudio(item), playing: isPlayingWrongStem(item) }" @tap="playWrongPronunciation(item)">
+                    <text class="speaker-icon">🔊</text>
+                  </view>
+                </view>
+                <view class="wrong-detail-card">
+                  <view class="wrong-detail-section">
+                    <text class="wrong-detail-label">完整释义</text>
+                    <text class="wrong-detail-text">{{ getWrongMeaningText(item) }}</text>
+                  </view>
+                  <view class="wrong-detail-section">
+                    <text class="wrong-detail-label">近义词</text>
+                    <text class="wrong-detail-text">{{ getWrongSynonymText(item) }}</text>
+                  </view>
+                  <view v-if="getWrongWordMeta(item).isSingleWord" class="wrong-detail-section">
+                    <text class="wrong-detail-label">词性变化</text>
+                    <view v-if="getWrongWordMeta(item).groupedRelatedForms.length" class="word-meta-groups compact">
+                      <view v-for="group in getWrongWordMeta(item).groupedRelatedForms" :key="group.key" class="word-meta-group">
+                        <text class="word-meta-group-title compact">{{ group.label }}</text>
+                        <view class="word-meta-list compact">
+                          <text v-for="entry in group.items" :key="entry.word" class="word-meta-item compact">{{ entry.word }}</text>
+                        </view>
+                      </view>
+                    </view>
+                    <text v-else class="word-meta-empty">暂无本地词形变化</text>
+                  </view>
+                </view>
+                <view class="wrong-foot detail-foot">
+                  <text class="meta">错误次数：{{ item.wrongCount }}</text>
+                  <text class="meta wrong-time">{{ formatDate(item.updatedAt) }}</text>
+                </view>
+                <button class="ghost mini detail-remove-btn" @tap="removeWrong(item.id)">移除</button>
+              </view>
+            </scroll-view>
+          </swiper-item>
+        </swiper>
+      </view>
     </view>
 
     <view v-if="activePanel" class="overlay" @tap="closeFilterPanel"></view>
@@ -202,7 +225,9 @@ export default {
       wordNetworkMap: {},
       audioContext: null,
       audioQueue: [],
-      playingStemKey: ''
+      playingStemKey: '',
+      detailVisible: false,
+      detailIndex: 0
     }
   },
   computed: {
@@ -450,6 +475,13 @@ export default {
     getWrongMeaningText(item) {
       return item && item.meaning ? item.meaning : '暂无完整释义'
     },
+    getWrongListMeaning(item) {
+      if (!item) {
+        return '暂无释义'
+      }
+
+      return item.meaningSummary || item.meaning || '暂无释义'
+    },
     getWrongWordMeta(item) {
       if (!item || !item.stem) {
         return { isSingleWord: false, posTags: [], relatedForms: [], groupedRelatedForms: [] }
@@ -484,6 +516,17 @@ export default {
       audioContext.src = audioUrls[0]
       audioContext.play()
     },
+    openWrongDetail(index) {
+      this.detailIndex = Math.max(0, Number(index || 0))
+      this.detailVisible = true
+    },
+    closeWrongDetail() {
+      this.detailVisible = false
+    },
+    handleDetailSwiperChange(event) {
+      const nextIndex = Number(event && event.detail && event.detail.current)
+      this.detailIndex = Number.isNaN(nextIndex) ? 0 : nextIndex
+    },
     clearWrongs() {
       uni.showModal({
         title: '确认清空',
@@ -494,6 +537,8 @@ export default {
           if (confirm) {
             this.wrongBook = clearWrongBook()
             this.wordNetworkMap = {}
+            this.detailVisible = false
+            this.detailIndex = 0
             this.stopPronunciationPlayback()
           }
         }
@@ -573,6 +618,13 @@ export default {
           if (confirm) {
             this.wrongBook = removeWrongQuestion(id)
             this.hydrateWrongWordNetwork(this.wrongBook)
+            const remaining = this.filteredWrongBook.length
+            if (!remaining) {
+              this.detailVisible = false
+              this.detailIndex = 0
+            } else if (this.detailIndex >= remaining) {
+              this.detailIndex = remaining - 1
+            }
             if (!this.wrongBook.some((item) => this.isPlayingWrongStem(item))) {
               this.stopPronunciationPlayback()
             }
@@ -632,8 +684,17 @@ export default {
 .filter-actions{display:flex;justify-content:flex-end;gap:14rpx;margin-top:18rpx}
 .meta,.plain,.question{display:block;font-size:28rpx;line-height:1.7;color:#334155}
 .meta{font-size:24rpx;color:#64748b}
+.wrong-list{margin-top:18rpx}
 .wrong{margin-top:18rpx;padding:22rpx;background:#f8fafc;border-radius:20rpx}
+.wrong-brief{margin-top:0;padding:22rpx 22rpx 18rpx;border:2rpx solid #e2eaf2;box-shadow:0 10rpx 22rpx rgba(53,74,98,.05)}
+.wrong-brief + .wrong-brief{margin-top:14rpx}
+.wrong-brief-stem{display:block;font-size:34rpx;font-weight:700;line-height:1.25;color:#1d4d7a}
+.wrong-brief-meaning{display:block;margin-top:12rpx;font-size:25rpx;line-height:1.7;color:#334155}
+.wrong-brief-foot{display:flex;align-items:center;justify-content:space-between;gap:16rpx;margin-top:14rpx}
+.wrong-brief-arrow{font-size:38rpx;line-height:1;color:#95a5b5}
 .word-head{display:flex;align-items:center;gap:14rpx;margin-top:14rpx}
+.detail-word-head{display:flex;align-items:center;gap:14rpx;margin-top:14rpx}
+.detail-word-stem{display:block;flex:1;min-width:0;font-size:38rpx;font-weight:700;color:#1d4d7a}
 .word-stem{display:block;flex:1;min-width:0;font-size:34rpx;font-weight:700;color:#1d4d7a}
 .wrong-detail-card{margin-top:16rpx;padding:18rpx;background:rgba(255,255,255,.9);border:2rpx solid #e1e8f0;border-radius:18rpx}
 .wrong-detail-section + .wrong-detail-section{margin-top:14rpx}
@@ -661,6 +722,16 @@ export default {
 .action-btn{min-width:156rpx}
 .empty{text-align:center;color:#64748b;padding:40rpx 0}
 .overlay{position:fixed;inset:0;background:rgba(15,23,42,.14);z-index:20}
+.detail-overlay{position:fixed;inset:0;display:flex;align-items:flex-end;background:rgba(15,23,42,.3);z-index:80}
+.detail-sheet{width:100%;max-height:88vh;padding:20rpx 20rpx 28rpx;background:#fff;border-radius:28rpx 28rpx 0 0;box-shadow:0 -16rpx 36rpx rgba(15,23,42,.12)}
+.detail-sheet-head{display:flex;align-items:center;justify-content:space-between;gap:16rpx;padding:0 8rpx 16rpx}
+.detail-sheet-hint{font-size:23rpx;line-height:1.5;color:#708092}
+.detail-sheet-close{font-size:24rpx;font-weight:600;color:#435163}
+.detail-swiper{height:74vh}
+.detail-scroll{height:74vh}
+.detail-card{padding:8rpx 8rpx 0}
+.detail-foot{margin-top:14rpx}
+.detail-remove-btn{margin-top:16rpx}
 @media (max-width: 560px){
   .filters{padding:18rpx}
   .filter-bar{gap:16rpx}

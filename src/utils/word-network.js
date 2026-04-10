@@ -2,6 +2,7 @@ const CACHE_KEY = 'snowy-english-word-network-cache-v4'
 const REQUEST_TIMEOUT = 6000
 const MAX_SYNONYMS = 2
 
+
 // 国内优先：
 // 1. 读音：改用有道 speech 接口，支持整词或整段短语一次性返回音频。
 // 2. 近义词：走可在国内访问的公开接口 Datamuse，前端可直接请求。
@@ -12,6 +13,8 @@ const WORD_NETWORK_CONFIG = {
 let memoryCache = null
 const pendingAudio = {}
 const pendingSynonyms = {}
+const runtimeAudioFileCache = {}
+const pendingAudioFileDownloads = {}
 
 function getCache() {
   if (!memoryCache) {
@@ -27,6 +30,10 @@ function saveCache() {
 
 function uniq(list) {
   return [...new Set(list.filter(Boolean))]
+}
+
+function isMpWeixinRuntime() {
+  return typeof wx !== 'undefined' && typeof uni.downloadFile === 'function'
 }
 
 function requestJson(url, data) {
@@ -119,6 +126,68 @@ async function loadAudioUrls(stem) {
   return audioUrl ? [audioUrl] : []
 }
 
+function downloadAudioFile(url) {
+  return new Promise((resolve, reject) => {
+    uni.downloadFile({
+      url,
+      timeout: REQUEST_TIMEOUT,
+      success: (response) => {
+        const statusCode = Number(response.statusCode || 200)
+        if (statusCode < 200 || statusCode >= 300 || !response.tempFilePath) {
+          reject(new Error(`Audio download failed: ${statusCode}`))
+          return
+        }
+
+        resolve(response.tempFilePath)
+      },
+      fail: reject
+    })
+  })
+}
+
+function getAudioFileExtension(url) {
+  const remoteUrl = String(url || '').trim().toLowerCase()
+  if (remoteUrl.includes('.wav')) {
+    return '.wav'
+  }
+
+  if (remoteUrl.includes('.aac')) {
+    return '.aac'
+  }
+
+  if (remoteUrl.includes('.m4a')) {
+    return '.m4a'
+  }
+
+  return '.mp3'
+}
+
+function sanitizeFileName(value) {
+  return String(value || '')
+    .replace(/[^a-z0-9_-]/gi, '_')
+    .slice(0, 80)
+}
+
+function copyFileToUserPath(tempFilePath, remoteUrl) {
+  return new Promise((resolve) => {
+    if (typeof wx === 'undefined' || !wx.env || !wx.getFileSystemManager) {
+      resolve(tempFilePath)
+      return
+    }
+
+    const fs = wx.getFileSystemManager()
+    const fileName = `${sanitizeFileName(encodeURIComponent(remoteUrl))}${getAudioFileExtension(remoteUrl)}`
+    const targetPath = `${wx.env.USER_DATA_PATH}/${fileName}`
+
+    fs.copyFile({
+      srcPath: tempFilePath,
+      destPath: targetPath,
+      success: () => resolve(targetPath),
+      fail: () => resolve(tempFilePath)
+    })
+  })
+}
+
 async function loadSynonyms(stem) {
   const normalized = normalizeStem(stem)
   if (!normalized) {
@@ -198,6 +267,31 @@ export async function getWordSynonyms(stem) {
   }
 
   return pendingSynonyms[key]
+}
+
+export async function resolvePlayableAudioUrl(url) {
+  const remoteUrl = String(url || '').trim()
+  if (!remoteUrl || !isMpWeixinRuntime()) {
+    return remoteUrl
+  }
+
+  if (runtimeAudioFileCache[remoteUrl]) {
+    return runtimeAudioFileCache[remoteUrl]
+  }
+
+  if (!pendingAudioFileDownloads[remoteUrl]) {
+    pendingAudioFileDownloads[remoteUrl] = downloadAudioFile(remoteUrl)
+      .then((tempFilePath) => copyFileToUserPath(tempFilePath, remoteUrl))
+      .then((localFilePath) => {
+        runtimeAudioFileCache[remoteUrl] = localFilePath
+        return localFilePath
+      })
+      .finally(() => {
+        delete pendingAudioFileDownloads[remoteUrl]
+      })
+  }
+
+  return pendingAudioFileDownloads[remoteUrl]
 }
 
 export { getLookupKey, WORD_NETWORK_CONFIG }
