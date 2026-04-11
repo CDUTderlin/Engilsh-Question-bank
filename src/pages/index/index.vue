@@ -884,6 +884,9 @@ export default {
           stem: question.stem,
           question: question.question,
           options: question.options || [],
+          meaning: question.meaning || '',
+          meaningSummary: question.meaningSummary || question.meaning || '',
+          meanings: question.meanings || [],
           userAnswer,
           userAnswerText: userAnswer ? this.showAnswer(question, userAnswer) : '未作答',
           correctAnswer: question.answer,
@@ -971,8 +974,37 @@ export default {
         this.stats = addStudySeconds(durationSeconds)
       }
 
-      this.clearPracticeView()
-      uni.showToast({ title: '已完成答题', icon: 'success' })
+      this.promptPracticeCompleteRedirect()
+    },
+    promptPracticeCompleteRedirect() {
+      const itemList = ['查看统计', '查看错题本', '返回主页']
+
+      uni.showActionSheet({
+        itemList,
+        success: ({ tapIndex }) => {
+          if (tapIndex === 0) {
+            this.clearPracticeView()
+            uni.navigateTo({ url: '/pages/stats/index' })
+            return
+          }
+
+          if (tapIndex === 1) {
+            this.clearPracticeView()
+            uni.navigateTo({ url: '/pages/wrong-book/index' })
+            return
+          }
+
+          this.clearPracticeView()
+          this.tab = '刷题'
+        },
+        fail: (error) => {
+          if (error && /cancel/i.test(String(error.errMsg || ''))) {
+            return
+          }
+
+          uni.showToast({ title: '已完成答题', icon: 'success' })
+        }
+      })
     },
     exitPractice() {
       uni.showModal({
