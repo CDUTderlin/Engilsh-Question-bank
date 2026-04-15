@@ -66,6 +66,7 @@
 <script>
 import { articleOptions, totalQuestionCount } from '../../data/question-bank'
 import { getPracticeRecords, getStats } from '../../utils/storage'
+import { buildShareAppMessage, buildShareTimeline } from '../../utils/share'
 
 const IS_H5 = process.env.UNI_PLATFORM === 'h5'
 const IS_MP_WEIXIN = process.env.UNI_PLATFORM === 'mp-weixin'
@@ -105,6 +106,17 @@ export default {
   onShow() {
     this.stats = getStats()
     this.practiceRecords = getPracticeRecords()
+  },
+  onShareAppMessage() {
+    return buildShareAppMessage({
+      title: `Snowy English | 我已完成 ${this.completedCount} 道题，正确率 ${this.accuracy}%`,
+      path: '/pages/stats/index'
+    })
+  },
+  onShareTimeline() {
+    return buildShareTimeline({
+      title: `Snowy English | 已完成 ${this.completedCount} 道题，正确率 ${this.accuracy}%`
+    })
   },
   methods: {
     async exportReport(record) {

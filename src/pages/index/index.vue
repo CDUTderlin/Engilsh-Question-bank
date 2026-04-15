@@ -6,7 +6,6 @@
           <image class="hero-logo" :src="heroLogo" mode="aspectFit" />
           <view class="hero-copy">
             <text class="title">Snowy English</text>
-            <text class="sub">本题库由唐雪雪老师精心挑选，包含了25篇精选教材文章的词汇题。</text>
           </view>
         </view>
       </view>
@@ -69,6 +68,7 @@
         <button class="primary start-btn" :disabled="isLoading" @tap="startPractice">
           {{ isLoading ? '题库加载中...' : '开始答题' }}
         </button>
+        <text class="disclaimer">本题库由新亚艺术教育唐雪雪老师精心挑选与整理，收录25篇精选教材文章词汇题，帮助学生高效巩固词汇知识，提升英语学习能力。</text>
       </view>
       <view v-else-if="isLoading" class="empty">题库加载中...</view>
       <view v-else-if="question">
@@ -164,6 +164,7 @@
 <script>
 import { articleOptions, loadArticleQuestions, loadMixedQuestions, totalQuestionCount } from '../../data/question-bank'
 import { addPracticeRecord, addStudySeconds, addWrongQuestion, clearWrongBook, getStats, getWrongBook, removeWrongQuestion, saveStats, saveWrongBook } from '../../utils/storage'
+import { buildShareAppMessage, buildShareTimeline } from '../../utils/share'
 import { getLookupKey, getWordAudioUrls, getWordSynonyms, resolvePlayableAudioUrl } from '../../utils/word-network'
 import { getWordMeta } from '../../utils/word-meta'
 
@@ -355,6 +356,17 @@ export default {
   },
   onLoad() {
     this.loadLocalState()
+  },
+  onShareAppMessage() {
+    return buildShareAppMessage({
+      title: 'Snowy English | 英语刷题与错题复习',
+      path: '/pages/index/index'
+    })
+  },
+  onShareTimeline() {
+    return buildShareTimeline({
+      title: 'Snowy English | 英语刷题与错题复习'
+    })
   },
   onShow() {
     this.loadLocalState()
@@ -1264,6 +1276,7 @@ export default {
 .my-entry-desc{font-size:24rpx;line-height:1.6;color:#64748b}
 .my-entry-arrow{font-size:42rpx;line-height:1;color:#90a0b2}
 .setup{display:flex;flex-direction:column;gap:14rpx}
+.disclaimer{display:block;margin-top:6rpx;font-size:22rpx;line-height:1.7;color:#8b95a7;text-align:center}
 .setup-row{position:relative;display:flex;align-items:center;justify-content:space-between;gap:20rpx;padding:10rpx 2rpx}
 .setup-row.open{z-index:70}
 .setup-label{flex:none;font-size:28rpx;font-weight:600;color:#334155}

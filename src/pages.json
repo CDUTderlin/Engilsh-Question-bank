@@ -5,7 +5,9 @@
       "style": {
         "navigationBarTitleText": "Snowy English",
         "navigationBarBackgroundColor": "#FFF7EC",
-        "navigationBarTextStyle": "black"
+        "navigationBarTextStyle": "black",
+        "enableShareAppMessage": true,
+        "enableShareTimeline": true
       }
     },
     {
@@ -13,7 +15,9 @@
       "style": {
         "navigationBarTitleText": "错题本",
         "navigationBarBackgroundColor": "#FFF7EC",
-        "navigationBarTextStyle": "black"
+        "navigationBarTextStyle": "black",
+        "enableShareAppMessage": true,
+        "enableShareTimeline": true
       }
     },
     {
@@ -21,7 +25,9 @@
       "style": {
         "navigationBarTitleText": "统计",
         "navigationBarBackgroundColor": "#FFF7EC",
-        "navigationBarTextStyle": "black"
+        "navigationBarTextStyle": "black",
+        "enableShareAppMessage": true,
+        "enableShareTimeline": true
       }
     }
   ],

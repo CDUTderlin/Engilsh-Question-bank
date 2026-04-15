@@ -200,6 +200,7 @@
 <script>
 import { articleOptions } from '../../data/question-bank'
 import { addStudySeconds, clearWrongBook, getWrongBook, removeWrongQuestion } from '../../utils/storage'
+import { buildShareAppMessage, buildShareTimeline } from '../../utils/share'
 import { getLookupKey, getWordAudioUrls, getWordSynonyms } from '../../utils/word-network'
 import { getWordMeta } from '../../utils/word-meta'
 
@@ -306,6 +307,17 @@ export default {
     this.activePanel = ''
     this.pageStartedAt = Date.now()
     this.hydrateWrongWordNetwork(this.wrongBook)
+  },
+  onShareAppMessage() {
+    return buildShareAppMessage({
+      title: `Snowy English | 我整理了 ${this.filteredWrongBook.length} 道错题，来一起复习`,
+      path: '/pages/wrong-book/index'
+    })
+  },
+  onShareTimeline() {
+    return buildShareTimeline({
+      title: `Snowy English | 错题本已整理 ${this.filteredWrongBook.length} 道题`
+    })
   },
   onHide() {
     this.flushStudyTime()
